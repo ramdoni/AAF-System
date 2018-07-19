@@ -265,7 +265,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Marital Status</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="marital_status" value="{{ $data->marital_status }}" class="form-control">
+                                        <input type="text" name="marital_status" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
