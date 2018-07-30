@@ -116,6 +116,7 @@
                                                                 <th>Status Mobil</th>
                                                             </tr>
                                                             @foreach(Auth::user()->inventaris_mobil as $item)
+                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
                                                             <tr>
                                                                 <td>{{ $item->tipe_mobil }}</td>
                                                                 <td>{{ $item->tahun }}</td>
@@ -139,6 +140,7 @@
                                                                 <th>Keterangan</th>
                                                             </tr>
                                                             @foreach(Auth::user()->inventaris as $item)
+                                                            <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
                                                             <tr>
                                                                 <td>{{ $item->jenis }}</td>
                                                                 <td>{{ $item->description }}</td>

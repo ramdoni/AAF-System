@@ -43,53 +43,8 @@
                                 </ul>
                             </div>
                         @endif
-
                         {{ csrf_field() }}
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-md-12">Directorate</label>
-                                <div class="col-md-10">
-                                   <select class="form-control" name="directorate_id" required>
-                                        <option value=""> Pilih Directorate</option>
-                                        @foreach($directorate as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $data->organisasi_directorate_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Division</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="division_id">
-                                        <option value=""> Pilih Division</option>
-                                        @foreach($division as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $data->organisasi_division_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Department</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="department_id" required>
-                                        <option value=""> Pilih Department</option>
-                                        @foreach($department as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $data->organisasi_department_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Section / Unit</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="unit_id" required>
-                                        <option value=""> Pilih Section / Unit</option>
-                                        @foreach($unit as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $data->organisasi_directorate_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-md-12">Name Position</label>
                                 <div class="col-md-10">

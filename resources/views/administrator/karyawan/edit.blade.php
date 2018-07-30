@@ -234,9 +234,11 @@
                                     <div class="col-md-6">
                                         <select class="form-control" name="department_id">
                                             <option value="">Pilih Department</option>
-                                            @foreach(get_organisasi_department($data->division_id) as $item)
-                                            <option value="{{ $item->id }}" {{ $item->id == $data->department_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                            @endforeach
+                                            @if(!empty($data->division_id))
+                                                @foreach(get_organisasi_department($data->division_id) as $item)
+                                                <option value="{{ $item->id }}" {{ $item->id == $data->department_id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select> 
                                     </div>
                                 </div>
@@ -245,9 +247,11 @@
                                     <div class="col-md-6">
                                         <select class="form-control" name="section_id">
                                             <option value="">Pilih Section</option>
-                                            @foreach(get_organisasi_unit() as $item)
-                                            <option value="{{ $item->id }}" {{ $item->id == $data->section_id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                            @endforeach
+                                            @if(!empty($data->department_id))
+                                                @foreach(get_organisasi_unit($data->department_id) as $item)
+                                                <option value="{{ $item->id }}" {{ $item->id == $data->section_id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select> 
                                     </div>
                                 </div>
@@ -255,7 +259,7 @@
                                     <label class="col-md-12">Position</label>
                                     <div class="col-md-6">
                                         <select class="form-control" name="organisasi_position">
-                                           @foreach(get_organisasi_position($data->section_id) as $item)
+                                           @foreach(get_organisasi_position() as $item)
                                             <option value="{{ $item->id }}" {{ $item->id == $data->organisasi_position ? 'selected' : '' }}>{{ $item->name }}</option>
                                             @endforeach
                                         </select>
@@ -1399,7 +1403,6 @@
                         html_ += "<option value=\""+ v.id_kab +"\">"+ v.nama +"</option>";
                     });
 
-                    //$(el).parent().find('select').html(html_);
                     $('.modal-kota').html(html_);
                 }
             });

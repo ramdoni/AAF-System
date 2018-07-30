@@ -37,10 +37,6 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>DIRECTORATE</th>
-                                    <th>DIVISION</th>
-                                    <th>DEPARTMENT</th>
-                                    <th>SECTION / UNIT</th>
                                     <th>POSITION</th>
                                     <th>CREATED</th>
                                     <th>MANAGE</th>
@@ -50,10 +46,6 @@
                                 @foreach($data as $no => $item)
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>    
-                                        <td>{{ (isset($item->directorate) ? $item->directorate->name : '-')  }}</td>
-                                        <td>{{ (isset($item->division) ? $item->division->name : '-') }}</td>
-                                        <td>{{ (isset($item->department) ? $item->department->name : '-') }}</td>
-                                        <td>{{ (isset($item->unit) ? $item->unit->name : '-') }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->created_at }}</td>
                                         <td>

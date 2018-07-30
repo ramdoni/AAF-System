@@ -25,4 +25,31 @@ class ExitInterview extends Model
     {
     	return $this->hasOne('App\User', 'id', 'user_id');
     }
+
+    /**
+     * [inventaris description]
+     * @return [type] [description]
+     */
+    public function inventaris()
+    {
+        return $this->hasMany('\App\ExitInterviewInventaris', 'exit_interview_id', 'id');
+    }
+
+    /**
+     * [inventaris_mobil description]
+     * @return [type] [description]
+     */
+    public function inventaris_mobil()
+    {
+        return $this->hasMany('\App\ExitInterviewInventarisMobil', 'exit_interview_id', 'id');
+    }
+
+    /**
+     * [atasan description]
+     * @return [type] [description]
+     */
+    public function atasan()
+    {
+        return $this->hasOne('\App\User', 'id', 'approved_atasan)id');
+    }
 }

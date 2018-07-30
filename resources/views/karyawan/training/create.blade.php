@@ -687,7 +687,7 @@
                 {
                     response(data);
                 }
-            })
+            });
         },
         select: function( event, ui ) {
             $("input[name='pesawat_rute_ke']").val(ui.item.id)

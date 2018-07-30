@@ -17,7 +17,6 @@
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Form Position</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Position</li>
@@ -46,50 +45,6 @@
                         {{ csrf_field() }}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-12">Directorate</label>
-                                <div class="col-md-10">
-                                   <select class="form-control" name="directorate_id">
-                                        <option value=""> Pilih Directorate</option>
-                                        @foreach($directorate as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Division</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="division_id">
-                                        <option value=""> Pilih Division</option>
-                                        @foreach($division as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Department</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="department_id">
-                                        <option value=""> Pilih Department</option>
-                                        @foreach($department as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Section / Unit</label>
-                                <div class="col-md-10">
-                                    <select class="form-control" name="unit_id">
-                                        <option value=""> Pilih Department</option>
-                                        @foreach($unit as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-md-12">Name Position</label>
                                 <div class="col-md-10">
                                     <input type="text" name="name" class="form-control form-control-line" value="{{ old('name')}}">
@@ -97,7 +52,7 @@
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <a href="{{ route('administrator.department.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                        <a href="{{ route('administrator.position.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                         <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Simpan Data</button>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>

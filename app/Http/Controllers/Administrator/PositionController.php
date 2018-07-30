@@ -24,7 +24,7 @@ class PositionController extends Controller
      */
     public function index()
     {
-        $params['data'] = \App\OrganisasiPosition::orderBy('id', 'DESC')->get();
+        $params['data'] = \App\OrganisasiPosition::orderBy('id', 'DESC')->groupBy('name')->get();
 
         return view('administrator.position.index')->with($params);
     }
@@ -35,12 +35,7 @@ class PositionController extends Controller
      */
     public function create()
     {   
-        $params['directorate']  = \App\OrganisasiDirectorate::all();
-        $params['division']     = \App\OrganisasiDivision::all();
-        $params['department']   = \App\OrganisasiDepartment::all();
-        $params['unit']   = \App\OrganisasiUnit::all();
-
-        return view('administrator.position.create')->with($params);
+        return view('administrator.position.create');
     }
 
     /**
@@ -50,10 +45,6 @@ class PositionController extends Controller
      */
     public function edit($id)
     {
-        $params['directorate']  = \App\OrganisasiDirectorate::all();
-        $params['division']     = \App\OrganisasiDivision::all();
-        $params['department']   = \App\OrganisasiDepartment::all();
-        $params['unit']         = \App\OrganisasiUnit::all();
         $params['data']         = \App\OrganisasiPosition::where('id', $id)->first();
 
         return view('administrator.position.edit')->with($params);
@@ -67,10 +58,6 @@ class PositionController extends Controller
     public function update(Request $request, $id)
     {
         $data       = \App\OrganisasiPosition::where('id', $id)->first();
-        $data->directorate_id           = $request->directorate_id; 
-        $data->division_id              = $request->division_id;
-        $data->department_id            = $request->department_id;
-        $data->organisasi_unit_id       = $request->unit_id;
         $data->name                     = $request->name;
         $data->save();
 
@@ -98,10 +85,7 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         $data       = new \App\OrganisasiPosition();
-        $data->organisasi_division_id       = $request->division_id;
-        $data->organisasi_department_id     = $request->department_id;
-        $data->organisasi_unit_id           = $request->unit_id;
-        $data->name                         = $request->name;
+        $data->name     = $request->name;
         $data->save();
 
         return redirect()->route('administrator.position.index')->with('message-success', 'Data berhasil disimpan !');

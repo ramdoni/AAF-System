@@ -373,7 +373,7 @@ class AjaxController extends Controller
     {
         if($request->ajax())
         {
-            $data = \App\ExitInterview::where('id', $request->foreign_id)->first();
+            $data = \App\ExitInterview::where('id', $request->id)->first();
 
             $atasan = \App\User::where('id', $data->approved_atasan_id)->first();
             
@@ -1016,7 +1016,24 @@ class AjaxController extends Controller
     {
         if($request->ajax())
         {
-            $data = Department::where('division_id', $request->id)->get();
+            $data = \App\OrganisasiDepartment::where('organisasi_division_id', $request->id)->get();
+        
+            return response()->json(['message'=> 'success', 'data' => $data]);
+        }
+
+        return response()->json($this->respon);
+    }
+
+    /**
+     * [getPositionBySection description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getPositionBySection(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = \App\OrganisasiPosition::where('organisasi_division_id', $request->organisasi_division_id)->where('organisasi_department_id', $request->organisasi_department_id)->where('organisasi_unit_id', $request->id)->get();
         
             return response()->json(['message'=> 'success', 'data' => $data]);
         }
@@ -1033,7 +1050,7 @@ class AjaxController extends Controller
     {
         if($request->ajax())
         {
-            $data = Section::where('department_id', $request->id)->get();
+            $data = \App\OrganisasiUnit::where('organisasi_department_id', $request->id)->get();
         
             return response()->json(['message'=> 'success', 'data' => $data]);
         }

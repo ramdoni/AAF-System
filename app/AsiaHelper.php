@@ -735,9 +735,9 @@ function get_organisasi_position_group()
 function get_organisasi_position($unit_id = "")
 {
 	if($unit_id != "")
-		return \App\OrganisasiPosition::where('organisasi_unit_id', $unit_id)->get();
+		return \App\OrganisasiPosition::where('organisasi_unit_id', $unit_id)->orderBy('name', 'ASC')->get();
 	else
-		return \App\OrganisasiPosition::all();
+		return \App\OrganisasiPosition::orderBy('name', 'ASC')->get();
 
 }
 /**
@@ -759,7 +759,7 @@ function get_organisasi_unit($department_id = "")
  */
 function get_organisasi_department($division_id = 0)
 {
-	if(!empty($division_id))
+	if(empty($division_id))
 		return \App\OrganisasiDepartment::orderBy('name', 'ASC')->get();
 	else
 		return \App\OrganisasiDepartment::where('organisasi_division_id', $division_id)->orderBy('name', 'ASC')->get();

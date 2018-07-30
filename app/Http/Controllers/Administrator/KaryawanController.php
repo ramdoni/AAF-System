@@ -260,6 +260,8 @@ class KaryawanController extends Controller
                 {
                     $user = new \App\UserTemp();
 
+                    if(empty($item[2])) continue;
+
                     /**
                      * FIND USER
                      *
@@ -269,7 +271,6 @@ class KaryawanController extends Controller
                     {
                         $user->user_id = $find_user->id;
                     }
-
 
                     $user->absensi_number   = $item[0];
                     $user->employee_number  = $item[1];
@@ -295,16 +296,19 @@ class KaryawanController extends Controller
                     $user->npwp_number      = $item[11];
                     $user->no_bpjs_kesehatan= $item[12];
                     $user->place_of_birth   = strtoupper($item[13]);
-                    $user->date_of_birth    = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[14]);
+                    $user->date_of_birth    = !empty($item[14]) ?  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[14]) : '';
                     $user->id_address       = strtoupper($item[15]);
                     
-                    // find city
-                    $kota = \App\Kabupaten::where('nama', 'LIKE', '%' . $item[16] .'%')->first();
-                    
-                    if(isset($kota))
-                        $user->id_city          = $kota->id_kab;
-                    else
-                        $user->id_city          = $item[16];
+                    if(!empty($item[16]))
+                    {
+                        // find city
+                        $kota = \App\Kabupaten::where('nama', 'LIKE', '%' . $item[16] .'%')->first();
+                        
+                        if(isset($kota))
+                            $user->id_city          = $kota->id_kab;
+                        else
+                            $user->id_city          = $item[16];
+                    }
 
                     $user->id_zip_code      = $item[17];
                     $user->current_address  = strtoupper($item[18]);
@@ -328,10 +332,10 @@ class KaryawanController extends Controller
                     {
                         if(!empty($item[29]))
                         {
-                            $dir = new \App\OrganisasiDirectorate();
-                            $dir->name = $item[29];
-                            $dir->save();
-                            $user->directorate_id     = $dir->id;    
+                            // $dir = new \App\OrganisasiDirectorate();
+                            // $dir->name = $item[29];
+                            // $dir->save();
+                            // $user->directorate_id     = $dir->id;    
                         }
                     }
 
@@ -343,12 +347,12 @@ class KaryawanController extends Controller
                         {
                             $user->organisasi_division= $organisasi_division->id;
                         }else{
-                            $organisasi_division = new \App\OrganisasiDivision();
-                            $organisasi_division->name = $item[30];
-                            $organisasi_division->organisasi_directorate_id = isset($dir->id) ? $dir->id  : 0;
-                            $organisasi_division->save();
+                            // $organisasi_division = new \App\OrganisasiDivision();
+                            // $organisasi_division->name = $item[30];
+                            // $organisasi_division->organisasi_directorate_id = isset($dir->id) ? $dir->id  : 0;
+                            // $organisasi_division->save();
 
-                            $user->organisasi_division= $organisasi_division->id;
+                            // $user->organisasi_division= $organisasi_division->id;
                         } 
                     } 
 
@@ -357,55 +361,58 @@ class KaryawanController extends Controller
                         $item[31] = str_replace('(', '', $item[31]);
                         $item[31] = str_replace(')', '', $item[31]);
 
-                        # find Department
-                        $organisasi_department = \App\OrganisasiDepartment::where('name', $item[31])->where('organisasi_division_id', $organisasi_division->id)->first();
-                        if($organisasi_department)
+                        if($organisasi_division)
                         {
-                            $user->organisasi_department= $organisasi_department->id;
-                        }else{
-                            $organisasi_department                          = new \App\OrganisasiDepartment();
-                            $organisasi_department->organisasi_division_id  = $organisasi_division->id;
-                            $organisasi_department->name                      = $item[31];
-                            $organisasi_department->save();
+                            # find Department
+                            $organisasi_department = \App\OrganisasiDepartment::where('name', $item[31])->where('organisasi_division_id', $organisasi_division->id)->first();
+                            if($organisasi_department)
+                            {
+                                $user->organisasi_department= $organisasi_department->id;
+                            }else{
+                                // $organisasi_department                          = new \App\OrganisasiDepartment();
+                                // $organisasi_department->organisasi_division_id  = $organisasi_division->id;
+                                // $organisasi_department->name                      = $item[31];
+                                // $organisasi_department->save();
 
-                            $user->organisasi_department = $organisasi_department->id;
+                                // $user->organisasi_department = $organisasi_department->id;
+                            }
                         }
                     }
 
                     if(!empty($item[32]))
                     {
-                        # find Unit
-                        $organisasi_unit = \App\OrganisasiUnit::where('name', $item[32])->where('organisasi_division_id', $organisasi_division->id)->where('organisasi_department_id', $organisasi_department->id)->first();
-                        if($organisasi_unit)
+                        if($organisasi_division and $organisasi_department)
                         {
-                            $user->organisasi_unit= $organisasi_unit->id;
-                        }else{
-                            $organisasi_unit                          = new \App\OrganisasiUnit();
-                            $organisasi_unit->organisasi_division_id  = $organisasi_division->id;
-                            $organisasi_unit->organisasi_department_id= $organisasi_department->id;
-                            $organisasi_unit->name                    = $item[32];
-                            $organisasi_unit->save();
+                            # find Unit
+                            $organisasi_unit = \App\OrganisasiUnit::where('name', $item[32])->where('organisasi_division_id', $organisasi_division->id)->where('organisasi_department_id', $organisasi_department->id)->first();
+                            if($organisasi_unit)
+                            {
+                                $user->organisasi_unit= $organisasi_unit->id;
+                            }else{
+                                // $organisasi_unit                          = new \App\OrganisasiUnit();
+                                // $organisasi_unit->organisasi_division_id  = $organisasi_division->id;
+                                // $organisasi_unit->organisasi_department_id= $organisasi_department->id;
+                                // $organisasi_unit->name                    = $item[32];
+                                // $organisasi_unit->save();
 
-                            $user->organisasi_unit= $organisasi_unit->id;
+                                // $user->organisasi_unit = $organisasi_unit->id;
+                            }
                         }
                     }
 
                     if(!empty($item[33]))
                     {
                         # find Position
-                        $organisasi_position = \App\OrganisasiPosition::where('name', $item[33])->where('organisasi_division_id', $organisasi_division->id)->where('organisasi_department_id', $organisasi_department->id)->where('organisasi_unit_id', $organisasi_unit->id )->first();
+                        $organisasi_position = \App\OrganisasiPosition::where('name', 'LIKE', '%'. $item[33] .'%')->first();
                         if($organisasi_position)
                         {
                             $user->organisasi_position = $organisasi_position->id;
                         }else{
-                            $organisasi_position                          = new \App\OrganisasiPosition();
-                            $organisasi_position->organisasi_division_id  = $organisasi_division->id;
-                            $organisasi_position->organisasi_department_id= $organisasi_department->id;
-                            $organisasi_position->organisasi_unit_id= $organisasi_unit->id;
-                            $organisasi_position->name                    = $item[33];
-                            $organisasi_position->save();
+                            // $organisasi_position                            = new \App\OrganisasiPosition();
+                            // $organisasi_position->name                      = $item[33];
+                            // $organisasi_position->save();
 
-                            $user->organisasi_position= $organisasi_position->id;
+                            // $user->organisasi_position= $organisasi_position->id;
                         }
                     }
 
@@ -430,11 +437,11 @@ class KaryawanController extends Controller
                     }
                     else
                     {
-                        $cabang = new \App\Cabang();
-                        $cabang->name = $cabang_string;
-                        $cabang->save();
+                        // $cabang = new \App\Cabang();
+                        // $cabang->name = $cabang_string;
+                        // $cabang->save();
 
-                        $user->organisasi_branch    = $cabang->id;
+                        // $user->organisasi_branch    = $cabang->id;
                     }
         
                     $user->organisasi_ho_or_branch= $item[36];
@@ -626,7 +633,7 @@ class KaryawanController extends Controller
                     $family->nama               = strtoupper($item[151]);
                     $family->gender             = $item[152];
                     $family->tempat_lahir       = strtoupper($item[153]);
-                    $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[154]);
+                    $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[154]) : null;
                     $family->pekerjaan          = strtoupper($item[155]);
                     $family->note               = strtoupper($item[156]);
                     $family->save();
@@ -640,7 +647,7 @@ class KaryawanController extends Controller
                         $family->nama               = strtoupper($item[158]);
                         $family->gender             = $item[159];
                         $family->tempat_lahir       = strtoupper($item[160]);
-                        $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[161]);
+                        $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[161]) : null;
                         $family->pekerjaan          = strtoupper($item[162]);
                         $family->note               = strtoupper($item[163]);
                         $family->save();
@@ -655,7 +662,7 @@ class KaryawanController extends Controller
                         $family->nama               = strtoupper($item[165]);
                         $family->gender             = $item[166];
                         $family->tempat_lahir       = strtoupper($item[167]);
-                        $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[168]);
+                        $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[168]) : null;
                         $family->pekerjaan          = strtoupper($item[169]);
                         $family->note               = strtoupper($item[170]);
                         $family->save();
@@ -670,7 +677,7 @@ class KaryawanController extends Controller
                         $family->nama               = strtoupper($item[172]);
                         $family->gender             = $item[173];
                         $family->tempat_lahir       = strtoupper($item[174]);
-                        $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[175]);
+                        $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[175]) : null;
                         $family->pekerjaan          = strtoupper($item[176]);
                         $family->note               = strtoupper($item[177]);
                         $family->save();
@@ -685,7 +692,7 @@ class KaryawanController extends Controller
                         $family->nama               = strtoupper($item[179]);
                         $family->gender             = $item[180];
                         $family->tempat_lahir       = strtoupper($item[181]);
-                        $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[182]);
+                        $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[182]) : null;
                         $family->pekerjaan          = strtoupper($item[183]);
                         $family->note               = strtoupper($item[184]);
                         $family->save();
@@ -700,7 +707,7 @@ class KaryawanController extends Controller
                         $family->nama               = strtoupper($item[186]);
                         $family->gender             = $item[187];
                         $family->tempat_lahir       = strtoupper($item[188]);
-                        $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[189]);
+                        $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[189]) : null;
                         $family->pekerjaan          = strtoupper($item[190]);
                         $family->note               = strtoupper($item[191]);
                         $family->save();
@@ -715,7 +722,7 @@ class KaryawanController extends Controller
                         $family->nama               = strtoupper($item[193]);
                         $family->gender             = $item[194];
                         $family->tempat_lahir       = strtoupper($item[195]);
-                        $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[196]);
+                        $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[196]) : null;
                         $family->pekerjaan          = strtoupper($item[197]);
                         $family->note               = strtoupper($item[198]);
                         $family->save();
@@ -730,7 +737,7 @@ class KaryawanController extends Controller
                         $family->nama               = strtoupper($item[200]);
                         $family->gender             = $item[201];
                         $family->tempat_lahir       = strtoupper($item[202]);
-                        $family->tanggal_lahir      = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[203]);
+                        $family->tanggal_lahir      = !empty($item[154]) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($item[203]) : null;
                         $family->pekerjaan          = strtoupper($item[204]);
                         $family->note               = strtoupper($item[205]);
                         $family->save();

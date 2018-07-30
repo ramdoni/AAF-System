@@ -585,9 +585,9 @@
              $.ajax({
                 type: 'POST',
                 url: '{{ route('ajax.get-history-approval-exit') }}',
-                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
+                data: {'id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
-                success: function (data) {
+                success: function (data) { 
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
@@ -595,7 +595,7 @@
                                                 (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
                                                 '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
-                                                    '<div class="desc">'+ data.data.date_approved_atasan +'<p>'+ data.data.catatan_atasan +'</p></div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_atasan !== null ? '<p>'+ data.data.catatan_atasan +'</p>' : '')  +'</div>'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>'+

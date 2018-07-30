@@ -206,6 +206,7 @@
                                     <label class="col-md-12">Position</label>
                                     <div class="col-md-6">
                                         <select class="form-control" name="organisasi_position">
+                                            <option value="">Pilih Position</option>
                                            @foreach(get_organisasi_position() as $item)
                                             <option>{{ $item->name }}</option>
                                             @endforeach
@@ -1109,7 +1110,6 @@
                 }
             });
         });
-
     </script>
 @endsection
 
