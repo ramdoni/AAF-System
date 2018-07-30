@@ -89,7 +89,7 @@
                                                     <label class="col-md-12">INVENTORY RETURN TO HRD</label>
                                                 </th>
                                             </tr>
-                                            <tbody> 
+                                            <tbody>
                                                 @foreach($list_exit_clearance_inventory_to_hrd as $no => $item)
                                                 <tr>
                                                     <td>{{ $no + 1 }}</td>
@@ -138,13 +138,88 @@
                                             </tbody>
                                             <tr>
                                                 <th colspan="5">
-                                                    <label class="col-md-12">INVENTORY RETURN TO IT</label>
+                                                    <label class="col-md-12">INVENTORY RETURN</label>
                                                 </th>
                                             </tr>
                                             <tbody>
+
+                                            @if($data->inventaris_mobil)
+                                             <tr>
+                                                <td>12</td>
+                                                <td colspan="4">
+                                                    <p><strong>Mobil</strong></p>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Tipe Mobil</th>
+                                                            <th>Tahun</th>
+                                                            <th>No Polisi</th>
+                                                            <th colspan="3">Status Mobil</th>
+                                                        </tr>
+                                                        @foreach($data->inventaris_mobil as $item)
+                                                        <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
+                                                        <tr> 
+                                                            <td>{{ $item->inventaris->tipe_mobil }}</td>
+                                                            <td>{{ $item->inventaris->tahun }}</td>
+                                                            <td>{{ $item->inventaris->no_polisi }}</td>
+                                                            <td>{{ $item->inventaris->status_mobil }}</td>
+                                                            <td style="text-align: center;">
+                                                                @if($item->status == 1)
+                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
+                                                                @else
+                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                 @if($item->status == 1)
+                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            @endif
+
+                                            @if($data->inventaris)
+                                            <tr>
+                                                <td>13</td>
+                                                <td colspan="4">
+                                                    <p><strong>Laptop/PC & Other IT Device</strong></p>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <th>Jenis Inventaris</th>
+                                                            <th colspan="3">Keterangan</th>
+                                                        </tr>
+                                                        @foreach($data->inventaris as $item)
+                                                        <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
+                                                        <tr>
+                                                            <td>{{ $item->inventaris->jenis }}</td>
+                                                            <td>{{ $item->inventaris->description }}</td>
+                                                            <td style="text-align: center;">
+                                                                @if($item->status == 1)
+                                                                    <label class="bt btn-success btn-xs"><i class="fa fa-check"></i> </label>
+                                                                @else
+                                                                    <label class="bt btn-danger btn-xs"><i class="fa fa-close"></i> </label>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                 @if($item->status == 1)
+                                                                    <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            @endif
+
                                             @foreach($list_exit_clearance_inventory_to_it as $item)
                                                 
-                                                @if($item->name == 'Mobil')
+                                              <!--   @if($item->name == 'Mobil')
                                                 <tr>
                                                     <td>12</td>
                                                     <td colspan="2">Mobil</td>
@@ -172,7 +247,7 @@
                                                     <td></td>
                                                 </tr>
                                                 @endif
-
+ -->
                                                 @if($item->name == 'Password PC/Laptop')
                                                 <tr>
                                                     <td>14</td>
@@ -282,7 +357,7 @@
                                         <div class="col-md-12">
                                             <div class="col-md-12">
                                                 <a href="{{ route('karyawan.approval.exit-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
-                                                @if($data->is_approved_atasan == "")
+                                                @if($data->is_approved_atasan === NULL)
                                                     <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve Pengajuan</a>
                                                     <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Tolak Pengajuan</a>
                                                 @endif

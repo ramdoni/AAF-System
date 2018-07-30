@@ -185,9 +185,9 @@
                                     <div class="col-md-6">
                                         <select class="form-control" name="department_id">
                                             <option value="">Pilih Department</option>
-                                            @foreach(get_organisasi_department() as $item)
+                                           <!--  @foreach(get_organisasi_department() as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
+                                            @endforeach -->
                                         </select> 
                                     </div>
                                 </div>
@@ -196,9 +196,9 @@
                                     <div class="col-md-6">
                                         <select class="form-control" name="section_id">
                                             <option value="">Pilih Section</option>
-                                            @foreach(get_organisasi_unit() as $item)
+                                            <!-- @foreach(get_organisasi_unit() as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
+                                            @endforeach -->
                                         </select> 
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@
                                         <select class="form-control" name="organisasi_position">
                                             <option value="">Pilih Position</option>
                                            @foreach(get_organisasi_position() as $item)
-                                            <option>{{ $item->name }}</option>
+                                            <option value="{{ $item->id }}" >{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

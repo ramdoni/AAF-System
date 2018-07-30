@@ -125,12 +125,12 @@
                                             </tbody>
                                             <tr>
                                                 <th colspan="5">
-                                                    <label class="col-md-12">INVENTORY RETURN TO IT</label>
+                                                    <label class="col-md-12">INVENTORY RETURN</label>
                                                 </th>
                                             </tr>
                                             <tbody>
-                                                @if($data->inventaris_mobil)
-                                            <tr>
+                                            @if($data->inventaris_mobil)
+                                             <tr>
                                                 <td>12</td>
                                                 <td colspan="4">
                                                     <p><strong>Mobil</strong></p>

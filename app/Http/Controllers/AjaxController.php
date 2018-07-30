@@ -375,13 +375,9 @@ class AjaxController extends Controller
         {
             $data = \App\ExitInterview::where('id', $request->id)->first();
 
-            $atasan = \App\User::where('id', $data->approved_atasan_id)->first();
-            
-            $data->atasan = "";
-
-            if(isset($atasan))
+            if(isset($data->atasan))
             {
-                $data->atasan = $atasan->name .' / '. $atasan->organisasiposition->name;
+                $data->nama_atasan = $data->atasan->name .' / '. $data->atasan->organisasiposition->name;
             }
 
 

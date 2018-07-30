@@ -53,7 +53,6 @@
                                     <label class="col-md-12">DOCUMENT LIST/DAFTAR DOKUMEN</label>
                                     <div class="col-md-12">
                                         <table class="table table-bordered">
-                                           
                                             <tr>
                                                 <th colspan="5">
                                                     <label class="col-md-12">INVENTORY RETURN TO HRD</label>
@@ -115,15 +114,14 @@
                                         <table  class="table table-bordered">
                                             <tr>
                                                 <th>Kerugian Perusahaan</th>
-                                                <th style="width: 20"><input type="checkbox" name="kerugian" value="1" /></th>
-                                                <th><input type="number" name="" class="form-control"></th>
+                                                <th style="width: 20"><input type="checkbox" name="kerugian_perusahaan_check" value="1" /></th>
+                                                <th><input type="number" name="kerugian_perusahaan_note" class="form-control"></th>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    <label class="col-md-12">INVENTORY RETURN TO IT</label>
+                                    <label class="col-md-12">INVENTORY RETURN</label>
                                     <div class="col-md-12">
                                         <table class="table table-bordered">
                                             <thead>
@@ -135,28 +133,92 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
+
+                                                @if($data->inventaris_mobil)
                                                 <tr>
                                                     <td>12</td>
+                                                    <td colspan="4">
+                                                        <p><strong>Mobil</strong></p>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th>Tipe Mobil</th>
+                                                                <th>Tahun</th>
+                                                                <th>No Polisi</th>
+                                                                <th colspan="3">Status Mobil</th>
+                                                            </tr>
+                                                            @foreach($data->inventaris_mobil as $item)
+                                                            <input type="hidden" name="inventaris_mobil[]" value="{{ $item->id }}" />
+                                                            <tr> 
+                                                                <td>{{ $item->inventaris->tipe_mobil }}</td>
+                                                                <td>{{ $item->inventaris->tahun }}</td>
+                                                                <td>{{ $item->inventaris->no_polisi }}</td>
+                                                                <td>{{ $item->inventaris->status_mobil }}</td>
+                                                                <td style="text-align: center;">
+                                                                    <input type="checkbox" name="check_inventaris_mobil[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="catatan_inventaris_mobil[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                     @if($item->status == 1)
+                                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                @endif
+
+                                                @if($data->inventaris)
+                                                <tr>
+                                                    <td>13</td>
+                                                    <td colspan="4">
+                                                        <p><strong>Laptop/PC & Other IT Device</strong></p>
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th>Jenis Inventaris</th>
+                                                                <th colspan="3">Keterangan</th>
+                                                            </tr>
+                                                            @foreach($data->inventaris as $item)
+                                                            <input type="hidden" name="inventaris[]" value="{{ $item->id }}" />
+                                                            <tr>
+                                                                <td>{{ $item->inventaris->jenis }}</td>
+                                                                <td>{{ $item->inventaris->description }}</td>
+                                                                <td style="text-align: center;">
+                                                                   <input type="checkbox" name="check_inventaris[{{ $item->id }}]" value="1" {{ $item->status == 1 ? 'checked' : '' }} />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="catatan_inventaris[{{ $item->id }}]" readonly="true" class="form-control catatan" value="{{ $item->catatan }}" />
+                                                                     @if($item->status == 1)
+                                                                        <small>Submit Date : {{ Carbon\Carbon::parse($item->updated_at)->format('d M Y H:i') }}</small>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                                <!-- <tr>
+                                                    <td>12</td>
                                                     <td>Laptop/PC & Other IT Device</td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         <input type="checkbox" name="" value="1" />
                                                     </td>
                                                     <td>
                                                         <input type="text" name="" readonly="true" class="form-control catatan" />
                                                     </td>
-                                                </tr>
-                                               
-                                                <tr>
-                                                    <td>13</td>
+                                                </tr> -->
+                                               <!--  <tr>
+                                                    <td>14</td>
                                                     <td>Other Inventory</td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         <input type="checkbox" name="check_inventory_it_mobil" value="1" />
                                                     </td>
                                                     <td>
                                                         <input type="text" name="check_inventory_it_mobil_catatan" readonly="true" class="form-control catatan" />
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>14</td>
                                                     <td>
@@ -165,7 +227,7 @@
                                                             <input type="text" name="inventory_it_email" class="form-control" placeholder="Email" readonly="true" value="{{ $data->inventory_it_email }}" />
                                                         </div>
                                                     </td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         <input type="checkbox" name="check_inventory_it_mobil" value="1" />
                                                     </td>
                                                     <td>
@@ -177,7 +239,7 @@
                                                     <td>
                                                         Arium
                                                     </td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         <input type="checkbox" name="" value="1" />
                                                     </td>
                                                     <td>
@@ -187,7 +249,7 @@
                                                 <tr>
                                                     <td>16</td>
                                                     <td>Handphone</td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         <input type="checkbox" name="" value="1" />
                                                     </td>
                                                     <td>
@@ -197,7 +259,7 @@
                                                 <tr>
                                                     <td>17</td>
                                                     <td>Model & Token</td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         <input type="checkbox" name="" value="1" />
                                                     </td>
                                                     <td>
@@ -207,7 +269,7 @@
                                                 <tr>
                                                     <td>18</td>
                                                     <td>SIM Card</td>
-                                                    <td>
+                                                    <td style="text-align: center;">
                                                         <input type="checkbox" name="" value="1" />
                                                     </td>
                                                     <td>

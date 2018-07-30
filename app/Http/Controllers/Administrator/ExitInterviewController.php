@@ -117,7 +117,32 @@ class ExitInterviewController extends Controller
                 }
             }
 
+            $exit->kerugian_perusahaan_check    = $request->kerugian_perusahaan_check;
+            $exit->kerugian_perusahaan_note     = $request->kerugian_perusahaan_note;
+
             $exit->save();
+        }
+
+        if(isset($request->inventaris_mobil))
+        {
+            foreach($request->inventaris_mobil as $item)
+            {
+                $inventaris_mobil = \App\ExitInterviewInventarisMobil::where('id', $item)->first();
+                $inventaris_mobil->status = $request->check_inventaris_mobil[$item];
+                $inventaris_mobil->catatan = $request->catatan_inventaris_mobil[$item];
+                $inventaris_mobil->save();
+            }
+        }
+
+        if(isset($request->inventaris))
+        {
+            foreach($request->inventaris as $item)
+            {
+                $inventaris_mobil = \App\ExitInterviewInventaris::where('id', $item)->first();
+                $inventaris_mobil->status = $request->check_inventaris[$item];
+                $inventaris_mobil->catatan = $request->catatan_inventaris[$item];
+                $inventaris_mobil->save();
+            }
         }
 
         return redirect()->route('administrator.exit-interview.index')->with('message-success', 'Form Exit Exit Interview & Exit Clearance Berhasil di update');

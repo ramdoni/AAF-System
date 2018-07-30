@@ -353,9 +353,25 @@
                         {
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.approved_hrd == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.approved_hrd == 1)
+                                            {
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+
+                                            if(data.data.approved_hrd == 0)
+                                            {
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+
+                                            if(data.data.approved_hrd === null)
+                                            {
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+
+
+                                            el +='<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                     '<div class="desc">'+ (data.data.approved_hrd == 1 ? '<small>'+ data.data.approved_hrd_date +'</small>' : '')  +'</div>'+
                                                 '</div>'+
@@ -365,9 +381,21 @@
 
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.approved_finance == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.approved_finance == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+
+                                            if(data.data.approved_finance == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+
+                                            if(data.data.approved_finance === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+                                                
+                                            el +='<div class="sl-right">'+
                                                     '<div><a href="#">FINANCE</a> </div>'+
                                                     '<div class="desc">'+ (data.data.approved_finance == 1 ? '<small>'+ data.data.approved_finance_date +'</small>' : '')  +'</div>'+
                                                 '</div>'+
@@ -396,9 +424,22 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_proposal_approved == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.is_proposal_approved == 1){
+                                            el +='<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                        }
+
+                                        if(data.data.is_proposal_approved == 0){
+                                            el +='<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                        }
+                                        
+                                        if(data.data.is_proposal_approved === null){
+                                            el +='<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        }
+                                        
+
+                                        el += '<div class="sl-right">'+
                                                     '<div><a href="#">Proposal Approval</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -407,9 +448,22 @@
 
                          el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_proposal_verification_approved == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.is_proposal_verification_approved == 1){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                        }
+
+                                        if(data.data.is_proposal_verification_approved == 0){
+                                            el += '<div class="sl-left bg-warning"> <i class="fa fa-close"></i></div>';
+                                        }
+
+                                        if(data.data.is_proposal_verification_approved === null){
+                                            el += '<div class="sl-left bg-danger"> <i class="fa fa-info"></i></div>';
+                                        }
+
+                                                
+                                        el += '<div class="sl-right">'+
                                                     '<div><a href="#">Proposal Verification</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -418,9 +472,21 @@
 
                          el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_payment_approved == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.is_payment_approved == 1){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>'; 
+                                        }
+
+                                        if(data.data.is_payment_approved == 0){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>'; 
+                                        }
+                                        
+                                        if(data.data.is_payment_approved === null){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>'; 
+                                        }
+                                        
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">Payment Approval</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -446,9 +512,13 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                if(data.data.is_approved_atasan == 1){
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+                                            
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
                                                     '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : ''  ) +'<p>'+ (data.data.catatan_atasan !=null ? data.data.catatan_atasan : '' ) +'</p></div>'+
                                                 '</div>'+
@@ -527,6 +597,46 @@
 
             $("#modal_history_approval").modal('show');
         }
+
+
+        function status_exit_interview(id)
+        {
+             $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-history-approval-exit') }}',
+                data: {'id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) { 
+
+                    var el = '<div class="panel-body">'+
+                                        '<div class="steamline">'+
+                                            '<div class="sl-item">'+
+                                                (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
+                                                '<div class="sl-right">'+
+                                                    '<div><a href="#">'+ data.data.nama_atasan +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_atasan !== null ? '<p>'+ data.data.catatan_atasan +'</p>' : '')  +'</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+
+                            el += '<div class="panel-body">'+
+                                        '<div class="steamline">'+
+                                            '<div class="sl-item">'+
+                                                (data.data.is_approved_hrd == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
+                                                '<div class="sl-right">'+
+                                                    '<div><a href="#">HRD</a> </div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+
+                    $("#modal_content_status_exit").html(el);
+                }
+            });
+
+            $("#modal_status_exit").modal('show');
+        }
     </script>
 
 
@@ -579,45 +689,6 @@
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
     <script type="text/javascript">
-        
-        function status_exit_interview(id)
-        {
-             $.ajax({
-                type: 'POST',
-                url: '{{ route('ajax.get-history-approval-exit') }}',
-                data: {'id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
-                dataType: 'json',
-                success: function (data) { 
-
-                    var el = '<div class="panel-body">'+
-                                        '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
-                                                    '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
-                                                    '<div class="desc">'+ (data.data.date_approved_atasan !== null ? '<p>'+ data.data.catatan_atasan +'</p>' : '')  +'</div>'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                    '</div>';
-
-                            el += '<div class="panel-body">'+
-                                        '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_hrd == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
-                                                    '<div><a href="#">HRD</a> </div>'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                    '</div>';
-
-                    $("#modal_content_status_exit").html(el);
-                }
-            });
-
-            $("#modal_status_exit").modal('show');
-        }
 
         $(".myadmin-alert .closed").click(function(event) {
             $(this).parents(".myadmin-alert").fadeToggle(350);

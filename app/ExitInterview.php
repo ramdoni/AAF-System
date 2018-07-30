@@ -50,6 +50,6 @@ class ExitInterview extends Model
      */
     public function atasan()
     {
-        return $this->hasOne('\App\User', 'id', 'approved_atasan)id');
+        return $this->hasOne('\App\User', 'id', 'approved_atasan_id');
     }
 }

@@ -158,7 +158,7 @@
             $.ajax({
                 type: 'POST',
                 url: '{{ route('ajax.get-history-approval-exit') }}',
-                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
+                data: {'id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
                 success: function (data) {
 
@@ -179,7 +179,7 @@
                                 }
 
                                 el +='<div class="sl-right">'+
-                                                    '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                                    '<div><a href="#">'+ data.data.nama_atasan +'</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>'+
