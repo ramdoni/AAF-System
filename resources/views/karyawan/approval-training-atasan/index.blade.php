@@ -37,7 +37,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIK / NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NAMA</th>
                                     <th>DEPARTMENT / POSITION</th>
                                     <th>JENIS KEGIATAN</th>
                                     <th>TOPIK KEGIATAN</th>
@@ -50,10 +51,12 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                 @if(isset($item->user->nik))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>  
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
-                                        <td>{{ $item->user->department->name .' / '. $item->user->organisasiposition->name }}</td> 
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
+                                        <td>{{ (isset($item->user->department->name) ? $item->user->department->name : '') .' / '. $item->user->organisasiposition->name }}</td> 
                                         <td>{{ $item->jenis_training }}</td>
                                         <td>{{ $item->topik_kegiatan }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_kegiatan_start)) }} - {{ date('d F Y', strtotime($item->tanggal_kegiatan_end)) }}</td>
@@ -111,8 +114,8 @@
                                             @endif
                                         </td>
                                     </tr>
+                                 @endif
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>

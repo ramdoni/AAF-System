@@ -49,11 +49,12 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                 @if(isset($item->user->nik))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>   
                                         <td>{{ $item->user->nik }}</td>
                                         <td>{{ $item->user->name }}</td>
-                                        <td>{{ $item->user->department->name .' / '. $item->user->organisasiposition->name }}</td> 
+                                        <td>{{ (isset($item->user->department->name) ? $item->user->department->name : '')  .' / '. (isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name : '') }}</td> 
                                         <td>{{ $item->resign_date }}</td>
                                         <td>
                                             @if($item->exit_interview_reason == "")
@@ -80,6 +81,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                  @endif
                                 @endforeach
                             </tbody>
                         </table>

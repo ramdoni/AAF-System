@@ -438,7 +438,7 @@
                                 </div>
 
                                 <div class="col-md-12" style="padding-left: 0;">
-                                    <a href="{{ route('administrator.training.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
+                                    <a href="{{ route('karyawan.training.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                                     <button type="submit" class="btn btn-sm btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Submit Kegiatan</button>
                                     <p>* Jika tidak menggunakan Pesawat silahkan langsung klik tombol submit </p>
                                     <br style="clear: both;" />

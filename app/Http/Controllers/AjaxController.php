@@ -351,11 +351,10 @@ class AjaxController extends Controller
             
             $data->atasan = "";
 
-            if(isset($atasan))
+            if(isset($atasan->name))
             {
-                $data->atasan = $atasan->name .' / '. $atasan->organisasiposition->name;
+                $data->atasan = $atasan->name .' / '. (isset($atasan->organisasiposition->name) ? $atasan->organisasiposition->name : '');
             }
-
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }

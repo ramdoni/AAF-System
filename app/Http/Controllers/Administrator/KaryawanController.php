@@ -403,7 +403,7 @@ class KaryawanController extends Controller
                     if(!empty($item[33]))
                     {
                         # find Position
-                        $organisasi_position = \App\OrganisasiPosition::where('name', 'LIKE', '%'. $item[33] .'%')->first();
+                        $organisasi_position = \App\OrganisasiPosition::where('name', $item[33])->first();
                         if($organisasi_position)
                         {
                             $user->organisasi_position = $organisasi_position->id;

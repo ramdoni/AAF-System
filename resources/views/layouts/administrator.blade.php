@@ -309,7 +309,7 @@
                             }
                             if(data.data.is_approved_atasan === null)
                             {
-                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                             }
 
                                             el += '<div class="sl-right">'+
@@ -320,7 +320,7 @@
                                         '</div>'+
                                     '</div>';
 
-                        if(data.data.pengambilan_uang_muka == "")
+                        if(data.data.pengambilan_uang_muka === null)
                         {
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
@@ -552,7 +552,7 @@
                                     }
 
                                         
-                                        el + '<div class="sl-right">'+
+                                        el += '<div class="sl-right">'+
                                                     '<div><a href="#">Personalia</a> </div>'+
                                                 '</div>'+
                                             '</div>'+

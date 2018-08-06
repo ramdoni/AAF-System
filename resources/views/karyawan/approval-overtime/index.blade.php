@@ -36,7 +36,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>KARYAWAN</th>
+                                    <th>NIK</th>
+                                    <th>NAME</th>
                                     <th>DEPARTMENT / POSITION</th>
                                     <th>TANGGAL OVERTIME</th>
                                     <th>STATUS</th>
@@ -45,10 +46,12 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                 @if(isset($item->user->name))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td> 
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>   
-                                        <td>{{ $item->user->department->name .' / '. $item->user->organisasiposition->name }}</td> 
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>   
+                                        <td>{{ (isset($item->user->department->name) ? $item->user->department->name : '')  .' / '. (isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name : '') }}</td> 
                                         <td>{{ date('d F Y', strtotime($item->created_at))}}</td>                                                   
                                         <td>
                                             <a onclick="status_approval_overtime({{ $item->id }})"> 
@@ -122,6 +125,7 @@
                                             </a>
                                         </td>
                                     </tr>
+                                 @endif
                                 @endforeach
                             </tbody>
                         </table>

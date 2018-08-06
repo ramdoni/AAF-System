@@ -54,12 +54,13 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                 @if(isset($item->user->nik))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td> 
                                         <td>{{ $item->user->nik }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->user->nama_jabatan }}</td>
-                                        <td>{{ $item->user->department->name }}</td>
+                                        <td>{{ isset($item->user->department->name) ? $item->user->department->name : '' }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_pengajuan)) }}</td>
                                         <td>
                                             <a onclick="status_approval_medical({{ $item->id }})"> 
@@ -70,6 +71,7 @@
                                             <a href="{{ route('karyawan.medical.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
                                         </td>
                                     </tr>
+                                 @endif
                                 @endforeach
                             </tbody>
                         </table>

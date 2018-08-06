@@ -431,7 +431,7 @@
                 star_date2 = new Date(star_date2.setDate(star_date2.getDate() + 1)); //date increase by 1
             }
 
-            $('.total_hari_cuti').html(  (calcBusinessDays(star_date, end_date) - total_libur ) +" Kerja" ); 
+            $('.total_hari_cuti').html(  (calcBusinessDays(star_date, end_date) - total_libur ) +" Hari" ); 
             $("input[name='total_cuti']").val((calcBusinessDays(star_date, end_date) - total_libur ));  
         } 
     }

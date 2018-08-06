@@ -188,9 +188,22 @@
                         
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approve_hrd_actual_bill == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                if(data.data.is_approve_hrd_actual_bill == 1){
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+
+                                if(data.data.is_approve_hrd_actual_bill == 0){
+                                    el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                }
+                                
+                                if(data.data.is_approve_hrd_actual_bill === null){
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                }
+                                
+                                               
+                                        el += '<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -199,9 +212,20 @@
 
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approve_finance_actual_bill == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.is_approve_finance_actual_bill == 1){
+                                            el +='<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                        }
+
+                                        if(data.data.is_approve_finance_actual_bill == 0){
+                                            el +='<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                        }
+
+                                        if(data.data.is_approve_finance_actual_bill === null){
+                                            el +='<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        }
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">FINANCE</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -227,9 +251,20 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approve_atasan_actual_bill == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_approve_atasan_actual_bill == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+
+                                            if(data.data.is_approve_atasan_actual_bill == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approve_atasan_actual_bill === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -240,9 +275,19 @@
                         {
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approve_hrd_actual_bill == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.is_approve_hrd_actual_bill == 1){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                        }
+                                        if(data.data.is_approve_hrd_actual_bill == 0){
+                                            el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                        }
+                                        if(data.data.is_approve_hrd_actual_bill === null){
+                                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        }
+                                                
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -253,9 +298,19 @@
                         {
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approve_hrd_actual_bill == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_approve_hrd_actual_bill == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approve_hrd_actual_bill == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approve_hrd_actual_bill === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -264,9 +319,19 @@
 
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approve_finance_actual_bill == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_approve_finance_actual_bill == 1){
+                                                el +='<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approve_finance_actual_bill == 0){
+                                                el +='<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approve_finance_actual_bill ===null){
+                                                el +='<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+                                                
+                                                el += '<div class="sl-right">'+
                                                     '<div><a href="#">FINANCE</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -292,9 +357,19 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.is_approved_atasan == 1){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                        }
+                                        if(data.data.is_approved_atasan == 0){
+                                            el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                        }
+                                        if(data.data.is_approved_atasan === null){
+                                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        }
+
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
                                                     '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                                 '</div>'+
@@ -302,13 +377,23 @@
                                         '</div>'+
                                     '</div>';
 
-                        if(data.data.pengambilan_uang_muka == null)
+                        if(data.data.pengambilan_uang_muka === null)
                         {
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.approved_hrd == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.approved_hrd == 1){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                        }
+                                        if(data.data.approved_hrd == 0){
+                                            el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                        }
+                                        if(data.data.approved_hrd === null){
+                                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        }
+                                               
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                     '<div class="desc">'+ (data.data.approved_hrd == 1 ? '<small>'+ data.data.approved_hrd_date +'</small>' : '')  +'</div>'+
                                                 '</div>'+
@@ -320,9 +405,19 @@
                         {
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.approved_hrd == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.approved_hrd == 1){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';   
+                                        }
+                                        if(data.data.approved_hrd == 0){
+                                            el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';   
+                                        }
+                                        if(data.data.approved_hrd === null){
+                                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';   
+                                        }
+
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                     '<div class="desc">'+ (data.data.approved_hrd == 1 ? '<small>'+ data.data.approved_hrd_date +'</small>' : '')  +'</div>'+
                                                 '</div>'+
@@ -332,9 +427,19 @@
 
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.approved_finance == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.approved_finance == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.approved_finance == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.approved_finance === null){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-info"></i></div>';
+                                            }
+                                            
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">FINANCE</a> </div>'+
                                                     '<div class="desc">'+ (data.data.approved_finance == 1 ? '<small>'+ data.data.approved_finance_date +'</small>' : '')  +'</div>'+
                                                 '</div>'+
@@ -361,9 +466,19 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_proposal_approved == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                        if(data.data.is_proposal_approved == 1){
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                        }
+                                        if(data.data.is_proposal_approved == 0){
+                                            el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                        }
+                                        if(data.data.is_proposal_approved === null){
+                                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                        }
+                                            
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">Proposal Approval</a></div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -372,9 +487,19 @@
 
                          el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_proposal_verification_approved == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_proposal_verification_approved == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_proposal_verification_approved == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_proposal_verification_approved === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+
+                                                el += '<div class="sl-right">'+
                                                     '<div><a href="#">Proposal Verification</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -383,9 +508,19 @@
 
                          el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_payment_approved == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_payment_approved == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_payment_approved == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_payment_approved === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+
+                                            el +='<div class="sl-right">'+
                                                     '<div><a href="#">Payment Approval</a> </div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -410,9 +545,19 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_approved_atasan == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
                                                     '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                                 '</div>'+
@@ -422,9 +567,19 @@
 
                     el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
-                                    '<div class="sl-item">'+
-                                        (data.data.is_hr_benefit_approved == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                        '<div class="sl-right">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_hr_benefit_approved == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_hr_benefit_approved == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_hr_benefit_approved === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
                                             '<div><a href="#">HR BENEFIT</a> </div>'+
                                         '</div>'+
                                     '</div>'+
@@ -434,9 +589,19 @@
 
                     el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
-                                    '<div class="sl-item">'+
-                                        (data.data.is_hr_manager == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                        '<div class="sl-right">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_hr_manager == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_hr_manager == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_hr_manager === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
                                             '<div><a href="#">SR. MANAGER HR OPR </a> </div>'+
                                         '</div>'+
                                     '</div>'+
@@ -461,9 +626,19 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_approved_atasan == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+
+                                            el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
                                                     '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                                 '</div>'+
@@ -473,9 +648,19 @@
 
                     el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
-                                    '<div class="sl-item">'+
-                                        (data.data.is_approved_hr_benefit == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                        '<div class="sl-right">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_approved_hr_benefit == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_approved_hr_benefit == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_approved_hr_benefit === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
                                             '<div><a href="#">HR BENEFIT</a> </div>'+
                                         '</div>'+
                                     '</div>'+
@@ -485,9 +670,19 @@
 
                     el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
-                                    '<div class="sl-item">'+
-                                        (data.data.is_approved_manager_hr == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                        '<div class="sl-right">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_approved_manager_hr == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_approved_manager_hr == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_approved_manager_hr === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
                                             '<div><a href="#">MANAGER HR OPR </a> </div>'+
                                         '</div>'+
                                     '</div>'+
@@ -496,14 +691,90 @@
 
                     el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
-                                    '<div class="sl-item">'+
-                                        (data.data.is_approved_gm_hr == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                        '<div class="sl-right">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_approved_gm_hr == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_approved_gm_hr == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_approved_gm_hr === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
                                             '<div><a href="#">GM HR </a> </div>'+
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
+
+                    $("#modal_content_history_approval").html(el);
+                }
+            });
+
+            $("#modal_history_approval").modal('show');
+        }
+
+        function detail_approval_cuti(id)
+        {
+             $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-history-approval-cuti') }}',
+                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) {
+
+                    var el = '<div class="panel-body">'+
+                                        '<div class="steamline">'+
+                                            '<div class="sl-item">';
+
+                                if(data.data.is_approved_atasan == 1){
+                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                }
+
+                                if(data.data.is_approved_atasan == 0){
+                                    el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                }
+                                
+                                if(data.data.is_approved_atasan === null){
+                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                }
+                                
+                                            
+                                            el += '<div class="sl-right">'+
+                                                    '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
+                                                    '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : ''  ) +'<p>'+ (data.data.catatan_atasan !=null ? data.data.catatan_atasan : '' ) +'</p></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+
+                        el += '<div class="panel-body">'+
+                                        '<div class="steamline">'+
+                                            '<div class="sl-item">';
+
+                                    if(data.data.is_approved_personalia == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+
+                                    if(data.data.is_approved_personalia == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+
+                                    if(data.data.is_approved_personalia === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                        
+                                        el += '<div class="sl-right">'+
+                                                    '<div><a href="#">Personalia</a> </div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>';
+
 
                     $("#modal_content_history_approval").html(el);
                 }

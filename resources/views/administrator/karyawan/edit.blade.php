@@ -263,11 +263,9 @@
                                     <label class="col-md-12">Position</label>
                                     <div class="col-md-6">
                                         <select class="form-control" name="organisasi_position">
-                                            @if(isset($data->organisasiposition->name))
-                                                @foreach(get_organisasi_position() as $item)
-                                                <option value="{{ $item->id }}" {{ $item->id == $data->organisasi_position ? 'selected' : '' }}>{{ $item->name }}</option>
-                                                @endforeach
-                                            @endif
+                                            @foreach(get_organisasi_position() as $item)
+                                            <option value="{{ $item->id }}" {{ $item->id == $data->organisasi_position ? 'selected' : '' }}>{{ $item->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

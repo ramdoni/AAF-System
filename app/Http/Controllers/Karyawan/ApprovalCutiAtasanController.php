@@ -40,6 +40,12 @@ class ApprovalCutiAtasanController extends Controller
         $cuti->is_approved_atasan       = $request->status;
         $cuti->catatan_atasan           = $request->noted;
         $cuti->date_approved_atasan     = date('Y-m-d H:i:s');
+
+        if($request->status == 0)
+        {
+            $cuti->status =3 ; // reject
+        }
+
         $cuti->save();
 
         return redirect()->route('karyawan.approval.cuti-atasan.index')->with('messages-success', 'Form Cuti Berhasil diproses !');

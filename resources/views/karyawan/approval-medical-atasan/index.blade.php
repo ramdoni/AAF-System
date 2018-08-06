@@ -39,7 +39,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
-                                    <th>NIK / NAME</th>
+                                    <th>NIK</th>
+                                    <th>NAME</th>
                                     <th>JABATAN</th>
                                     <th>DEPARTMENT</th>
                                     <th>TANGGAL PENGAJUAN</th>
@@ -49,15 +50,17 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $no => $item)
+                                 @if(isset($item->user->nik))
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>
-                                        <td><a onclick="bootbox.alert('<p>Nama : <b>{{ $item->user->name }}</b></p><p>NIK : <b>{{ $item->user->nik }}<b></p>');">{{ $item->user->name }}</a></td>
+                                        <td>{{ $item->user->nik }}</td>
+                                        <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->user->organisasi_job_role }}</td>
-                                        <td>{{ $item->user->department->name }}</td>
+                                        <td>{{ isset($item->user->department->name) ? $item->user->department->name : '' }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_pengajuan)) }}</td>
                                         <td>
                                             <a onclick="status_approval_medical({{ $item->id }})"> 
-                                            @if(!cek_status_approval_user(Auth::user()->id, 'medical', $item->id))
+                                            @if(!cek_status_approval_user(Auth::user()->id, 'medical', $item->id))s
                                                 <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                             @else 
                                                 <label class="btn btn-success btn-xs">Approved</label>
@@ -72,6 +75,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                 @endif
                                 @endforeach
                             </tbody>
                         </table>

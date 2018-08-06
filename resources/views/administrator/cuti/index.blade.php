@@ -62,7 +62,7 @@
                                             <td>{{ $item->keperluan }}</td>
                                             <td>
                                                 <a onclick="detail_approval_cuti('cuti', {{ $item->id }})"> 
-                                                    @if($item->is_approved_atasan == "")
+                                                    @if($item->is_approved_atasan === NULL)
                                                         <label class="btn btn-default btn-xs">Waiting Approval Atasan</label>
                                                     @else
                                                         @if($item->is_approved_personalia == "" and $item->is_approved_atasan == 1 and $item->status != 4)

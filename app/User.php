@@ -60,7 +60,7 @@ class User extends Authenticatable
      */
     public function section()
     {
-        return $this->hasOne('App\OrganisasiSection', 'id', 'section_id');
+        return $this->hasOne('App\OrganisasiUnit', 'id', 'section_id');
     }
 
     /**

@@ -110,9 +110,19 @@
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_atasan == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_approved_atasan == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+                                               
+                                                el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
                                                     '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                                 '</div>'+
@@ -122,9 +132,18 @@
 
                         el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
-                                            '<div class="sl-item">'+
-                                                (data.data.is_approved_personalia == 1 ? '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>' : '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>' )+
-                                                '<div class="sl-right">'+
+                                            '<div class="sl-item">';
+
+                                            if(data.data.is_approved_personalia == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approved_personalia == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approved_personalia === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
+                                                el += '<div class="sl-right">'+
                                                     '<div><a href="#">Personalia</a> </div>'+
                                                     '<div class="desc"></div>'+
                                                 '</div>'+

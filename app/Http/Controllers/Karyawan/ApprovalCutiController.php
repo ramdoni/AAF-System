@@ -95,7 +95,7 @@ class ApprovalCutiController extends Controller
         //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
 
         $cuti->status = $status;
-        $cuti->is_approved_personalia = 1;
+        $cuti->is_approved_personalia = $request->status;
         $cuti->is_personalia_id = \Auth::user()->id;
         $cuti->save();
 

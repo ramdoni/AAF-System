@@ -253,15 +253,15 @@
                 <i class="mdi mdi-account-check fa-fw"></i> <span class="hide-menu">Management Approval (Superior)<span class="fa arrow"></span></span>
             </a>
 
-                @if(cek_cuti_approval_user(\Auth::user()->id) > 0 ||  cek_overtime_approval_user_count(\Auth::user()->id) > 0 || count_medical_approval_atasan('null') > 0 || count_exit_approval_user(\Auth::user()->id) > 0 || count_training_approval_atasan('null') > 0)    
+                @if(cek_cuti_approval_user(\Auth::user()->id, 'null') > 0 ||  cek_overtime_approval_user_count(\Auth::user()->id) > 0 || count_medical_approval_atasan('null') > 0 || count_exit_approval_user(\Auth::user()->id) > 0 || count_training_approval_atasan('null') > 0)    
                     <div class="notify" style="position: absolute;top: 61px;right: 10px;"> <span class="heartbit"></span> <span class="point"></span> </div>
                 @endif
 
             <ul class="nav nav-second-level">
-                @if(cek_cuti_approval_user(\Auth::user()->id) > 0)
+                @if(cek_cuti_approval_user(\Auth::user()->id, 'null') > 0)
                 <li style="position: relative;">
                     <a href="{{ route('karyawan.approval.cuti-atasan.index') }}"><i class="ti-check-box fa-fw"></i><span class="hide-menu">Cuti / Ijin</span> 
-                        <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{cek_cuti_approval_user(\Auth::user()->id)}}</label>
+                        <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{cek_cuti_approval_user(\Auth::user()->id, 'null')}}</label>
                     </a>
                 </li>
                 @endif

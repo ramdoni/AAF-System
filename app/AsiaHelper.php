@@ -334,9 +334,17 @@ function count_medical_approval_atasan($type ='all')
  * @param  [type] $user_id [description]
  * @return [type]          [description]
  */
-function cek_cuti_approval_user($user_id)
+function cek_cuti_approval_user($user_id, $status='all')
 {
-	return \App\CutiKaryawan::where('approved_atasan_id', $user_id)->count();
+	if($status == 'all')
+	{
+		return \App\CutiKaryawan::where('approved_atasan_id', $user_id)->count();
+	}
+
+	if($status == 'null')
+	{
+		return \App\CutiKaryawan::where('approved_atasan_id', $user_id)->whereNull('is_approved_atasan')->count();
+	}
 }
 
 /**

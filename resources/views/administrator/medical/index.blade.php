@@ -56,7 +56,7 @@
                                         <td>{{ $item->user->nik }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->user->organisasi_job_role }}</td>
-                                        <td>{{ $item->user->department->name }}</td>
+                                        <td>{{ (isset($item->user->department->name) ? $item->user->department->name : '') }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_pengajuan)) }}</td>
                                         <td>{!! status_medical($item->status) !!}</td>
                                         <td>

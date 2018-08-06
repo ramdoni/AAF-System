@@ -114,24 +114,24 @@
                                     <input type="text" readonly="true" value="{{ $data->backup_karyawan->name }}" class="form-control">
                                 </div>
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-md-6">Jabatan</label>
                                 <label class="col-md-6">Division / Departement</label>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control" value="{{ $data->backup_karyawan->organisasiposition->name }}">
+                                    <input type="text" readonly="true" class="form-control" value="{{ isset($data->backup_karyawan->organisasiposition->name) ? $data->backup_karyawan->organisasiposition->name : '' }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control" value="{{ $data->backup_karyawan->department->name }}">
+                                    <input type="text" readonly="true" class="form-control" value="{{ isset($data->backup_karyawan->department->name) ? $data->backup_karyawan->department->name : '' }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-6">No Handphone</label>
                                 <label class="col-md-6">Email</label>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control no_handphone" value="{{ $data->backup_karyawan->telepon }}">
+                                    <input type="text" readonly="true" class="form-control no_handphone" value="{{ isset($data->backup_karyawan->telepon) ? $data->backup_karyawan->telepon : '' }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control email" value="{{ $data->backup_karyawan->email }}">
+                                    <input type="text" readonly="true" class="form-control email" value="{{ isset($data->backup_karyawan->email) ? $data->backup_karyawan->email : '' }}">
                                 </div>
                             </div>
                         </div>
