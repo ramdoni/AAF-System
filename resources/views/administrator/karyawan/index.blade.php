@@ -51,6 +51,7 @@
                                     <th>DEPARTEMENT</th>
                                     <th>POSITION</th>
                                     <th>JOB RULE</th>
+                                    <th>STATUS LOGIN</th>
                                     <th>MANAGE</th>
                                 </tr>
                             </thead>
@@ -66,14 +67,24 @@
                                         <td>{{ isset($item->department->name) ? $item->department->name : '' }}</td>
                                         <td>{{ isset($item->position->name) ? $item->position->name : '' }}</td>
                                         <td>{{ $item->organisasi_job_role }}</td>
-
+                                        <td>
+                                            <a onclick="status_karyawan('{{ $item->name .' - '. $item->nik }}',  {{ $item->id }}, {{ $item->status }})"> 
+                                            @if($item->status == 1)
+                                                <label class="btn btn-success btn-xs"><i class="fa fa-check"></i> Active</label>
+                                            @else
+                                                <label class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Inactive</label>
+                                            @endif
+                                            </a>
+                                        </td>
                                         <td>
                                             <a href="{{ route('administrator.karyawan.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
-                                            <form action="{{ route('administrator.karyawan.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
+                                           <!--  <form action="{{ route('administrator.karyawan.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}                                               
                                                 <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i> delete</button>
-                                            </form>
+                                            </form> -->
+                                            <div class="clearfix"></div>
+                                            <a class="btn btn-default btn-xs" onclick="change_password('{{ $item->name .' - '. $item->nik }}', {{ $item->id }})"><i class="fa fa-key"></i> Change Password </a><br />
                                             <a href="{{ route('administrator.karyawan.print-profile', $item->id) }}" target="_blank" class="btn btn-default btn-xs"><i class="fa fa-print"></i> print</a>
                                         </td>
                                     </tr>
@@ -123,8 +134,103 @@
     <!-- /.modal-dialog -->
 </div>
 
+<!-- modal content education  -->
+<div id="modal_status_karyawan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title nama_karyawan">Status Karyawan</h4> </div>
+                    <form method="POST" id="form-status-karyawan" class="form-horizontal frm-modal-education" action="{{ route('administrator.karyawan.change-status-karyawan') }}">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-md-3">Status</label>
+                            <div class="col-md-9">
+                                <select class="form-control" name="status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" />
+                    </div>
+                    <div class="modal-footer"> 
+                        <button type="button" class="btn btn-default waves-effect btn-sm" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-info btn-sm">Change Status</button>
+                    </div>
+                </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- modal content education  -->
+<div id="modal_change_password" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title nama_karyawan">Change Password Karyawan</h4> </div>
+                    <form method="POST" id="form-changen-password-karyawan" class="form-horizontal frm-modal-education" action="{{ route('administrator.karyawan.change-password-karyawan') }}">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-md-3">Password</label>
+                            <div class="col-md-9">
+                              <input type="password" name="password" class="form-control modal-input-change-password" />
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-md-3">Confirm Password</label>
+                            <div class="col-md-9">
+                              <input type="password" name="confirm" class="form-control modal-input-change-confirm" />
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" />
+                    </div>
+                    <div class="modal-footer"> 
+                        <button type="button" class="btn btn-default waves-effect btn-sm" data-dismiss="modal">Cancel</button>
+                        <label class="btn btn-info btn-sm" id="submit_change_password_karyawan">Change Password</label>
+                    </div>
+                </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 @section('footer-script')
 <script type="text/javascript">
+    
+    $("#submit_change_password_karyawan").click(function(){
+
+        var password    = $('.modal-input-change-password').val();
+        var confirm     = $('.modal-input-change-confirm').val();
+
+        if(password == confirm)
+        {
+            $("#form-changen-password-karyawan").submit();            
+        }
+        else
+        {
+            alert('Konfirmasi password tidak sama !');
+        }
+    });
+    
+    var change_password = function(name, id){
+        $("#modal_change_password input[name='id']").val(id);
+        $("#modal_change_password").modal("show");
+    }
+
+    var status_karyawan = function(name, id, status){
+        $("#modal_status_karyawan").modal("show");
+        $("#modal_status_karyawan input[name='id']").val(id);
+        $("#modal_status_karyawan select[name='status']").val(status);
+        $("#modal_status_karyawan .nama_karyawan").html(name);
+    }
+
     $("#btn_import").click(function(){
 
         $("#form-upload").submit();

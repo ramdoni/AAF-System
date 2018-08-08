@@ -70,21 +70,15 @@ class KaryawanController extends Controller
 
             $cekuser = \App\User::where('nik', $item->nik)->first();
             
-            if($cekuser) {
+            if($cekuser)
+            {
                 $user  = $cekuser;
-                //$cekuser->delete();
-                // delete all data user
-                //\App\UserCuti::where('user_id', $cekuser->id)->delete();
-                //\App\UserEducation::where('user_id', $cekuser->id)->delete();
-                //\App\UserFamily::where('user_id', $cekuser->id)->delete();
-                //\App\UserInventaris::where('user_id', $cekuser->id)->delete();
-                //\App\UserInventarisMobil::where('user_id', $cekuser->id)->delete();
             }
             else
             {
                 $user               = new \App\User();
                 $user->nik          = $item->nik;
-                $user->password         = bcrypt('password'); // set default password
+                $user->password     = bcrypt('password'); // set default password
             }
 
             $user->name             = empty($item->name) ? $user->name : $item->name;
@@ -874,6 +868,7 @@ class KaryawanController extends Controller
         $data->branch_staff_id      = $request->branch_staff_id;
         $data->branch_head_id       = $request->branch_head_id;
         $data->blood_type           = $request->blood_type; 
+        $data->status               = $request->status;
         
         if ($request->hasFile('foto'))
         {
@@ -1024,6 +1019,7 @@ class KaryawanController extends Controller
         $data->mobile_2             = $request->mobile_2;
         $data->id_address           = $request->id_address;
         $data->id_city              = $request->id_city;
+        $data->status               = $request->status;
 
         if (request()->hasFile('foto'))
         {
@@ -1212,5 +1208,42 @@ class KaryawanController extends Controller
         $data->delete();
 
         return redirect()->route('administrator.karyawan.edit', $id)->with('message-success', 'Data Educatuin Berhasil dihapus !');
+    }
+
+    /**
+     * [changePasswordKaryawan description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function changeStatusKaryawan(Request $request)
+    {
+        $user = \App\User::where('id', $request->id)->first();
+
+        if($user)
+        {
+            $user->status = $request->status;
+            $user->save();
+
+            return redirect()->route('administrator.karyawan.index')->with('message-success', 'Status Karyawan Berhasil dirubah !');
+        }
+    }
+
+    /**
+     * [changePasswordKaryawan description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function changePasswordKaryawan(Request $request)
+    {
+        $user = \App\User::where('id', $request->id)->first();
+
+        if($user)
+        {
+            $user->password             = bcrypt($request->password);
+            $user->last_change_password = date('Y-m-d H:i:s');
+            $user->save();
+
+            return redirect()->route('administrator.karyawan.index')->with('message-success', 'Password Karyawan Berhasil dirubah !');
+        }
     }
 }

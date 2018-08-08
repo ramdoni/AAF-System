@@ -231,37 +231,37 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Name</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="name" style="text-transform: uppercase"  class="form-control form-control-line" value="{{ old('name')}}"> </div>
+                                        <input type="text" name="name" style="text-transform: uppercase"  class="form-control" value="{{ old('name')}}"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Employee Number</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="employee_number" class="form-control form-control-line" value="{{ old('employee_number')}}"> </div>
+                                        <input type="text" name="employee_number" class="form-control" value="{{ old('employee_number')}}"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Absensi Number</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="absensi_number" class="form-control form-control-line" value="{{ old('employee_number')}}"> </div>
+                                        <input type="text" name="absensi_number" class="form-control" value="{{ old('employee_number')}}"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">NIK</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="nik" value="{{ old('nik')}}" class="form-control form-control-line"> </div>
+                                        <input type="text" name="nik" value="{{ old('nik')}}" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">LDAP</label>
                                     <div class="col-md-10">
-                                        <input type="number" name="ldap" value="{{ old('ldap')}}" class="form-control form-control-line"> </div>
+                                        <input type="number" name="ldap" value="{{ old('ldap')}}" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Place of Birth</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir')}}" class="form-control form-control-line"> </div>
+                                        <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir')}}" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Date of Birth</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="tanggal_lahir" value="{{ old('tanggal_lahir')}}" class="form-control form-control-line datepicker"> </div>
+                                        <input type="text" name="tanggal_lahir" value="{{ old('tanggal_lahir')}}" class="form-control datepicker"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Marital Status</label>
@@ -283,12 +283,12 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Blood Type</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control form-control-line" name="blood_type"> </div>
+                                        <input type="text" class="form-control" name="blood_type"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Email</label>
                                     <div class="col-md-10">
-                                        <input type="email" value="{{ old('email') }}" class="form-control form-control-line" name="email" id="example-email"> </div>
+                                        <input type="email" value="{{ old('email') }}" class="form-control" name="email" id="example-email"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Password</label>
@@ -309,14 +309,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Employee Status</label>
-                                    <div class="col-md-10">
+                                    <label class="col-md-6">Employee Status</label>
+                                    <label class="col-md-6">Status Login</label>
+                                    <div class="col-md-6">
                                         <select class="form-control" name="organisasi_status">
                                             <option value="">- selectd - </option>
                                             @foreach(['Permanent', 'Contract'] as $item)
                                             <option {{ old('organisasi_status') == $item ? 'selected' : '' }}>{{ $item }}</option>
                                             @endforeach
                                         </select> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control">
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
                                     </div>
                                 </div>
                                 
@@ -356,17 +363,17 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Telepon</label>
                                     <div class="col-md-12">
-                                        <input type="number" value="{{ old('telepon') }}" name="telepon" class="form-control form-control-line"> </div>
+                                        <input type="number" value="{{ old('telepon') }}" name="telepon" class="form-control"> </div>
                                 </div>
                                  <div class="form-group">
                                     <label class="col-md-12">Mobile 1</label>
                                     <div class="col-md-12">
-                                        <input type="number" name="mobile_1" value="{{ old('mobile_1') }}"  value="" class="form-control form-control-line"> </div>
+                                        <input type="number" name="mobile_1" value="{{ old('mobile_1') }}"  value="" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Mobile 2</label>
                                     <div class="col-md-12">
-                                        <input type="number" name="mobile_2" value="{{ old('mobile_2') }}" class="form-control form-control-line"> </div>
+                                        <input type="number" name="mobile_2" value="{{ old('mobile_2') }}" class="form-control"> </div>
                                 </div>
                                <div class="form-group">
                                     <label class="col-md-12">Religion</label>

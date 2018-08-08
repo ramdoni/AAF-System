@@ -11,25 +11,21 @@
     <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 20px">
       <tbody>
         <tr>
-          <td style="vertical-align: top; padding-bottom:30px;">
-            <a href="#" target="_blank" style="text-decoration: none;color: #484848;"><img src="http://www.arthaasiafinance.co.id/images/logo.png" alt="Admin Responsive web app kit" style="border:none; width: 270px; "><br/>
-            <h2 style="margin-top: 5px; padding-top: 5px;">PT. Arthaasia Finance</h2>
+          <td style="vertical-align: top; padding-bottom:10px;">
+            <a href="#" target="_blank" style="text-decoration: none;color: #484848;"><img src="http://www.arthaasiafinance.co.id/images/logo.png" alt="PT. Arthaasia Finance" style="border:none; width: 150px; ">
             </a>
           </td>
         </tr>
       </tbody>
     </table>
     <div style="padding: 40px; background: #fff;">
-        
         {!! $data->content !!}
-
-              <p>Email ini terkirim otomatis oleh sistem anda tidak bisa membalas pesan ini, silahkan login ke akun anda untuk info lebih lanjut</p>
-             <br />
-              <b>Thanks,<br /> PT. Arthaasia Finance</b>
+        <p><i>Email ini terkirim otomatis oleh sistem anda tidak bisa membalas pesan ini, silahkan login ke akun anda untuk info lebih lanjut</i></p>
+        <br />
+        <b>Thanks,<br /> PT. Arthaasia Finance</b>
     </div>
     <div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px">
-      <p> PT. Arthaasia Finance System <br>
-        <a href="#" style="color: #b2b2b5; text-decoration: underline;">Unsubscribe</a> </p>
+      <p> PT. Arthaasia Finance System <br></p>
     </div>
   </div>
 </div>

@@ -495,6 +495,23 @@ function get_atasan_langsung()
 								->get();
 			}
 
+			/**
+			 * Jika sebagai pic cabang maka role approval sama dengan Branch Manager
+			 * 
+			 */
+			if($user->is_pic_cabang == 1)
+			{
+				$karyawan = \App\User::join('organisasi_position', 'organisasi_position.id', '=', 'users.organisasi_position')
+								//->where('users.division_id', $user->division_id)
+								->where('users.id', '<>', $user->id)
+								->where(function($query){
+									$query->where('organisasi_position.name', 'LIKE', '%General Manager%')
+											->orWhere('organisasi_position.name', 'LIKE', '%Area Manager%');
+								})
+								->select('users.*', 'organisasi_position.name as job_rule')
+								->get();
+			}
+
 			// jika yang mengajukan Branch Manager
 			if($user->organisasiposition->name  == 'Head' and $user->organisasi_job_role == 'Manager Outlet')
 			{

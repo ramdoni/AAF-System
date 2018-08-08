@@ -66,12 +66,8 @@
                                         <td>
                                             {{ $item->nik }}<br />
                                             <a class="btn btn-info btn-xs" onclick="slide_toogle(this)"><i class="fa fa-info"></i> detail</a>
-                                            <a href="{{ route('administrator.karyawan.delete-temp', $item->id) }}" onclick="return confirm('Hapus data ini ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> hapus </a>
-
                                             @if(!empty($item->user_id))
                                             <a href="{{ route('administrator.karyawan.edit', $item->user_id) }}" target="_blank" class="btn btn-warning btn-xs"><i class="fa fa-info"></i> view data yang sama </a>
-                                            <a href="{{ route('administrator.karyawan.delete-old-user', $item->user_id) }}" onclick="return confirm('Hapus data yang lama ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> hapus data yang lama </a>
-
                                             @endif
                                         </td>
                                         <td>{{ $item->name }}</td>

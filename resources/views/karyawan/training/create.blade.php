@@ -409,8 +409,6 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <!-- <a class="btn btn-info btn-xs" id="table_tambah_penumpang"><i class="fa fa-plus"></i> Tambah Penumpang</a> -->
-
                                     </div>
                                 </div>
                                 <div class="form-group">

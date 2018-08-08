@@ -302,6 +302,6 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	Route::get('karyawan/delete-inventaris/{id}', $path.'KaryawanController@deleteInventaris')->name('administrator.karyawan.delete-inventaris');
 	Route::get('karyawan/delete-inventaris-mobil/{id}', $path.'KaryawanController@deleteInventarisMobil')->name('administrator.karyawan.delete-inventaris-mobil');
 	Route::get('karyawan/delete-inventaris-lainnya/{id}', $path.'KaryawanController@deleteInventarisLainnya')->name('administrator.karyawan.delete-inventaris-lainnya');
+	Route::post('karyawan/change-status-karyawan', $path .'KaryawanController@changeStatusKaryawan')->name('administrator.karyawan.change-status-karyawan');
+	Route::post('karyawan/change-password-karyawan', $path .'KaryawanController@changePasswordKaryawan')->name('administrator.karyawan.change-password-karyawan');
 });
-
-

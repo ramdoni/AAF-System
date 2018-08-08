@@ -287,42 +287,42 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Name</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="name" style="text-transform: uppercase" class="form-control form-control-line" value="{{ $data->name }}"> </div>
+                                        <input type="text" name="name" style="text-transform: uppercase" class="form-control" value="{{ $data->name }}"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Employee Number</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="employee_number" class="form-control form-control-line" value="{{ $data->employee_number }}"> </div>
+                                        <input type="text" name="employee_number" class="form-control" value="{{ $data->employee_number }}"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Absensi Number</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="absensi_number" class="form-control form-control-line" value="{{ $data->employee_number }}"> </div>
+                                        <input type="text" name="absensi_number" class="form-control" value="{{ $data->employee_number }}"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">NIK</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="nik" value="{{ $data->nik }}" class="form-control form-control-line"> </div>
+                                        <input type="text" name="nik" value="{{ $data->nik }}" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Ext</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="ext" value="{{ $data->ext }}" class="form-control form-control-line"> </div>
+                                        <input type="text" name="ext" value="{{ $data->ext }}" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">LDAP</label>
                                     <div class="col-md-10">
-                                        <input type="number" name="ldap" value="{{ $data->ldap }}" class="form-control form-control-line"> </div>
+                                        <input type="number" name="ldap" value="{{ $data->ldap }}" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Place of Birth</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="tempat_lahir" value="{{ $data->tempat_lahir }}" class="form-control form-control-line"> </div>
+                                        <input type="text" name="tempat_lahir" value="{{ $data->tempat_lahir }}" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Date of Birth</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="tanggal_lahir" value="{{ $data->tanggal_lahir }}" class="form-control form-control-line datepicker"> </div>
+                                        <input type="text" name="tanggal_lahir" value="{{ $data->tanggal_lahir }}" class="form-control datepicker"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Marital Status</label>
@@ -344,12 +344,12 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Blood Type</label>
                                     <div class="col-md-10">
-                                        <input type="text" class="form-control form-control-line" value="{{ $data->blood_type }}" name="blood_type"> </div>
+                                        <input type="text" class="form-control" value="{{ $data->blood_type }}" name="blood_type"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="example-email" class="col-md-12">Email</label>
                                     <div class="col-md-10">
-                                        <input type="email" value="{{ $data->email }}" class="form-control form-control-line" name="email" id="example-email"> </div>
+                                        <input type="email" value="{{ $data->email }}" class="form-control" name="email" id="example-email"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Password</label>
@@ -370,13 +370,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Employee Status</label>
-                                    <div class="col-md-10">
+                                    <label class="col-md-6">Employee Status</label>
+                                    <label class="col-md-6">Status Login</label>
+                                    <div class="col-md-6">
                                         <select class="form-control" name="organisasi_status">
                                             <option value="">- select - </option>
                                             @foreach(['Permanent', 'Contract'] as $item)
                                             <option {{ $data->organisasi_status == $item ? 'selected' : '' }}>{{ $item }}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control">
+                                            <option value="1" {{ $data->status == 1 ? 'selected' : '' }}>Active</option>
+                                            <option value="0" {{ $data->status == 0 ? 'selected' : '' }}>Inactive</option>
                                         </select>
                                     </div>
                                 </div>
@@ -385,17 +392,17 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Telepon</label>
                                     <div class="col-md-12">
-                                        <input type="number" value="{{ $data->telepon }}" name="telepon" class="form-control form-control-line"> </div>
+                                        <input type="number" value="{{ $data->telepon }}" name="telepon" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Mobile 1</label>
                                     <div class="col-md-12">
-                                        <input type="number" value="{{ $data->mobile_1 }}" name="telepon" class="form-control form-control-line"> </div>
+                                        <input type="number" value="{{ $data->mobile_1 }}" name="telepon" class="form-control"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Mobile 2</label>
                                     <div class="col-md-12">
-                                        <input type="number" value="{{ $data->mobile_2 }}" name="telepon" class="form-control form-control-line"> </div>
+                                        <input type="number" value="{{ $data->mobile_2 }}" name="telepon" class="form-control"> </div>
                                 </div>
                                <div class="form-group">
                                     <label class="col-md-12">Religion</label>
