@@ -1,6 +1,15 @@
 <?php
 
 /**
+ * [jenis_claim_medical description]
+ * @return [type] [description]
+ */
+function jenis_claim_medical()
+{
+	return ['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
+}
+
+/**
  * [count_approval_training description]
  * @param  string $status [description]
  * @return [type]         [description]

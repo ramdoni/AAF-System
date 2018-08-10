@@ -37,18 +37,18 @@ class CutiController extends Controller
      */
     public function create()
     {   
-        $params['atasan']   = \App\User::where('id', 2)->first();
-        $params['user']     = \App\User::where('id', 3)->first();
-        $params['cuti']     = \App\CutiKaryawan::where('id', 1)->first();
+        // $params['atasan']   = \App\User::where('id', 2)->first();
+        // $params['user']     = \App\User::where('id', 3)->first();
+        // $params['cuti']     = \App\CutiKaryawan::where('id', 1)->first();
 
-        $objDemo = new \stdClass();
-        $objDemo->content = view('email.cuti-approval')->with($params);
+        // $objDemo = new \stdClass();
+        // $objDemo->content = view('email.cuti-approval')->with($params);
 
-        $params['data'] = $objDemo;
+        // $params['data'] = $objDemo;
         
-        \Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
+        // \Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
 
-        return view('email.general')->with($params);
+        // return view('email.general')->with($params);
 
         $params['karyawan'] = User::where('access_id', 2)->get();
         $params['karyawan_backup'] = User::where('access_id', 2)->where('department_id', \Auth::user()->department_id)->get();

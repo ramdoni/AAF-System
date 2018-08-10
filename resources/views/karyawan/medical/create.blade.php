@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <label class="col-md-12">Tanggal Pengajuan</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control datepicker" name="tanggal_pengajuan" required />
+                                    <input type="text" class="form-control" readonly="true" name="tanggal_pengajuan" value="{{ date('Y-m-d') }}" required />
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -108,12 +108,13 @@
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
                                       <th>JUMLAH</th>
+                                      <th></th>
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
-                                <tr>
+                                <tr class="oninput">
                                     <td>1</td>
-                                    <td><input type="text" class="form-control datepicker" required name="tanggal_kwitansi[]" /></td>
+                                    <td><input type="text" class="form-control datepicker" required name="tanggal_kwitansi[]"  /></td>
                                     <td>
                                         <select name="user_family_id[]" class="form-control" onchange="select_hubungan(this)" required>
                                             <option value="">Pilih Hubungan</option>
@@ -127,7 +128,7 @@
                                     <td>
                                         <select name="jenis_klaim[]" class="form-control" required>
                                             <option value="">Pilih Jenis Klaim</option>
-                                            @foreach(['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)', 'Kacamata' => 'Kacamata'] as $k => $i)
+                                            @foreach(jenis_claim_medical() as $k => $i)
                                             <option value="{{ $k }}">{{ $i }}</option>
                                             @endforeach
                                         </select>
@@ -207,6 +208,10 @@
     @endforeach
 </script>
 <script type="text/javascript">
+    
+    show_hide_add();
+    cek_button_add();
+
     $(".autcomplete-atasan" ).autocomplete({
         source: list_atasan,
         minLength:0,
@@ -269,7 +274,7 @@
 
         var no = $('.table-claim tr').length;
 
-        var html =  '<tr>'+
+        var html =  '<tr class="oninput">'+
                         '<td>'+(no+1)+'</td>'+
                         '<td><input type="text" class="form-control datepicker" required name="tanggal_kwitansi[]" /></td>'+
                         '<td>'+
@@ -280,10 +285,10 @@
                         '<td><input type="text" readonly="true" class="form-control nama_hubungan" /></td>'+
                         '<td>'+
                             '<select name="jenis_klaim[]" class="form-control" required>'+
-                                '<option value="">Pilih Jenis Klaim</option>@foreach(['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)', 'Kacamata' => 'Kacamata'] as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
+                                '<option value="">Pilih Jenis Klaim</option>@foreach(jenis_claim_medical() as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
-                        '<td><input type="number" class="form-control" name="jumlah[]" required /></td></tr>';
+                        '<td><input type="number" class="form-control" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td></tr>';
 
         $('.table-claim').append(html);
 
@@ -291,10 +296,47 @@
             format: 'yyyy-mm-dd',
         });
 
+        cek_button_add();
+        show_hide_add();
     });
 
-</script>
+function show_hide_add()
+{   
+    $('.oninput input, .oninput select').each(function(){
+        
+        if($(this).val() == "")
+        {
+            $("#add").hide();
+        }
+        else
+        {
+            $("#add").show();
+        }
+    });
+}
 
+function cek_button_add()
+{
+    $('.oninput input').on('keyup',function()
+    {
+        show_hide_add()
+    });
+    $('.oninput select').on('change',function()
+    {
+        show_hide_add()
+    }); 
+}
+
+function hapus_item(el)
+{
+    if(confirm("Hapus item ?"))
+    {
+        $(el).parent().parent().remove(); 
+        cek_button_add()       
+    }
+}
+
+</script>
 
 @endsection
 <!-- ============================================================== -->

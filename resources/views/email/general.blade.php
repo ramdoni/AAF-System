@@ -12,7 +12,7 @@
       <tbody>
         <tr>
           <td style="vertical-align: top; padding-bottom:10px;">
-            <a href="#" target="_blank" style="text-decoration: none;color: #484848;"><img src="http://www.arthaasiafinance.co.id/images/logo.png" alt="PT. Arthaasia Finance" style="border:none; width: 150px; ">
+            <a href="#" target="_blank" style="text-decoration: none;color: #484848;"><img src="http://www.arthaasiafinance.co.id/images/logo.png" style="border:none; width: 150px; ">
             </a>
           </td>
         </tr>
