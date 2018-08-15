@@ -94,51 +94,34 @@ class ApprovalMedicalController extends Controller
                 $medical->gm_hr_date          = date('Y-m-d H:i:s');
             }
         }
-        $medical->save();
-
+        
         foreach($request->nominal_approve as $id => $val)
         {
             $list                   = \App\MedicalReimbursementForm::where('id', $id)->first();
-            $list->nominal_approve  = $val;
+            $list->nominal_approve  = str_replace(',', '', $val);
             $list->save();
         }
-        
+
         $skip_gm_hr = ['Staff', 'Head','Supervisor'];
+        $status = $request->status;
 
-        if(isset($data->user->organisasiposition->name))
+        if(isset($medical->user->organisasiposition->name))
         {
-            if(in_array($data->user->organisasiposition->name, $skip_gm_hr)){
+            // Dibawah Manager tidak perlu approval GM HR
+            if(in_array($medical->user->organisasiposition->name, $skip_gm_hr)){
 
-                $data->show_gm_hr = 'no';
+              if($medical->is_approved_hr_benefit ==1 and $medical->is_approved_manager_hr ==1)
+              {
+                  $medical->status = 2;
+              }
             }
-            else
+            else // Level Manager ke atas perlu approval GM HR
             {
-                $data->show_gm_hr = 'yes';
+              if($medical->is_approved_hr_benefit ==1 and $medical->is_approved_manager_hr ==1 and $medical->is_approved_gm_hr == 1)
+              {
+                  $medical->status = 2;
+              }
             }
-        }
-        else
-        {
-            $data->show_gm_hr = 'no';
-        }
-
-
-        if($medical->is_approved_hr_benefit ==1 and $medical->is_approved_manager_hr ==1 and $medical->is_approved_gm_hr == 1)
-        {
-            // cek semua approval
-            $status = \App\StatusApproval::where('jenis_form', 'medical')
-                                            ->where('foreign_id', $request->id)
-                                            ->where('status', 0)
-                                            ->count();
-            if($status >=1)
-            {
-                $status = 3;
-            }
-            else
-            {
-                $status = 2;
-            }
-
-            $medical->status = $status;
         }
 
         // Denied

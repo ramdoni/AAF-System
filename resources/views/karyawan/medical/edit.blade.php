@@ -110,12 +110,17 @@
                                       <th>HUBUNGAN</th>
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
+                                      <th>FILE BUKTI TRANSAKSI</th>
                                       <th>JUMLAH</th>
                                       <th>JUMLAH DISETUJUI</th>
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
+                                @php($total_pengajuan = 0)
+                                @php($total_approve = 0)
                                 @foreach($form as $key => $f)
+                                @php($total_pengajuan += $f->jumlah)
+                                @php($total_approve += $f->nominal_approve)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td><input type="text" class="form-control datepicker"  readonly="true" name="tanggal_kwitansi[]" value="{{ $f->tanggal_kwitansi }}"  /></td>
@@ -141,11 +146,21 @@
                                             @endforeach
                                         </select>
                                     </td>
+                                    <td>
+                                      <label class="btn btn-info btn-xs" onclick="show_file('{{ asset('storage/file-medical') }}/{{ $f->file_bukti_transaksi }}')"><i class="fa fa-file"></i> view</label>
+                                    </td>
                                     <td><input type="text" class="form-control" value="{{ number_format($f->jumlah) }}" readonly /></td>
                                     <td><input type="text" class="form-control" value="{{ number_format($f->nominal_approve) }}" readonly /></td>
                                 </tr>
                                 @endforeach
                               </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="6" style="text-align: right">TOTAL</th>
+                                      <th>Rp. {{ number_format($total_pengajuan) }}</th>
+                                      <th>Rp. {{ number_format($total_approve) }}</th>
+                                  </tr>
+                              </tfoot>
                           </table>  
                         </div>
                         <br />
@@ -166,9 +181,12 @@
     @extends('layouts.footer')
 </div>
 @section('footer-script')
-
+<script type="text/javascript">
+    function show_file(img)
+    {
+        bootbox.alert('<img src="'+ img +'" style="width: 100%;" />');
+    }
 </script>
-
 
 @endsection
 <!-- ============================================================== -->

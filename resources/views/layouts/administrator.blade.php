@@ -28,10 +28,10 @@
     <link href="{{ asset('admin-css/css/style.css') }}?time=<?=date('His')?>" rel="stylesheet">
     <!-- color CSS -->
     <link href="{{ asset('admin-css/css/colors/green.css?v=2') }}" id="theme" rel="stylesheet">
-    
+
     <link href="{{ asset('admin-css/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-    
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,7 +63,7 @@
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
         </svg>
     </div>
-     
+
     <!-- ============================================================== -->
     <!-- Wrapper -->
     <!-- ============================================================== -->
@@ -84,7 +84,7 @@
                 <!-- Search input and Toggle icon -->
                 <ul class="nav navbar-top-links navbar-left">
                     <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs"><i class="ti-close ti-menu"></i></a></li>
-                    
+
                     <!-- .Megamenu -->
                 </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
@@ -126,7 +126,7 @@
         <!-- ============================================================== -->
         <!-- End Left Sidebar -->
         <!-- ============================================================== -->
-        
+
         @yield('content')
 
         @include('layouts.alert')
@@ -139,7 +139,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">History Approval</h4> </div>
                     <div class="modal-body" id="modal_content_status_exit">
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default waves-effect btn-sm" data-dismiss="modal">Close</button>
@@ -219,26 +219,29 @@
                                 '</div>'+
                             '</div>';
 
-                    el += '<div class="panel-body">'+
-                                '<div class="steamline">'+
-                                    '<div class="sl-item">';
+                            if(data.data.show_gm_hr =='yes')
+                            {
+                                el += '<div class="panel-body">'+
+                                        '<div class="steamline">'+
+                                            '<div class="sl-item">';
 
-                                    if(data.data.is_approved_gm_hr == 1){
-                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                                    }
-                                    if(data.data.is_approved_gm_hr == 0){
-                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
-                                    }
-                                    if(data.data.is_approved_gm_hr === null){
-                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
-                                    }
+                                            if(data.data.is_approved_gm_hr == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approved_gm_hr == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approved_gm_hr === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
 
-                                    el += '<div class="sl-right">'+
-                                            '<div><a href="#">GM HR </a> </div>'+
+                                            el += '<div class="sl-right">'+
+                                                    '<div><a href="#">GM HR </a> </div>'+
+                                                '</div>'+
+                                            '</div>'+
                                         '</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
+                                    '</div>';
+                            }
 
                     $("#modal_content_history_approval").html(el);
                 }
@@ -246,7 +249,7 @@
 
             $("#modal_history_approval").modal('show');
         }
-        
+
         function status_approval_actual_bill(id)
         {
             $.ajax({
@@ -299,7 +302,7 @@
                             if(data.data.is_approve_hrd_actual_bill === null){
                                 el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                             }
-                                                
+
                             el += '<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                 '</div>'+
@@ -312,7 +315,7 @@
                             el += '<div class="panel-body">'+
                                         '<div class="steamline">'+
                                             '<div class="sl-item">';
-                            
+
                             if(data.data.is_approve_hrd_actual_bill == 1){
                                 el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                             }
@@ -355,14 +358,14 @@
                                         '</div>'+
                                     '</div>';
                         }
-                        
+
                     $("#modal_content_history_approval").html(el);
                 }
             });
 
             $("#modal_history_approval").modal('show');
         }
-        
+
         function status_approval_training(id)
         {
              $.ajax({
@@ -473,7 +476,7 @@
                                             if(data.data.approved_finance === null){
                                                 el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                             }
-                                                
+
                                             el +='<div class="sl-right">'+
                                                     '<div><a href="#">FINANCE</a> </div>'+
                                                     '<div class="desc">'+ (data.data.approved_finance == 1 ? '<small>'+ data.data.approved_finance_date +'</small>' : '')  +'</div>'+
@@ -482,7 +485,7 @@
                                         '</div>'+
                                     '</div>';
                         }
-                        
+
 
 
                     $("#modal_content_history_approval").html(el);
@@ -512,11 +515,11 @@
                                         if(data.data.is_proposal_approved == 0){
                                             el +='<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
                                         }
-                                        
+
                                         if(data.data.is_proposal_approved === null){
                                             el +='<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                         }
-                                        
+
 
                                         el += '<div class="sl-right">'+
                                                     '<div><a href="#">Proposal Approval</a> </div>'+
@@ -541,7 +544,7 @@
                                             el += '<div class="sl-left bg-danger"> <i class="fa fa-info"></i></div>';
                                         }
 
-                                                
+
                                         el += '<div class="sl-right">'+
                                                     '<div><a href="#">Proposal Verification</a> </div>'+
                                                 '</div>'+
@@ -554,17 +557,17 @@
                                             '<div class="sl-item">';
 
                                         if(data.data.is_payment_approved == 1){
-                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>'; 
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                                         }
 
                                         if(data.data.is_payment_approved == 0){
-                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>'; 
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                                         }
-                                        
+
                                         if(data.data.is_payment_approved === null){
-                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>'; 
+                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                                         }
-                                        
+
                                             el += '<div class="sl-right">'+
                                                     '<div><a href="#">Payment Approval</a> </div>'+
                                                 '</div>'+
@@ -600,12 +603,12 @@
                                 if(data.data.is_approved_atasan == 0){
                                     el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
                                 }
-                                
+
                                 if(data.data.is_approved_atasan === null){
                                     el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                 }
-                                
-                                            
+
+
                                             el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
                                                     '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : ''  ) +'<p>'+ (data.data.catatan_atasan !=null ? data.data.catatan_atasan : '' ) +'</p></div>'+
@@ -630,7 +633,7 @@
                                         el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                     }
 
-                                        
+
                                         el += '<div class="sl-right">'+
                                                     '<div><a href="#">Personalia</a> </div>'+
                                                 '</div>'+
@@ -645,7 +648,7 @@
 
             $("#modal_history_approval").modal('show');
         }
-        
+
         function status_approval_overtime(id)
         {
              $.ajax({
@@ -696,7 +699,7 @@
                                 {
                                     el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                 }
-                                        
+
                                     el += '<div class="sl-right">'+
                                             '<div><a href="#">HR BENEFIT</a> </div>'+
                                             '<div class="desc">'+ (data.data.is_hr_benefit_approved == 1 ? '<small>'+ data.data.is_hr_benefit_approved +'</small>' : '')  +'</div>'+
@@ -721,7 +724,7 @@
                                     if(data.data.is_hr_manager === null){
                                         el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                     }
-                                        
+
                                         el += '<div class="sl-right">'+
                                             '<div><a href="#">SR. MANAGER HR OPR </a> </div>'+
                                             '<div class="desc">'+ (data.data.is_hr_manager == 1 ? '<small>'+ data.data.is_hr_manager +'</small>' : '')  +'</div>'+
@@ -745,7 +748,7 @@
                 url: '{{ route('ajax.get-history-approval-exit') }}',
                 data: {'id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
-                success: function (data) { 
+                success: function (data) {
 
                     var el = '<div class="panel-body">'+
                                         '<div class="steamline">'+
@@ -760,7 +763,7 @@
                                             if(data.data.is_approved_atasan === null){
                                                 el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                             }
-                                            
+
                                             el += '<div class="sl-right">'+
                                                     '<div><a href="#">'+ data.data.nama_atasan +'</a> </div>'+
                                                     '<div class="desc">'+ (data.data.date_approved_atasan !== null ? '<p>'+ data.data.catatan_atasan +'</p>' : '')  +'</div>'+
@@ -782,7 +785,7 @@
                                             if(data.data.is_approved_hrd === null){
                                                 el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                             }
-                                                
+
                                                 el += '<div class="sl-right">'+
                                                     '<div><a href="#">HRD</a> </div>'+
                                                 '</div>'+
@@ -868,7 +871,7 @@
             dom: 'Bfrtip',
              buttons: []
         });
-        
+
 
         $('#data_table').DataTable({
             dom: 'Bfrtip',

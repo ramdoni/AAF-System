@@ -37,7 +37,7 @@ class MedicalController extends Controller
      * @return [type] [description]
      */
     public function create()
-    {   
+    {
         $params['karyawan'] = User::where('access_id', 2)->get();
 
         return view('karyawan.medical.create')->with($params);
@@ -66,13 +66,13 @@ class MedicalController extends Controller
     {
         $data       = MedicalReimbursement::where('id', $id)->first();
         $data->tanggal_pengajuan = $request->tanggal_pengajuan;
-        $data->status       = 1;  
+        $data->status       = 1;
         $data->save();
 
         MedicalReimbursementForm::where('medical_reimbursement_id', $id)->delete();
 
         foreach($request->tanggal_kwitansi as $key => $item)
-        {   
+        {
             $form                           = new MedicalReimbursementForm();
             $form->medical_reimbursement_id = $data->id;
             $form->tanggal_kwitansi         = $request->tanggal_kwitansi[$key];
@@ -83,7 +83,7 @@ class MedicalController extends Controller
         }
 
         return redirect()->route('karyawan.medical.index')->with('message-success', 'Data berhasil disimpan');
-    }   
+    }
 
     /**
      * [desctroy description]
@@ -98,7 +98,7 @@ class MedicalController extends Controller
         MedicalReimbursementForm::where('medical_reimbursement_id', $id)->delete();
 
         return redirect()->route('karyawan.medical.index')->with('message-sucess', 'Data berhasi di hapus');
-    } 
+    }
 
     /**
      * [store description]
@@ -110,18 +110,35 @@ class MedicalController extends Controller
         $data                       = new MedicalReimbursement();
         $data->user_id              = \Auth::user()->id;
         $data->tanggal_pengajuan    = $request->tanggal_pengajuan;
-        $data->status               = 1;  
-        $data->approved_atasan_id   = $request->atasan_user_id; 
+        $data->status               = 1;
+        $data->approved_atasan_id   = $request->atasan_user_id;
         $data->save();
 
         foreach($request->tanggal_kwitansi as $key => $item)
-        {   
+        {
             $form                           = new MedicalReimbursementForm();
             $form->medical_reimbursement_id = $data->id;
             $form->tanggal_kwitansi         = $request->tanggal_kwitansi[$key];
             $form->user_family_id              = $request->user_family_id[$key];
             $form->jenis_klaim              = $request->jenis_klaim[$key];
             $form->jumlah                   = $request->jumlah[$key];
+            
+            if (request()->hasFile('file_bukti_transaksi'))
+            {
+                $file = $request->file('file_bukti_transaksi');
+
+                foreach($file as $k => $f)
+                {
+                    if($k == $key)
+                    {
+                        $fname = md5($f->getClientOriginalName() . time()) . "." . $f->getClientOriginalExtension();
+
+                        $destinationPath = public_path('/storage/file-medical/');
+                        $f->move($destinationPath, $fname);
+                        $form->file_bukti_transaksi = $fname;
+                    }
+                }
+            }
             $form->save();
         }
 

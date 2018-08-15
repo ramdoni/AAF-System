@@ -45,7 +45,7 @@
                         @endif
 
                         {{ csrf_field() }}
-                        
+
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
                                 <label class="col-md-12">NIK / Nama Karyawan</label>
@@ -73,7 +73,7 @@
                             <br />
                         </div>
                         <div class="col-md-6">
-                            
+
                             <br />
                             <table class="table table-bordered">
                                 <tbody>
@@ -96,7 +96,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div class="clearfix"></div>
                         <div>
                           <table class="table table-hover">
@@ -107,6 +107,7 @@
                                       <th>HUBUNGAN</th>
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
+                                      <th>FILE BUKTI TRANSAKSI</th>
                                       <th>JUMLAH</th>
                                       <th></th>
                                   </tr>
@@ -121,7 +122,7 @@
                                             <option value="{{ \Auth::user()->id }}" data-nama="{{ \Auth::user()->name }}">Saya Sendiri</option>
                                             @foreach(Auth::user()->userFamily as $item)
                                             <option value="{{ $item->id }}" data-nama="{{ $item->nama }}">{{ $item->hubungan }}</option>
-                                            @endforeach 
+                                            @endforeach
                                         </select>
                                     </td>
                                     <td><input type="text" readonly="true" class="form-control nama_hubungan" /></td>
@@ -133,16 +134,18 @@
                                             @endforeach
                                         </select>
                                     </td>
+                                    <td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>
+
                                     <td><input type="number" class="form-control input" name="jumlah[]" required /></td>
                                 </tr>
                               </tbody>
                               <tfoot>
                                   <tr>
-                                      <th colspan="5" style="text-align: right;">TOTAL : </th>
+                                      <th colspan="6" style="text-align: right;">TOTAL : </th>
                                       <th class="th-total"></th>
                                   </tr>
                               </tfoot>
-                          </table>  
+                          </table>
                           <span class="btn btn-info btn-xs pull-right" id="add">Tambah</span>
                         </div>
                         <div class="clearfix"></div>
@@ -156,8 +159,8 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                </div>    
-            </form>                    
+                </div>
+            </form>
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
@@ -177,7 +180,7 @@
     @endforeach
 </script>
 <script type="text/javascript">
-    
+
     validate_form = true;
 
     show_hide_add();
@@ -188,7 +191,7 @@
         minLength:0,
         select: function( event, ui ) {
             $( "input[name='atasan_user_id']" ).val(ui.item.id);
-            
+
             var id = ui.item.id;
 
             $.ajax({
@@ -214,7 +217,7 @@
     });
 
     var data_dependent = [];
-    
+
     $("#btn_submit").click(function(){
 
         if(!validate_form)
@@ -235,12 +238,12 @@
     function select_hubungan(el)
     {
         var nama_hubungan = $(el).find(":selected").data('nama');
-        
+
         if(nama_hubungan == "") return false;
 
         $(el).parent().parent().find('.nama_hubungan').val(nama_hubungan);
     }
-    
+
 
     $("#add").click(function(){
 
@@ -260,7 +263,10 @@
                                 '<option value="">Pilih Jenis Klaim</option>@foreach(jenis_claim_medical() as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
-                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td></tr>';
+                        '<td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>'+
+                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td>'+
+                        '<td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td>'+
+                        '</tr>';
 
         $('.table-claim').append(html);
 
@@ -273,11 +279,11 @@
     });
 
 function show_hide_add()
-{   
+{
     $("#add").show();
     validate_form = true;
     $('.oninput .input').each(function(){
-     
+
         if($(this).val() == "")
         {
             $("#add").hide();
@@ -289,7 +295,7 @@ function show_hide_add()
     $(".oninput input[name='jumlah[]']").each(function(){
         if($(this).val() != "")
         {
-            total_nominal += parseInt($(this).val());            
+            total_nominal += parseInt($(this).val());
         }
     });
 
@@ -305,15 +311,15 @@ function cek_button_add()
 
     $('.oninput select').on('change',function(){
         show_hide_add();
-    }); 
+    });
 }
 
 function hapus_item(el)
 {
     if(confirm("Hapus item ?"))
     {
-        $(el).parent().parent().remove(); 
-        cek_button_add()       
+        $(el).parent().parent().remove();
+        cek_button_add()
     }
 }
 

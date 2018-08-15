@@ -56,7 +56,7 @@
                                     @if($data->is_approved_manager_hr !== NULL)
                                         @php($readonly='readonly="true"')
                                     @endif
-                                @endif  
+                                @endif
 
                                 @if($approval->nama_approval == 'GM HR')
                                     @if($data->is_approved_gm_hr !== NULL)
@@ -66,7 +66,7 @@
                             @endif
 
                         {{ csrf_field() }}
-                        
+
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
                                 <label class="col-md-12">NIK / Nama Karyawan</label>
@@ -125,8 +125,8 @@
                                       <th>HUBUNGAN</th>
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
+                                      <th>FILE BUKTI TRANSAKSI</th>
                                       <th>JUMLAH</th>
-                                      <th>FILE</th>
                                       <th>JUMLAH DISETUJUI</th>
                                   </tr>
                               </thead>
@@ -159,6 +159,9 @@
                                             @endforeach
                                         </select>
                                     </td>
+                                    <td>
+                                      <label class="btn btn-info btn-xs" onclick="show_file('{{ asset('storage/file-medical') }}/{{ $f->file_bukti_transaksi }}')"><i class="fa fa-file"></i> view</label>
+                                    </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
                                     <td><input type="text" name="nominal_approve[{{ $f->id }}]" {{ $readonly }} class="form-control nominal_approve price_format" value="{{ number_format($f->nominal_approve) }}" /></td>
                                 </tr>
@@ -171,11 +174,12 @@
                                   <tr>
                                       <th colspan="5" style="text-align: right;">Total</th>
                                       <th class="total_nominal">{{ number_format($total_nominal) }}</th>
+                                      <th></th>
                                       <th class="total_nominal_approve">{{ number_format($total_approve) }}</th>
                                   </tr>
                               </tfoot>
                           </table>
-                            
+
                             <input type="hidden" name="status" value="0" />
                             <input type="hidden" name="id" value="{{ $data->id }}">
 
@@ -183,36 +187,33 @@
                         <br />
                         <br />
                         <div class="col-md-12">
-                            <a href="{{ route('karyawan.approval.medical.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
-                            @if($data->is_approved_atasan == 1)
-                                @if($approval->nama_approval == 'HR Benefit')
-                                    @if($data->is_approved_hr_benefit === NULL)
-                                        <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
-                                        <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
-                                    @endif
-                                @endif
-
-                                @if($approval->nama_approval == 'Manager HR')
-                                    @if($data->is_approved_manager_hr === NULL)
-                                        <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
-                                        <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
-                                    @endif
-                                @endif  
-
-                                @if($approval->nama_approval == 'GM HR')
-                                    @if($data->is_approved_gm_hr === NULL)
-                                        <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
-                                        <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
-                                    @endif
+                        <a href="{{ route('karyawan.approval.medical.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                            @if($approval->nama_approval == 'HR Benefit')
+                                @if($data->is_approved_hr_benefit === NULL)
+                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
+                                    <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
                                 @endif
                             @endif
 
+                            @if($approval->nama_approval == 'Manager HR')
+                                @if($data->is_approved_manager_hr === NULL)
+                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
+                                    <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                @endif
+                            @endif
+
+                            @if($approval->nama_approval == 'GM HR')
+                                @if($data->is_approved_gm_hr === NULL)
+                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
+                                    <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                @endif
+                            @endif
                             <br style="clear: both;" />
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                </div>    
-            </form>                    
+                </div>
+            </form>
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
@@ -224,14 +225,25 @@
 @section('footer-script')
 <script type="text/javascript">
     
-    var nominal_approve = 0;
-    
+    function show_file(img)
+    {
+        bootbox.alert('<img src="'+ img +'" style="width: 100%;" />');
+    }
+
+
     $(".nominal_approve").on('input', function(){
+        var nominal_approve = 0;
 
         $('.nominal_approve').each(function(){
-            var temp  = parseInt($(this).val().replace(',','').replace(',',''));
 
-            nominal_approve += temp;
+            if($(this).val() != "")
+            {
+                var temp  = parseInt($(this).val().replace(',','').replace(',',''));
+                
+                nominal_approve += parseInt(temp);
+            }
+
+            console.log(temp);
         });
 
         $(".total_nominal_approve").html(numberWithComma(nominal_approve));
@@ -259,7 +271,7 @@
 
         });
     });
-</script>   
+</script>
 @endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->

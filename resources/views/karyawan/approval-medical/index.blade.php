@@ -94,12 +94,6 @@
                                                         <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                     @endif
                                                 @endif
-
-                                                @if($item->status == 3)
-                                                    <label class="btn btn-danger btn-xs">Denied</label>
-                                                @elseif($item->status == 2)
-                                                    <label class="btn btn-success btn-xs">Approved</label>
-                                                @endif
                                             </a>
                                         </td>
                                         <td>
