@@ -92,6 +92,13 @@ class ApprovalMedicalController extends Controller
         }
         $medical->save();    
 
+        foreach($request->nominal_approve as $id => $val)
+        {
+            $list                   = \App\MedicalReimbursementForm::where('id', $id)->first();
+            $list->nominal_approve  = $val;
+            $list->save();
+        }
+
         $medical = \App\MedicalReimbursement::where('id', $request->id)->first();
         if($medical->is_approved_hr_benefit ==1 and $medical->is_approved_manager_hr ==1 and $medical->is_approved_gm_hr == 1)
         {

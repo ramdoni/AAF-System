@@ -253,13 +253,22 @@ class AjaxController extends Controller
         {
             $data = \App\MedicalReimbursement::where('id', $request->foreign_id)->first();
 
-            $atasan = \App\User::where('id', $data->approved_atasan_id)->first();
+            $skip_gm_hr = ['Staff', 'Head','Supervisor'];
             
-            $data->atasan = "";
-
-            if(isset($atasan))
+            if(isset($data->user->organisasiposition->name))
             {
-                $data->atasan = $atasan->name .' / '. $atasan->organisasiposition->name;
+                if(in_array($data->user->organisasiposition->name, $skip_gm_hr)){
+
+                    $data->show_gm_hr = 'no';
+                }
+                else
+                {
+                    $data->show_gm_hr = 'yes';
+                }
+            }
+            else
+            {
+                $data->show_gm_hr = 'no';
             }
 
 

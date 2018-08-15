@@ -114,9 +114,9 @@
                               <tbody class="table-claim">
                                 <tr class="oninput">
                                     <td>1</td>
-                                    <td><input type="text" class="form-control datepicker" required name="tanggal_kwitansi[]"  /></td>
+                                    <td><input type="text" class="form-control datepicker input" required name="tanggal_kwitansi[]"  /></td>
                                     <td>
-                                        <select name="user_family_id[]" class="form-control" onchange="select_hubungan(this)" required>
+                                        <select name="user_family_id[]" class="form-control input" onchange="select_hubungan(this)" required>
                                             <option value="">Pilih Hubungan</option>
                                             <option value="{{ \Auth::user()->id }}" data-nama="{{ \Auth::user()->name }}">Saya Sendiri</option>
                                             @foreach(Auth::user()->userFamily as $item)
@@ -126,49 +126,24 @@
                                     </td>
                                     <td><input type="text" readonly="true" class="form-control nama_hubungan" /></td>
                                     <td>
-                                        <select name="jenis_klaim[]" class="form-control" required>
+                                        <select name="jenis_klaim[]" class="form-control input" required>
                                             <option value="">Pilih Jenis Klaim</option>
                                             @foreach(jenis_claim_medical() as $k => $i)
                                             <option value="{{ $k }}">{{ $i }}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="number" class="form-control" name="jumlah[]" required /></td>
+                                    <td><input type="number" class="form-control input" name="jumlah[]" required /></td>
                                 </tr>
                               </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="5" style="text-align: right;">TOTAL : </th>
+                                      <th class="th-total"></th>
+                                  </tr>
+                              </tfoot>
                           </table>  
                           <span class="btn btn-info btn-xs pull-right" id="add">Tambah</span>
-                        </div>
-
-                        <h4><b>Approval</b></h4>
-                        <div class="col-md-6" style="border: 1px solid #eee; padding: 15px">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control autcomplete-atasan" placeholder="Select Superior  / Atasan Langsung">
-                                    <input type="hidden" name="atasan_user_id" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-6">Jabatan</label>
-                                <label class="col-md-6">Division / Departement</label>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control jabatan_atasan">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control department_atasan">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-6">No Handphone</label>
-                                <label class="col-md-6">Email</label>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control no_handphone_atasan">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control email_atasan">
-                                </div>
-                            </div>
                         </div>
                         <div class="clearfix"></div>
                         <br />
@@ -190,15 +165,9 @@
     <!-- /.container-fluid -->
     @extends('layouts.footer')
 </div>
-
-
 @section('footer-script')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-
 <script type="text/javascript">
 
     var list_atasan = [];
@@ -209,6 +178,8 @@
 </script>
 <script type="text/javascript">
     
+    validate_form = true;
+
     show_hide_add();
     cek_button_add();
 
@@ -239,16 +210,17 @@
     });
 
     jQuery('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
+        dateFormat: 'yy-mm-dd',
     });
 
     var data_dependent = [];
     
     $("#btn_submit").click(function(){
 
-        if($("input[name='atasan_user_id']").val() == "")
+        if(!validate_form)
         {
-            bootbox.alert('Approval atasan harus dipilih !');
+            bootbox.alert('Form harus diisi semua ?');
+
             return false;
         }
 
@@ -276,24 +248,24 @@
 
         var html =  '<tr class="oninput">'+
                         '<td>'+(no+1)+'</td>'+
-                        '<td><input type="text" class="form-control datepicker" required name="tanggal_kwitansi[]" /></td>'+
+                        '<td><input type="text" class="form-control datepicker input" required name="tanggal_kwitansi[]" /></td>'+
                         '<td>'+
-                            '<select name="user_family_id[]" class="form-control" onchange="select_hubungan(this)" required>'+
+                            '<select name="user_family_id[]" class="form-control input" onchange="select_hubungan(this)" required>'+
                                 '<option value="">Pilih Hubungan</option><option value="{{ \Auth::user()->id }}" data-nama="{{ \Auth::user()->name }}">Saya Sendiri</option>@foreach(Auth::user()->userFamily as $item)<option value="{{ $item->id }}" data-nama="{{ $item->nama }}">{{ $item->hubungan }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
                         '<td><input type="text" readonly="true" class="form-control nama_hubungan" /></td>'+
                         '<td>'+
-                            '<select name="jenis_klaim[]" class="form-control" required>'+
+                            '<select name="jenis_klaim[]" class="form-control input" required>'+
                                 '<option value="">Pilih Jenis Klaim</option>@foreach(jenis_claim_medical() as $k => $i)<option value="{{ $k }}">{{ $i }}</option>@endforeach'+
                             '</select>'+
                         '</td>'+
-                        '<td><input type="number" class="form-control" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td></tr>';
+                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td><td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td></tr>';
 
         $('.table-claim').append(html);
 
-         jQuery('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+        jQuery('.datepicker').datepicker({
+            dateFormat: 'yy-mm-dd',
         });
 
         cek_button_add();
@@ -302,28 +274,37 @@
 
 function show_hide_add()
 {   
-    $('.oninput input, .oninput select').each(function(){
-        
+    $("#add").show();
+    validate_form = true;
+    $('.oninput .input').each(function(){
+     
         if($(this).val() == "")
         {
             $("#add").hide();
-        }
-        else
-        {
-            $("#add").show();
+            validate_form = false;
         }
     });
+
+    var total_nominal = 0;
+    $(".oninput input[name='jumlah[]']").each(function(){
+        if($(this).val() != "")
+        {
+            total_nominal += parseInt($(this).val());            
+        }
+    });
+
+    $('.th-total').html(numberWithComma(total_nominal));
+
 }
 
 function cek_button_add()
 {
-    $('.oninput input').on('keyup',function()
-    {
-        show_hide_add()
+    $('.oninput input').on('keyup',function(){
+        show_hide_add();
     });
-    $('.oninput select').on('change',function()
-    {
-        show_hide_add()
+
+    $('.oninput select').on('change',function(){
+        show_hide_add();
     }); 
 }
 

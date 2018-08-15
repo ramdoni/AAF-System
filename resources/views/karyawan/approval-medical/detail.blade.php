@@ -44,6 +44,26 @@
                                 </ul>
                             </div>
                         @endif
+                        @php ($readonly="")
+                        @if($data->is_approved_atasan == 1)
+                                @if($approval->nama_approval == 'HR Benefit')
+                                    @if($data->is_approved_hr_benefit !== NULL)
+                                        @php($readonly='readonly="true"')
+                                    @endif
+                                @endif
+
+                                @if($approval->nama_approval == 'Manager HR')
+                                    @if($data->is_approved_manager_hr !== NULL)
+                                        @php($readonly='readonly="true"')
+                                    @endif
+                                @endif  
+
+                                @if($approval->nama_approval == 'GM HR')
+                                    @if($data->is_approved_gm_hr !== NULL)
+                                        @php($readonly='readonly="true"')
+                                    @endif
+                                @endif
+                            @endif
 
                         {{ csrf_field() }}
                         
@@ -106,9 +126,13 @@
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
                                       <th>JUMLAH</th>
+                                      <th>FILE</th>
+                                      <th>JUMLAH DISETUJUI</th>
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
+                                @php ($total_nominal=0)
+                                @php ($total_approve=0)
                                 @foreach($data->form as $key => $f)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -136,9 +160,20 @@
                                         </select>
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
+                                    <td><input type="text" name="nominal_approve[{{ $f->id }}]" {{ $readonly }} class="form-control nominal_approve price_format" value="{{ number_format($f->nominal_approve) }}" /></td>
                                 </tr>
+                                @php($total_nominal=$f->jumlah)
+                                @php($total_approve=$f->nominal_approve)
+
                                 @endforeach
                               </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="5" style="text-align: right;">Total</th>
+                                      <th class="total_nominal">{{ number_format($total_nominal) }}</th>
+                                      <th class="total_nominal_approve">{{ number_format($total_approve) }}</th>
+                                  </tr>
+                              </tfoot>
                           </table>
                             
                             <input type="hidden" name="status" value="0" />
@@ -151,21 +186,21 @@
                             <a href="{{ route('karyawan.approval.medical.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
                             @if($data->is_approved_atasan == 1)
                                 @if($approval->nama_approval == 'HR Benefit')
-                                    @if($data->is_approved_hr_benefit == "")
+                                    @if($data->is_approved_hr_benefit === NULL)
                                         <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                         <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
                                     @endif
                                 @endif
 
                                 @if($approval->nama_approval == 'Manager HR')
-                                    @if($data->is_approved_manager_hr == "")
+                                    @if($data->is_approved_manager_hr === NULL)
                                         <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                         <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
                                     @endif
                                 @endif  
 
                                 @if($approval->nama_approval == 'GM HR')
-                                    @if($data->is_approved_gm_hr == "")
+                                    @if($data->is_approved_gm_hr === NULL)
                                         <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                         <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
                                     @endif
@@ -187,30 +222,44 @@
 </div>
 
 @section('footer-script')
-    <script type="text/javascript">
-        $("#btn_approved").click(function(){
-            bootbox.confirm('Approve Medical Reimbursement Karyawan ?', function(result){
+<script type="text/javascript">
+    
+    var nominal_approve = 0;
+    
+    $(".nominal_approve").on('input', function(){
 
-                $("input[name='status']").val(1);
-                if(result)
-                {
-                    $('#form-medical').submit();
-                }
+        $('.nominal_approve').each(function(){
+            var temp  = parseInt($(this).val().replace(',','').replace(',',''));
 
-            });
+            nominal_approve += temp;
         });
 
-        $("#btn_tolak").click(function(){
-            bootbox.confirm('Tolak Medical Reimbursement Karyawan ?', function(result){
+        $(".total_nominal_approve").html(numberWithComma(nominal_approve));
+    });
 
-                if(result)
-                {
-                    $('#form-medical').submit();
-                }
+    $("#btn_approved").click(function(){
+        bootbox.confirm('Approve Medical Reimbursement Karyawan ?', function(result){
 
-            });
+            $("input[name='status']").val(1);
+            if(result)
+            {
+                $('#form-medical').submit();
+            }
+
         });
-    </script>
+    });
+
+    $("#btn_tolak").click(function(){
+        bootbox.confirm('Tolak Medical Reimbursement Karyawan ?', function(result){
+
+            if(result)
+            {
+                $('#form-medical').submit();
+            }
+
+        });
+    });
+</script>   
 @endsection
 <!-- ============================================================== -->
 <!-- End Page Content -->

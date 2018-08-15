@@ -106,9 +106,13 @@
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
                                       <th>JUMLAH</th>
-                                  </tr>
+                                      @if($data->is_approved_atasan !== NULL)
+                                      <th>JUMLAH DISETUJUI</th>
+                                      @endif
                               </thead>
                               <tbody class="table-claim">
+                                @php ($total_nominal=0)
+                                @php ($total_approve=0)
                                 @foreach($data->form as $key => $f)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -136,9 +140,21 @@
                                         </select>
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
+                                    @if($data->is_approved_atasan !== NULL)
+                                    <td><input type="text" class="form-control" required value="{{ number_format($f->nominal_approve) }}" readonly /></td>
+                                    @endif
                                 </tr>
+                                @php($total_nominal=$f->jumlah)
+                                @php($total_approve=$f->nominal_approve)
                                 @endforeach
                               </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <th colspan="5" style="text-align: right;">Total</th>
+                                      <th class="total_nominal">{{ number_format($total_nominal) }}</th>
+                                      <th class="total_nominal_approve">{{ number_format($total_approve) }}</th>
+                                  </tr>
+                              </tfoot>
                           </table>
                             
                         <input type="hidden" name="status" value="0" />
@@ -149,7 +165,7 @@
                         <br />
                         <div class="col-md-12">
                             <a href="{{ route('karyawan.approval.medical-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
-                            @if($data->is_approved_atasan == "")
+                            @if($data->is_approved_atasan === NULL)
                             <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                             <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
                             @endif

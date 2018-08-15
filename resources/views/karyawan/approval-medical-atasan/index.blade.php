@@ -60,9 +60,13 @@
                                         <td>{{ date('d F Y', strtotime($item->tanggal_pengajuan)) }}</td>
                                         <td>
                                             <a onclick="status_approval_medical({{ $item->id }})"> 
-                                            @if(!cek_status_approval_user(Auth::user()->id, 'medical', $item->id))s
+                                            @if($item->is_approved_atasan === NULL)
                                                 <label class="btn btn-warning btn-xs">Waiting Approval</label>
-                                            @else 
+                                            @endif
+                                            @if($item->is_approved_atasan == 0)
+                                                <label class="btn btn-danger btn-xs">Denied</label>
+                                            @endif
+                                            @if($item->is_approved_atasan == 1)
                                                 <label class="btn btn-success btn-xs">Approved</label>
                                             @endif
                                             </a>                                        

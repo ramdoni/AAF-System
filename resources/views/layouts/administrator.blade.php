@@ -167,7 +167,86 @@
     </div>
 
     <script type="text/javascript">
+        function status_approval_medical(id)
+        {
+             $.ajax({
+                type: 'POST',
+                url: '{{ route('ajax.get-history-approval-medical') }}',
+                data: {'foreign_id' : id ,'_token' : $("meta[name='csrf-token']").attr('content')},
+                dataType: 'json',
+                success: function (data) {
 
+                    var el = '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_approved_hr_benefit == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_approved_hr_benefit == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_approved_hr_benefit === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
+                                            '<div><a href="#">HR BENEFIT</a> </div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+
+                    el += '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_approved_manager_hr == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_approved_manager_hr == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_approved_manager_hr === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
+                                            '<div><a href="#">MANAGER HR OPR </a> </div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+                    el += '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_approved_gm_hr == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_approved_gm_hr == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_approved_gm_hr === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right">'+
+                                            '<div><a href="#">GM HR </a> </div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+                    $("#modal_content_history_approval").html(el);
+                }
+            });
+
+            $("#modal_history_approval").modal('show');
+        }
+        
         function status_approval_actual_bill(id)
         {
             $.ajax({

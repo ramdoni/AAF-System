@@ -106,6 +106,7 @@
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
                                       <th>JUMLAH</th>
+                                      <th>JUMLAH DISETUJUI</th>
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
@@ -130,12 +131,13 @@
                                     <td>
                                         <select class="form-control" readonly>
                                             <option value="">Pilih Jenis Klaim</option>
-                                            @foreach(jenis_claim_medial() as $k => $i)
+                                            @foreach(jenis_claim_medical() as $k => $i)
                                             <option value="{{ $k }}" {{ $f->jenis_klaim == $k ? 'selected' : '' }} >{{ $i }}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
+                                    <td><input type="text" class="form-control" required value="{{ number_format($f->nominal_approve) }}" readonly /></td>
                                 </tr>
                                 @endforeach
                               </tbody>
@@ -145,7 +147,7 @@
                         <br />
                         <div class="form-group">
                             <div class="col-md-12">
-                                <a href="{{ route('administrator.overtime.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                                <a href="{{ route('administrator.medical.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
                                 <br style="clear: both;" />
                             </div>
                         </div>

@@ -58,7 +58,11 @@
                                         <td>{{ $item->user->organisasi_job_role }}</td>
                                         <td>{{ (isset($item->user->department->name) ? $item->user->department->name : '') }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_pengajuan)) }}</td>
-                                        <td>{!! status_medical($item->status) !!}</td>
+                                        <td>
+                                            <a onclick="status_approval_medical({{ $item->id }})"> 
+                                            {!! status_medical($item->status) !!}
+                                            </a>
+                                        </td>
                                         <td>
                                             <a href="{{ route('administrator.medical.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
                                             <form action="{{ route('administrator.medical.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post">

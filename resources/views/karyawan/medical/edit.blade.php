@@ -111,6 +111,7 @@
                                       <th>NAMA PASIEN</th>
                                       <th>JENIS KLAIM</th>
                                       <th>JUMLAH</th>
+                                      <th>JUMLAH DISETUJUI</th>
                                   </tr>
                               </thead>
                               <tbody class="table-claim">
@@ -135,12 +136,13 @@
                                     <td>
                                         <select class="form-control" readonly>
                                             <option value="">Pilih Jenis Klaim</option>
-                                            @foreach(type_claim_medical() as $k => $i)
+                                            @foreach(jenis_claim_medical() as $k => $i)
                                             <option value="{{ $k }}" {{ $f->jenis_klaim == $k ? 'selected' : '' }} >{{ $i }}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
+                                    <td><input type="text" class="form-control" value="{{ number_format($f->jumlah) }}" readonly /></td>
+                                    <td><input type="text" class="form-control" value="{{ number_format($f->nominal_approve) }}" readonly /></td>
                                 </tr>
                                 @endforeach
                               </tbody>
