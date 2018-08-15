@@ -8,8 +8,8 @@
 
 @section('content')
 
-  
-        
+
+
 <!-- ============================================================== -->
 <!-- Page Content -->
 <!-- ============================================================== -->
@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Dashboard</h4> 
+                <h4 class="page-title">Dashboard</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
@@ -51,15 +51,14 @@
                                 @foreach($data as $no => $item)
                                  @if(isset($item->user->nik))
                                     <tr>
-                                        <td class="text-center">{{ $no+1 }}</td> 
+                                        <td class="text-center">{{ $no+1 }}</td>
                                         <td>{{ $item->user->nik }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->user->organisasi_job_role }}</td>
                                         <td>{{ $item->user->department->name }}</td>
                                         <td>{{ date('d F Y', strtotime($item->tanggal_pengajuan)) }}</td>
                                         <td>
-                                            <a onclick="status_approval_medical({{ $item->id }})"> 
-                                            @if($item->is_approved_atasan == 1)
+                                            <a onclick="status_approval_medical({{ $item->id }})">
                                                 @if($approval->nama_approval == 'HR Benefit')
                                                     @if($item->is_approved_hr_benefit == 1)
                                                         <label class="btn btn-success btn-xs">Approved</label>
@@ -95,44 +94,37 @@
                                                         <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                     @endif
                                                 @endif
-                                            @else
-                                                @if($item->is_approved_atasan == "")
-                                                    <label class="btn btn-default btn-xs">Waiting Approval Atasan</label>
-                                                @endif
+
                                                 @if($item->status == 3)
                                                     <label class="btn btn-danger btn-xs">Denied</label>
                                                 @elseif($item->status == 2)
                                                     <label class="btn btn-success btn-xs">Approved</label>
                                                 @endif
-                                            @endif
                                             </a>
                                         </td>
                                         <td>
-                                            @if($item->is_approved_atasan == 1)
-                                                @if($approval->nama_approval == 'HR Benefit')
-                                                    @if($item->is_approved_hr_benefit == "")
-                                                        <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">proses <i class="fa fa-arrow-right"></i></button></a>
-                                                    @else
-                                                        <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">detail <i class="fa fa-arrow-right"></i></button></a>
-                                                    @endif
+                                            @if($approval->nama_approval == 'HR Benefit')
+                                                @if($item->is_approved_hr_benefit == "")
+                                                    <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">proses <i class="fa fa-arrow-right"></i></button></a>
+                                                @else
+                                                    <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">detail <i class="fa fa-arrow-right"></i></button></a>
                                                 @endif
+                                            @endif
 
-                                                @if($approval->nama_approval == 'Manager HR')
-                                                    @if($item->is_approved_manager_hr == "")
-                                                        <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">proses <i class="fa fa-arrow-right"></i></button></a>
-                                                    @else
-                                                        <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">detail <i class="fa fa-arrow-right"></i></button></a>
-                                                    @endif
+                                            @if($approval->nama_approval == 'Manager HR')
+                                                @if($item->is_approved_manager_hr == "")
+                                                    <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">proses <i class="fa fa-arrow-right"></i></button></a>
+                                                @else
+                                                    <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">detail <i class="fa fa-arrow-right"></i></button></a>
                                                 @endif
+                                            @endif
 
-                                                @if($approval->nama_approval == 'GM HR')
-                                                    @if($item->is_approved_gm_hr == "")
-                                                        <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">proses <i class="fa fa-arrow-right"></i></button></a>
-                                                    @else
-                                                        <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">detail <i class="fa fa-arrow-right"></i></button></a>
-                                                    @endif
+                                            @if($approval->nama_approval == 'GM HR')
+                                                @if($item->is_approved_gm_hr == "")
+                                                    <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">proses <i class="fa fa-arrow-right"></i></button></a>
+                                                @else
+                                                    <a href="{{ route('karyawan.approval.medical.detail', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5">detail <i class="fa fa-arrow-right"></i></button></a>
                                                 @endif
-                                                
                                             @endif
                                         </td>
                                     </tr>
@@ -142,7 +134,7 @@
                         </table>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
         <!-- ============================================================== -->
     </div>

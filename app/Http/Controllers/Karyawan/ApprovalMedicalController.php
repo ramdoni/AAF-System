@@ -39,7 +39,7 @@ class ApprovalMedicalController extends Controller
                 $params['data'] = \App\MedicalReimbursement::where('is_approved_manager_hr', 0)->orderBy('id', 'DESC')->get();
             }
 
-             if($approval->nama_approval =='GM HR')
+            if($approval->nama_approval =='GM HR')
             {
                 $params['data'] = \App\MedicalReimbursement::where('is_approved_atasan', 1)->where('is_approved_gm_hr', 0)->orderBy('id', 'DESC')->get();
             }
@@ -69,28 +69,32 @@ class ApprovalMedicalController extends Controller
         $status->foreign_id             = $request->id;
         $status->status                 = $request->status;
         $status->noted                  = $request->noted;
+        $status->save();
 
-        $approval = \App\SettingApproval::where('user_id', \Auth::user()->id)->where('jenis_form','medical')->first();
-        
-        $medical = \App\MedicalReimbursement::where('id', $request->id)->first();        
+        $approval   = \App\SettingApproval::where('user_id', \Auth::user()->id)->where('jenis_form','medical')->first();
+        $medical    = \App\MedicalReimbursement::where('id', $request->id)->first();
         if($approval)
         {
             if($approval->nama_approval =='HR Benefit')
             {
-                $medical->is_approved_hr_benefit = 1;
+                $medical->is_approved_hr_benefit  = $request->status;
+                $medical->hr_benefit_id           = \Auth::user()->id;
+                $medical->hr_benefit_date         = date('Y-m-d H:i:s');
             }
-
             if($approval->nama_approval =='Manager HR')
             {
-                $medical->is_approved_manager_hr = 1;
+                $medical->is_approved_manager_hr  = $request->status;
+                $medical->manager_hr_id           = \Auth::user()->id;
+                $medical->manager_hr_date         = date('Y-m-d H:i:s');
             }
-
             if($approval->nama_approval =='GM HR')
             {
-                $medical->is_approved_gm_hr = 1;
-            }   
+                $medical->is_approved_gm_hr   = $request->status;
+                $medical->gm_hr_id            = \Auth::user()->id;
+                $medical->gm_hr_date          = date('Y-m-d H:i:s');
+            }
         }
-        $medical->save();    
+        $medical->save();
 
         foreach($request->nominal_approve as $id => $val)
         {
@@ -98,8 +102,26 @@ class ApprovalMedicalController extends Controller
             $list->nominal_approve  = $val;
             $list->save();
         }
+        
+        $skip_gm_hr = ['Staff', 'Head','Supervisor'];
 
-        $medical = \App\MedicalReimbursement::where('id', $request->id)->first();
+        if(isset($data->user->organisasiposition->name))
+        {
+            if(in_array($data->user->organisasiposition->name, $skip_gm_hr)){
+
+                $data->show_gm_hr = 'no';
+            }
+            else
+            {
+                $data->show_gm_hr = 'yes';
+            }
+        }
+        else
+        {
+            $data->show_gm_hr = 'no';
+        }
+
+
         if($medical->is_approved_hr_benefit ==1 and $medical->is_approved_manager_hr ==1 and $medical->is_approved_gm_hr == 1)
         {
             // cek semua approval
@@ -107,26 +129,14 @@ class ApprovalMedicalController extends Controller
                                             ->where('foreign_id', $request->id)
                                             ->where('status', 0)
                                             ->count();
-
-            $medical = \App\MedicalReimbursement::where('id', $request->id)->first();
             if($status >=1)
             {
                 $status = 3;
-
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $medical->user->name .'</p><p> Pengajuan Medical Reimbursement anda ditolak.</p>' ;
             }
             else
             {
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $medical->user->name .'</p><p> Pengajuan Medical Reimbursement anda disetujui.</p>' ;
-
                 $status = 2;
             }
-
-            //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
 
             $medical->status = $status;
         }
@@ -136,7 +146,6 @@ class ApprovalMedicalController extends Controller
         {
             $medical->status == 3;
         }
-
         $medical->save();
 
         return redirect()->route('karyawan.approval.medical.index')->with('message-success', 'Form Medical Reimbursement Berhasil diproses !');
@@ -148,7 +157,7 @@ class ApprovalMedicalController extends Controller
      * @return [type]     [description]
      */
     public function detail($id)
-    {   
+    {
         $params['data']         = \App\MedicalReimbursement::where('id', $id)->first();
         $params['approval']     = \App\SettingApproval::where('user_id', \Auth::user()->id)->where('jenis_form','medical')->first();
 
