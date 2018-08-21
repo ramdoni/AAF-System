@@ -1,6 +1,55 @@
 <?php
 
 /**
+ * [sum_lembur_jam description]
+ * @param  [type] $hours [description]
+ * @return [type]        [description]
+ */
+function sum_lembur_jam($hours)
+{
+	$i = 0;
+    foreach ($hours as $time) {
+    	
+    	$time = str_replace(' ', '', $time);
+
+        sscanf($time, '%d:%d', $hour, $min);
+        $i += $hour * 60 + $min;
+    }
+    if ($h = floor($i / 60)) {
+        $i %= 60;
+    }
+    return sprintf('%02d:%02d', $h, $i);
+}
+
+/**
+ * [cek_is_up_manager description]
+ * @param  [type] $id [description]
+ * @return [type]     [description]
+ */
+function skip_is_down_manager($id)
+{
+	$skip_gm_hr = ['Staff', 'Head','Supervisor'];
+     
+	$data = \App\User::where('id', $id)->first();
+
+    if(isset($data->organisasiposition->name))
+    {
+        if(in_array($data->organisasiposition->name, $skip_gm_hr)){
+
+            return  'no';
+        }
+        else
+        {
+        	return 'yes';
+        }
+    }
+    else
+    {
+    	return 'no';
+    }
+}
+
+/**
  * [jenis_claim_medical description]
  * @return [type] [description]
  */

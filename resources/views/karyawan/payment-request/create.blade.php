@@ -111,6 +111,7 @@
                                         <th>AMOUNT</th>
                                         <th>AMOUNT APPROVED</th>
                                         <th>BUKTI TRANSAKSI</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-content-lembur">
@@ -118,7 +119,7 @@
                                         <td>1</td>
                                         <td>
                                             <div class="col-md-10" style="padding-left:0;">
-                                                <select name="type[]" class="form-control">
+                                                <select name="type[]" class="form-control input">
                                                     <option value=""> - none - </option>
                                                     <option>Parkir</option>
                                                     <option>Bensin</option>
@@ -131,23 +132,24 @@
                                             <div class="content_overtime"></div>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" name="description[]">
+                                            <input type="text" class="form-control input" name="description[]">
                                         </td>
                                         <td>
-                                            <input type="number" name="quantity[]" class="form-control">
+                                            <input type="number" name="quantity[]" class="form-control input">
                                         </td>
                                         <td>
-                                            <input type="number" name="estimation_cost[]" class="form-control estimation">
+                                            <input type="number" name="estimation_cost[]" class="form-control estimation input">
                                         </td>
                                         <td>
-                                            <input type="number" name="amount[]" class="form-control amount">
+                                            <input type="number" name="amount[]" class="form-control amount input">
                                         </td>
                                         <td>
                                             <input type="number" name="amount_approved[]" class="form-control" readonly="true">
                                         </td>
                                         <td>
-                                            <input type="file" name="file_struk[]" class="form-control">
+                                            <input type="file" name="file_struk[] input" class="form-control">
                                         </td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -161,39 +163,6 @@
                         </div>
                         <hr />
                         <div class="clearfix"></div>
-                        <!-- <h4><b>Approval</b></h4>
-                        <div class="col-md-6" style="border: 1px solid #eee; padding: 15px">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control autcomplete-atasan" placeholder="Select Superior  / Atasan Langsung">
-                                    <input type="hidden" name="atasan_user_id" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-6">Jabatan</label>
-                                <label class="col-md-6">Division / Departement</label>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control jabatan_atasan">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control department_atasan">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-6">No Handphone</label>
-                                <label class="col-md-6">Email</label>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control no_handphone_atasan">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" readonly="true" class="form-control email_atasan">
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="clearfix"></div>
-                        <hr /> -->
                         <br />
                         <a href="{{ route('karyawan.payment-request.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
                         <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="submit_payment"><i class="fa fa-save"></i> Submit Payment Request</a>
@@ -318,6 +287,8 @@
     @endforeach
 </script>
 <script type="text/javascript">
+    
+    var validate_form = true;
 
     $(".autcomplete-atasan" ).autocomplete({
         source: list_atasan,
@@ -416,6 +387,15 @@
 
     $('#submit_payment').click(function(){
 
+        cek_form();
+        
+        if(!validate_form)
+        {
+            bootbox.alert('Form belum lengkap !');
+
+            return false;
+        }
+
         if($('.table-content-lembur tr').length == 0)
         {
             return false;
@@ -456,13 +436,14 @@
 
         var html = '<tr>';
             html += '<td>'+ (no+1) +'</td>';
-            html += '<td><select name="type[]" class="form-control"><option value=""> - none - </option><option>Parkir</option><option>Bensin</option><option>Tol</option><option>Overtime Transport</option><option>Others</option></select></td>';
-            html += '<td class="description_td"><input type="text" class="form-control" name="description[]"></td>';
-            html += '<td><input type="number" name="quantity[]" class="form-control" /></td>';
-            html += '<td><input type="number" name="estimation_cost[]" class="form-control estimation" /></td>';
-            html += '<td><input type="number" name="amount[]" class="form-control amount" /></td>';
-            html += '<td><input type="number" name="amount_approved[]" class="form-control" readonly="true" /></td>';
-            html += '<td><input type="file" name="file_struk[]" class="form-control" /></td>';
+            html += '<td><select name="type[]" class="form-control input"><option value=""> - none - </option><option>Parkir</option><option>Bensin</option><option>Tol</option><option>Overtime Transport</option><option>Others</option></select></td>';
+            html += '<td class="description_td"><input type="text" class="form-control input" name="description[]"></td>';
+            html += '<td><input type="number" name="quantity[]" class="form-control input" /></td>';
+            html += '<td><input type="number" name="estimation_cost[]" class="form-control estimation input" /></td>';
+            html += '<td><input type="number" name="amount[]" class="form-control amount input" /></td>';
+            html += '<td><input type="number" name="amount_approved[]" class="form-control input" readonly="true" /></td>';
+            html += '<td><input type="file" name="file_struk[]" class="form-control input input" /></td>';
+            html += '<td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i> hapus</a></td>';
             html += '</tr>';
 
         $('.table-content-lembur').append(html);
@@ -484,6 +465,27 @@
 
         general_function();
     });
+
+    function cek_form()
+    {
+        validate_form = true;
+        $(".input").each(function(){
+            if($(this).val() == "")
+            {
+                validate_form = false;
+            }
+        });   
+    }
+
+    function hapus_item(el)
+    {   
+        bootbox.confirm("Hapus data ini ?", function(res){
+            if(res)
+            {
+                $(el).parent().parent().remove();
+            }
+        })
+    }
 
 </script>
 

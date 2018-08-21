@@ -99,6 +99,12 @@
                                 <a style="font-size: 12px;"><i class="fa fa-star"></i> {{ isset(\Auth::user()->organisasiposition->name) ? \Auth::user()->organisasiposition->name : ''  }} Department {{ isset(\Auth::user()->department->name) ? \Auth::user()->department->name : '' }}</a>
                             </li>
                             <li role="separator" class="divider"></li>
+                            @if(\Session::get('is_login_administrator'))
+                                <li>
+                                    <a href="{{ route('karyawan.back-to-administrator') }}"> <i class="fa fa-key"></i> Back to Administrator</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                            @endif
                             <li>
                                 <a href="{{ route('karyawan.profile') }}">Profile</a>
                             </li>
@@ -558,8 +564,8 @@
                                             }
 
                                             el += '<div class="sl-right">'+
-                                                    '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
-                                                    '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                                    '<div><a href="#">ATASAN</a> </div>'+
+                                                    '<div class="desc">'+ data.data.atasan.name +' / '+ data.data.atasan.nik + '<br />'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>'+
@@ -580,12 +586,17 @@
                                     }
 
                                     el += '<div class="sl-right">'+
-                                            '<div><a href="#">HR BENEFIT</a> </div>'+
-                                        '</div>'+
+                                            '<div><a href="#">HR BENEFIT</a> </div>';
+
+
+                                    if(data.data.is_hr_benefit_approved !== null){
+                                       el += '<div class="desc">'+ data.data.hr_benefit.name +' / '+ data.data.hr_benefit.nik +'<p>'+ data.data.hr_benefit_date +'</p></div>'; 
+                                    }
+                                    
+                                    el +='</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
-
 
                     el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
@@ -601,9 +612,13 @@
                                         el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                     }
 
-                                    el += '<div class="sl-right">'+
-                                            '<div><a href="#">SR. MANAGER HR OPR </a> </div>'+
-                                        '</div>'+
+                                    el += '<div class="sl-right"><div><a href="#">SR. MANAGER HR OPR </a> </div>';
+
+                                    if(data.data.is_hr_manager !== null){
+                                       el += '<div class="desc">'+ data.data.hr_manager.name +' / '+ data.data.hr_manager.nik +'<p>'+ data.data.hr_manager_date +'</p></div>'; 
+                                    }
+                                    
+                                    el += '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
@@ -639,8 +654,13 @@
                                     }
 
                                     el += '<div class="sl-right">'+
-                                            '<div><a href="#">HR BENEFIT</a> </div>'+
-                                        '</div>'+
+                                            '<div><a href="#">HR BENEFIT</a> </div>';
+
+                                    if(data.data.is_approved_hr_benefit !== null){
+                                        el += '<div class="desc">'+ data.data.hr_benefit.name +' / '+ data.data.hr_benefit.nik +'<p>'+ data.data.hr_benefit_date +'</p></div>'; 
+                                    }
+
+                                    el += '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
@@ -660,8 +680,13 @@
                                     }
 
                                     el += '<div class="sl-right">'+
-                                            '<div><a href="#">MANAGER HR OPR </a> </div>'+
-                                        '</div>'+
+                                            '<div><a href="#">MANAGER HR OPR </a> </div>';
+
+                                    if(data.data.is_approved_manager_hr !== null){
+                                        el += '<div class="desc">'+ data.data.manager_hr.name +' / '+ data.data.manager_hr.nik +'<p>'+ data.data.manager_hr_date +'</p></div>'; 
+                                    }
+
+                                    el += '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';

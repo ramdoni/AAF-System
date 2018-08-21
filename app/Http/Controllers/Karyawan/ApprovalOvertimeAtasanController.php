@@ -39,6 +39,12 @@ class ApprovalOvertimeAtasanController extends Controller
         $overtime                           = \App\OvertimeSheet::where('id', $request->id)->first();
         $overtime->is_approved_atasan       = $request->status;
         $overtime->date_approved_atasan     = date('Y-m-d H:i:s');
+
+        if($request->status == 0)
+        {
+            $overtime->status = 3;
+        }
+
         $overtime->save();   
 
         return redirect()->route('karyawan.approval.overtime-atasan.index')->with('messages-success', 'Form Cuti Berhasil diproses !');

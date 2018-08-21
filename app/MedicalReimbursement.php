@@ -43,4 +43,31 @@ class MedicalReimbursement extends Model
     {
         return $this->hasOne('\App\User', 'id', 'approve_direktur_id');
     }
+
+    /**
+     * [hr_benefit description]
+     * @return [type] [description]
+     */
+    public function hr_benefit()
+    {
+        return $this->hasOne('\App\User', 'id', 'hr_benefit_id');
+    }
+
+    /**
+     * [manager_hr description]
+     * @return [type] [description]
+     */
+    public function manager_hr()
+    {
+        return $this->hasOne('\App\User', 'id', 'manager_hr_id');
+    }
+
+    /**
+     * [gm_hr description]
+     * @return [type] [description]
+     */
+    public function gm_hr()
+    {
+        return $this->hasOne('\App\User', 'id', 'gm_hr_id');
+    }
 }

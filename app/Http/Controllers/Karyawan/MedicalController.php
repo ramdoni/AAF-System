@@ -78,7 +78,7 @@ class MedicalController extends Controller
             $form->tanggal_kwitansi         = $request->tanggal_kwitansi[$key];
             $form->user_family_id              = $request->user_family_id[$key];
             $form->jenis_klaim              = $request->jenis_klaim[$key];
-            $form->jumlah                   = $request->jumlah[$key];
+            $form->jumlah                   = str_replace(',', '', $request->jumlah[$key]);
             $form->save();
         }
 
@@ -121,7 +121,7 @@ class MedicalController extends Controller
             $form->tanggal_kwitansi         = $request->tanggal_kwitansi[$key];
             $form->user_family_id              = $request->user_family_id[$key];
             $form->jenis_klaim              = $request->jenis_klaim[$key];
-            $form->jumlah                   = $request->jumlah[$key];
+            $form->jumlah                   = str_replace(',', '', $request->jumlah[$key]);
             
             if (request()->hasFile('file_bukti_transaksi'))
             {

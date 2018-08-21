@@ -65,7 +65,7 @@
                                         <td>{{ $item->telepon }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ isset($item->department->name) ? $item->department->name : '' }}</td>
-                                        <td>{{ isset($item->position->name) ? $item->position->name : '' }}</td>
+                                        <td>{{ isset($item->organisasiposition->name) ? $item->organisasiposition->name : '' }}</td>
                                         <td>{{ $item->organisasi_job_role }}</td>
                                         <td>
                                             <a onclick="status_karyawan('{{ $item->name .' - '. $item->nik }}',  {{ $item->id }}, {{ $item->status }})"> 
@@ -78,14 +78,10 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('administrator.karyawan.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
-                                           <!--  <form action="{{ route('administrator.karyawan.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}                                               
-                                                <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i> delete</button>
-                                            </form> -->
                                             <div class="clearfix"></div>
                                             <a class="btn btn-default btn-xs" onclick="change_password('{{ $item->name .' - '. $item->nik }}', {{ $item->id }})"><i class="fa fa-key"></i> Change Password </a><br />
                                             <a href="{{ route('administrator.karyawan.print-profile', $item->id) }}" target="_blank" class="btn btn-default btn-xs"><i class="fa fa-print"></i> print</a>
+                                            <a onclick="confirm_loginas('{{ $item->name }}','{{ route('administrator.karyawan.autologin', $item->id) }}')"  class="btn btn-warning btn-xs"><i class="fa fa-key"></i> Autologin</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -100,7 +96,6 @@
     <!-- /.container-fluid -->
     @include('layouts.footer')
 </div>
-
 <!-- modal content education  -->
 <div id="modal_import" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -133,7 +128,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 <!-- modal content education  -->
 <div id="modal_status_karyawan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -165,7 +159,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 <!-- modal content education  -->
 <div id="modal_change_password" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -200,10 +193,19 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 @section('footer-script')
 <script type="text/javascript">
     
+    function confirm_loginas(name, url)
+    {
+        bootbox.confirm("Login sebagai "+ name +" ? ", function(result){
+            if(result)
+            {
+                window.location = url;
+            }
+        });
+    }
+
     $("#submit_change_password_karyawan").click(function(){
 
         var password    = $('.modal-input-change-password').val();

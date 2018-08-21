@@ -44,6 +44,23 @@ class AjaxController extends Controller
     }
 
     /**
+     * [calculateHoursTime description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function calculateHoursTime(Request $request)
+    {
+        $params = ['message' => 'success'];
+        
+        if($request->ajax())
+        {
+            $params['data'] = sum_lembur_jam($request->data);
+        }   
+        
+        return response()->json($params);
+    }
+
+    /**
      * [updateFirstPassword description]
      * @return [type] [description]
      */
@@ -271,6 +288,9 @@ class AjaxController extends Controller
                 $data->show_gm_hr = 'no';
             }
 
+            $data->hr_benefit   = $data->hr_benefit;
+            $data->manager_hr   = $data->manager_hr;
+            $data->gm_hr        = $data->gm_hr;
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }
@@ -289,15 +309,9 @@ class AjaxController extends Controller
         {
             $data = \App\OvertimeSheet::where('id', $request->foreign_id)->first();
 
-            $atasan = \App\User::where('id', $data->approved_atasan_id)->first();
-            
-            $data->atasan = "";
-
-            if(isset($atasan))
-            {
-                $data->atasan = $atasan->name .' / '. $atasan->organisasiposition->name;
-            }
-
+            $data->atasan = $data->atasan;
+            $data->hr_benefit = $data->hr_benefit;
+            $data->hr_manager = $data->hr_manager;
 
             return response()->json(['message' => 'success', 'data' => $data]);
         }

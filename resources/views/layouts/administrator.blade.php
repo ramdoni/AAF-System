@@ -99,6 +99,9 @@
                                     </div>
                                 </div>
                             </li>
+                            <li>
+                                <a href="{{ route('administrator.profile') }}">Profile</a>
+                            </li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Logout</a></li>
@@ -662,48 +665,47 @@
                                         '<div class="steamline">'+
                                             '<div class="sl-item">';
 
-                                        if(data.data.is_approved_atasan == 1)
-                                        {
-                                            el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                                        }
-                                        if(data.data.is_approved_atasan == 0)
-                                        {
-                                            el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
-                                        }
-                                        if(data.data.is_approved_atasan === null)
-                                        {
-                                            el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
-                                        }
+                                            if(data.data.is_approved_atasan == 1){
+                                                el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan == 0){
+                                                el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                            }
+                                            if(data.data.is_approved_atasan === null){
+                                                el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                            }
 
                                             el += '<div class="sl-right">'+
-                                                    '<div><a href="#">'+ data.data.atasan +'</a> </div>'+
-                                                    '<div class="desc">'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
+                                                    '<div><a href="#">ATASAN</a> </div>'+
+                                                    '<div class="desc">'+ data.data.atasan.name +' / '+ data.data.atasan.nik + '<br />'+ (data.data.date_approved_atasan != null ? data.data.date_approved_atasan : '' ) +'<p>'+ (data.data.catatan_atasan != null ? data.data.catatan_atasan : '' )  +'</p></div>'+
                                                 '</div>'+
                                             '</div>'+
                                         '</div>'+
                                     '</div>';
 
-                    el += '<div class="panel-body">'+
+                     el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
                                     '<div class="sl-item">';
 
-                                if(data.data.is_hr_benefit_approved == 1)
-                                {
-                                    el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                                }
-                                if(data.data.is_hr_benefit_approved == 0)
-                                {
-                                    el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
-                                }
-                                if(data.data.is_hr_benefit_approved === null)
-                                {
-                                    el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
-                                }
+                                    if(data.data.is_hr_benefit_approved == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_hr_benefit_approved == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_hr_benefit_approved === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
 
                                     el += '<div class="sl-right">'+
-                                            '<div><a href="#">HR BENEFIT</a> </div>'+
-                                            '<div class="desc">'+ (data.data.is_hr_benefit_approved == 1 ? '<small>'+ data.data.is_hr_benefit_approved +'</small>' : '')  +'</div>'+
-                                        '</div>'+
+                                            '<div><a href="#">HR BENEFIT</a> </div>';
+
+
+                                    if(data.data.is_hr_benefit_approved !== null){
+                                       el += '<div class="desc">'+ data.data.hr_benefit.name +' / '+ data.data.hr_benefit.nik +'<p>'+ data.data.hr_benefit_date +'</p></div>'; 
+                                    }
+                                    
+                                    el +='</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
@@ -716,19 +718,20 @@
                                     if(data.data.is_hr_manager == 1){
                                         el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                                     }
-
                                     if(data.data.is_hr_manager == 0){
                                         el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
                                     }
-
                                     if(data.data.is_hr_manager === null){
                                         el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
                                     }
 
-                                        el += '<div class="sl-right">'+
-                                            '<div><a href="#">SR. MANAGER HR OPR </a> </div>'+
-                                            '<div class="desc">'+ (data.data.is_hr_manager == 1 ? '<small>'+ data.data.is_hr_manager +'</small>' : '')  +'</div>'+
-                                        '</div>'+
+                                    el += '<div class="sl-right"><div><a href="#">SR. MANAGER HR OPR </a> </div>';
+
+                                    if(data.data.is_hr_manager !== null){
+                                       el += '<div class="desc">'+ data.data.hr_manager.name +' / '+ data.data.hr_manager.nik +'<p>'+ data.data.hr_manager_date +'</p></div>'; 
+                                    }
+                                    
+                                    el += '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
@@ -897,8 +900,8 @@
     </script>
 
     @yield('footer-script')
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-</form>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
 </body>
 </html>

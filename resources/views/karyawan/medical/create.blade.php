@@ -43,9 +43,7 @@
                                 </ul>
                             </div>
                         @endif
-
                         {{ csrf_field() }}
-
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
                                 <label class="col-md-12">NIK / Nama Karyawan</label>
@@ -73,7 +71,6 @@
                             <br />
                         </div>
                         <div class="col-md-6">
-
                             <br />
                             <table class="table table-bordered">
                                 <tbody>
@@ -96,7 +93,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                         <div class="clearfix"></div>
                         <div>
                           <table class="table table-hover">
@@ -136,7 +132,7 @@
                                     </td>
                                     <td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>
 
-                                    <td><input type="number" class="form-control input" name="jumlah[]" required /></td>
+                                    <td><input type="text" class="form-control input price_format" name="jumlah[]" required /></td>
                                 </tr>
                               </tbody>
                               <tfoot>
@@ -150,6 +146,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <br />
+                        <hr />
                         <div class="form-group">
                             <div class="col-md-12">
                                 <a href="{{ route('administrator.overtime.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Cancel</a>
@@ -264,7 +261,7 @@
                             '</select>'+
                         '</td>'+
                         '<td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>'+
-                        '<td><input type="number" class="form-control input" name="jumlah[]" required /></td>'+
+                        '<td><input type="text" class="form-control input price_format" name="jumlah[]" required /></td>'+
                         '<td><a class="btn btn-danger btn-xs" onclick="hapus_item(this)"><i class="fa fa-trash"></i></a></td>'+
                         '</tr>';
 
@@ -276,6 +273,7 @@
 
         cek_button_add();
         show_hide_add();
+        start_price_format();
     });
 
 function show_hide_add()
@@ -295,7 +293,7 @@ function show_hide_add()
     $(".oninput input[name='jumlah[]']").each(function(){
         if($(this).val() != "")
         {
-            total_nominal += parseInt($(this).val());
+            total_nominal += parseInt($(this).val().replace(',','').replace(',', ''));
         }
     });
 
@@ -303,7 +301,7 @@ function show_hide_add()
 
 }
 
-function cek_button_add()
+function cek_button_add() 
 {
     $('.oninput input').on('keyup',function(){
         show_hide_add();

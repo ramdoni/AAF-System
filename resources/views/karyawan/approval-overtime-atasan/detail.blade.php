@@ -97,6 +97,7 @@
 
                         <div class="clearfix"></div>
                         <br />
+                        <hr />
                         <a href="{{ route('karyawan.approval.overtime-atasan.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
                         @if($data->is_approved_atasan == "")
                         <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>

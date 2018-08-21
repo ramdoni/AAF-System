@@ -8,8 +8,6 @@
 
 @section('content')
 
-  
-        
 <!-- ============================================================== -->
 <!-- Page Content -->
 <!-- ============================================================== -->
@@ -68,7 +66,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($item->is_approved_atasan == "")
+                                            @if($item->is_approved_atasan === NULL)
                                                 <a href="{{ route('administrator.overtime.edit', $item->id) }}" class="btn btn-info btn-xs">proses <i class="fa fa-arrow-right"></i></a>
                                             @else
                                                 <a href="{{ route('administrator.overtime.edit', $item->id) }}" class="btn btn-default btn-xs">detail <i class="fa fa-search-plus"></i></a>

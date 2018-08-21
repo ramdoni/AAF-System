@@ -1246,4 +1246,25 @@ class KaryawanController extends Controller
             return redirect()->route('administrator.karyawan.index')->with('message-success', 'Password Karyawan Berhasil dirubah !');
         }
     }
+
+    /**
+     * [autologin description]
+     * @return [type] [description]
+     */
+    public function autologin($id)
+    {   
+        $user = \App\User::where('id', $id)->first();
+
+        if($user)
+        {
+            \Auth::loginUsingId($user->id);
+            \Session::put('is_login_administrator', true);
+
+            return redirect()->route('karyawan.dashboard');
+        }
+        else
+        {
+            return redirect()->route('administrator.karyawan.index')->with('message-error', 'Error, Autologin gagal !');
+        }
+    }
 }

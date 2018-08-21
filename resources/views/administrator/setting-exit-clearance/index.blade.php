@@ -194,12 +194,8 @@
                        <div class="form-group">
                             <label class="col-md-3">Pilih </label>
                             <div class="col-md-6">
-                                <select class="form-control modal_hrd_id">
-                                    <option value="">Pilih </option>
-                                    @foreach(get_karyawan() as $item)
-                                    <option value="{{ $item->id }}" data-kelamin="{{ $item->jenis_kelamin }}">{{ $item->nik }} / {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control autocomplete-hrd" >
+                                <input type="hidden" class="modal_hrd_id">
                             </div>
                        </div>
                    </form>
@@ -226,12 +222,8 @@
                        <div class="form-group">
                             <label class="col-md-3">Pilih </label>
                             <div class="col-md-6">
-                                <select class="form-control modal_ga_id">
-                                    <option value="">Pilih </option>
-                                    @foreach(get_karyawan() as $item)
-                                    <option value="{{ $item->id }}" data-kelamin="{{ $item->jenis_kelamin }}">{{ $item->nik }} / {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control autocomplete-ga">
+                                <input type="hidden" class="modal_ga_id">
                             </div>
                        </div>
                    </form>
@@ -258,12 +250,8 @@
                        <div class="form-group">
                             <label class="col-md-3">Pilih </label>
                             <div class="col-md-6">
-                                <select class="form-control modal_it_id">
-                                    <option value="">Pilih </option>
-                                    @foreach(get_karyawan() as $item)
-                                    <option value="{{ $item->id }}" data-kelamin="{{ $item->jenis_kelamin }}">{{ $item->nik }} / {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control autocomplete-it">
+                                <input type="hidden" class="modal_it_id">
                             </div>
                        </div>
                    </form>
@@ -290,12 +278,8 @@
                        <div class="form-group">
                             <label class="col-md-3">Pilih </label>
                             <div class="col-md-6">
-                                <select class="form-control modal_accounting_id">
-                                    <option value="">Pilih </option>
-                                    @foreach(get_karyawan() as $item)
-                                    <option value="{{ $item->id }}" data-kelamin="{{ $item->jenis_kelamin }}">{{ $item->nik }} / {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control autocomplete-accounting" />
+                                <input type="hidden" class="modal_accounting_id">
                             </div>
                        </div>
                    </form>
@@ -311,7 +295,59 @@
 </div>
 
 @section('footer-script')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style type="text/css">
+    .ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front {
+        z-index: 9999;
+    } 
+</style>
 <script type="text/javascript">
+
+    $(".autocomplete-ga" ).autocomplete({
+        minLength:0,
+        limit: 25,
+        source: function( request, response ) {
+            $.ajax({
+              url: "{{ route('ajax.get-karyawan') }}",
+              method : 'POST',
+              data: {
+                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+              },
+              success: function( data ) {
+                response( data );
+              }
+            });
+        },
+        select: function( event, ui ) {
+            $( ".modal_ga_id" ).val(ui.item.id);
+        }
+    }).on('focus', function () {
+            $(this).autocomplete("search", "");
+    });
+
+
+    $(".autocomplete-hrd" ).autocomplete({
+        minLength:0,
+        limit: 25,
+        source: function( request, response ) {
+            $.ajax({
+              url: "{{ route('ajax.get-karyawan') }}",
+              method : 'POST',
+              data: {
+                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+              },
+              success: function( data ) {
+                response( data );
+              }
+            });
+        },
+        select: function( event, ui ) {
+            $( ".modal_hrd_id" ).val(ui.item.id);
+        }
+    }).on('focus', function () {
+            $(this).autocomplete("search", "");
+    });
 
     $('.add-hrd').click(function(){
         $('#modal_hrd').modal('show');
@@ -345,6 +381,29 @@
         });
     });
 
+    $(".autocomplete-it" ).autocomplete({
+        minLength:0,
+        limit: 25,
+        source: function( request, response ) {
+            $.ajax({
+              url: "{{ route('ajax.get-karyawan') }}",
+              method : 'POST',
+              data: {
+                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+              },
+              success: function( data ) {
+                response( data );
+              }
+            });
+        },
+        select: function( event, ui ) {
+            $( ".modal_it_id" ).val(ui.item.id);
+        }
+    }).on('focus', function () {
+            $(this).autocomplete("search", "");
+    });
+
+
     $('.add-it').click(function(){
         $('#modal_it').modal('show');
     });
@@ -360,6 +419,28 @@
         });
     });
 
+
+    $(".autocomplete-accounting" ).autocomplete({
+        minLength:0,
+        limit: 25,
+        source: function( request, response ) {
+            $.ajax({
+              url: "{{ route('ajax.get-karyawan') }}",
+              method : 'POST',
+              data: {
+                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+              },
+              success: function( data ) {
+                response( data );
+              }
+            });
+        },
+        select: function( event, ui ) {
+            $( ".modal_accounting_id" ).val(ui.item.id);
+        }
+    }).on('focus', function () {
+            $(this).autocomplete("search", "");
+    });
     $('.add-accounting').click(function(){
         $('#modal_accounting').modal('show');
     });

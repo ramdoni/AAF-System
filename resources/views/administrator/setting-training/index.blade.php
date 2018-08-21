@@ -237,7 +237,7 @@
 <style type="text/css">
     .ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front {
         z-index: 9999;
-    }
+    } 
 </style>
 <script type="text/javascript">
 

@@ -42,4 +42,29 @@ class IndexController extends Controller
 
         return view('administrator.structure')->with($params);
     }
+
+    /**
+     * [profile description]
+     * @return [type] [description]
+     */
+    public function profile()
+    {
+        return view('administrator.profile')->with(['data' => \Auth::user()]);
+    }
+
+    /**
+     * [profileUpdate description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function profileUpdate(Request $request)
+    {
+        $data           = \App\User::where('id', \Auth::user()->id)->first();
+        $data->name     = $request->name;
+        $data->email    = $request->email;
+        $data->telepon  = $request->telepon;
+        $data->save();
+
+        return redirect()->route('administrator.profile')->with('message-success', 'Update profile berhasil ');
+    }
 }

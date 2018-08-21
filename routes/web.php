@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::post('ajax/update-inventaris-lainnya', 'AjaxController@updateInventarisLainnya')->name('ajax.update-inventaris-lainnya');
 	Route::post('ajax/update-first-password', 'AjaxController@updatePassword')->name('ajax.update-first-password');		
 	Route::post('ajax/get-position-by-section', 'AjaxController@getPositionBySection')->name('ajax.get-position-by-section');
+	Route::post('ajax/calculate-hours-time', 'AjaxController@calculateHoursTime')->name('ajax.calculate-hours-time');
 });
 
 
@@ -169,6 +170,7 @@ Route::group(['prefix' => 'karyawan', 'middleware' => ['auth', 'access:2']], fun
 	Route::get('karyawan/download-peraturan-perusahaan/{id}', $path . 'IndexController@downloadPeraturanPerusahaan')->name('karyawan.download-peraturan-perusahaan');
 	Route::get('karyawan/news/more', $path . 'IndexController@newsmore')->name('karyawan.news.more');
 	Route::get('karyawan/internal-memo/more', $path . 'IndexController@internalMemoMore')->name('karyawan.internal-memo.more');
+	Route::get('karyawan/backtoadministrator', $path . 'IndexController@backtoadministrator')->name('karyawan.back-to-administrator');
 });
 
 // ROUTING ADMINISTRATOR
@@ -185,7 +187,8 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	$path = 'Administrator\\';
 
 	Route::get('/', $path . 'IndexController@index')->name('administrator.dashboard');
-
+	Route::get('profile', $path .'IndexController@profile')->name('administrator.profile');
+	Route::post('profile-update', $path .'IndexController@profileUpdate')->name('administrator.profile.update');
 	Route::resource('karyawan', $path . 'KaryawanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
 	Route::resource('department', $path . 'DepartmentController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
 	Route::resource('jabatan', $path . 'JabatanController', ['only'=> ['index','create','store', 'edit','destroy','update'], 'as' => 'administrator']);
@@ -304,4 +307,5 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['auth', 'access:1']]
 	Route::get('karyawan/delete-inventaris-lainnya/{id}', $path.'KaryawanController@deleteInventarisLainnya')->name('administrator.karyawan.delete-inventaris-lainnya');
 	Route::post('karyawan/change-status-karyawan', $path .'KaryawanController@changeStatusKaryawan')->name('administrator.karyawan.change-status-karyawan');
 	Route::post('karyawan/change-password-karyawan', $path .'KaryawanController@changePasswordKaryawan')->name('administrator.karyawan.change-password-karyawan');
+	Route::get('karyawan/autologin/{id}', $path .'KaryawanController@autologin')->name('administrator.karyawan.autologin');
 });

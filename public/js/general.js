@@ -7,10 +7,15 @@ function numberWithComma(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-$('.price_format').priceFormat({
-    prefix: '',
-    centsSeparator: '.',
-    thousandsSeparator: ',',
-    clearOnEmpty: true,
-    centsLimit : 0
-});
+start_price_format();
+
+function start_price_format()
+{
+	$('.price_format').priceFormat({
+	    prefix: '',
+	    centsSeparator: '.',
+	    thousandsSeparator: ',',
+	    clearOnEmpty: true,
+	    centsLimit : 0
+	});
+}

@@ -39,6 +39,8 @@
                             <thead>
                                 <tr>
                                     <th width="70" class="text-center">#</th>
+                                    <th>NIK</th>
+                                    <th>NAME</th>
                                     <th>TANGGAL OVERTIME</th>
                                     <th>STATUS</th>
                                     <th>#</th>
@@ -47,7 +49,9 @@
                             <tbody>
                                 @foreach($data as $no => $item)
                                     <tr>
-                                        <td class="text-center">{{ $no+1 }}</td>    
+                                        <td class="text-center">{{ $no+1 }}</td>  
+                                        <td>{{ $item->user->nik }}</td>  
+                                        <td>{{ $item->user->name }}</td>  
                                         <td>{{ date('d F Y', strtotime($item->created_at))}}</td>                                                   
                                         <td>
                                             <a href="javascript:;" onclick="status_approval_overtime({{ $item->id }})"> 

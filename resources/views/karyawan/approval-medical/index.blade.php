@@ -50,6 +50,10 @@
                             <tbody>
                                 @foreach($data as $no => $item)
                                  @if(isset($item->user->nik))
+                                    
+                                    @if(skip_is_down_manager($item->user->id)=='yes')
+                                        <?php continue; ?>
+                                    @endif
                                     <tr>
                                         <td class="text-center">{{ $no+1 }}</td>
                                         <td>{{ $item->user->nik }}</td>
@@ -66,7 +70,7 @@
                                                     @if($item->is_approved_hr_benefit === 0)
                                                         <label class="btn btn-danger btn-xs">Denied</label>
                                                     @endif
-                                                    @if($item->is_approved_hr_benefit == "")
+                                                    @if($item->is_approved_hr_benefit === NULL)
                                                         <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                     @endif
                                                 @endif
@@ -78,7 +82,7 @@
                                                     @if($item->is_approved_manager_hr === 0)
                                                         <label class="btn btn-danger btn-xs">Denied</label>
                                                     @endif
-                                                    @if($item->is_approved_manager_hr == "")
+                                                    @if($item->is_approved_manager_hr === NULL)
                                                         <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                     @endif
                                                 @endif
@@ -90,7 +94,7 @@
                                                     @if($item->is_approved_gm_hr === 0)
                                                         <label class="btn btn-danger btn-xs">Denied</label>
                                                     @endif
-                                                    @if($item->is_approved_gm_hr == "")
+                                                    @if($item->is_approved_gm_hr === NULL)
                                                         <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                     @endif
                                                 @endif

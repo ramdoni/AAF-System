@@ -84,10 +84,10 @@
                                 <tbody class="table-content-lembur">
                                     <tr>
                                         <td>1</td>
-                                        <td><input type="text" name="tanggal[]" class="form-control datepicker"></td>
-                                        <td><input type="text" name="description[]" class="form-control"></td>
-                                        <td><input type="text" name="awal[]" class="form-control time-picker awal" /></td>
-                                        <td><input type="text" name="akhir[]" class="form-control time-picker akhir" /></td>
+                                        <td><input type="text" name="tanggal[]" class="form-control datepicker input"></td>
+                                        <td><input type="text" name="description[]" class="form-control input"></td>
+                                        <td><input type="text" name="awal[]" class="form-control time-picker awal input" /></td>
+                                        <td><input type="text" name="akhir[]" class="form-control time-picker akhir input" /></td>
                                         <td><input type="text" name="total_lembur[]" class="form-control total_lembur" readonly="true" /></td>
                                         <td><a class="btn btn-danger btn-xs" onclick="hapus_(this)"><i class="fa fa-trash"></i> hapus</a></td>
                                     </tr>
@@ -105,7 +105,6 @@
                                     <input type="hidden" name="atasan_user_id" />
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-md-6">Jabatan</label>
                                 <label class="col-md-6">Division / Departement</label>
@@ -146,12 +145,7 @@
 @section('footer-script')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-
 <link href="{{ asset('admin-css/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css') }}" rel="stylesheet">
-<!-- Clock Plugin JavaScript -->
 <script src="{{ asset('admin-css/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
 
 <script type="text/javascript">
@@ -163,6 +157,9 @@
     @endforeach
 </script>
 <script type="text/javascript">
+
+    var validate_form = true;
+
     $(".autcomplete-atasan" ).autocomplete({
         source: list_atasan,
         minLength:0,
@@ -191,6 +188,15 @@
 
     $("#btn_submit").click(function(){
 
+        cek_form();
+        
+        if(!validate_form)
+        {
+            bootbox.alert('Form belum lengkap !');
+
+            return false;
+        }
+        
         var total = $('.table-content-lembur tr').length;
 
         if(total == 0) return false;
@@ -200,6 +206,8 @@
             bootbox.alert('Approval Atasan harus anda pilih !');
             return false;
         }
+
+        
 
         bootbox.confirm('Apakah anda ingin mengajukan Overtime ?', function(result){
 
@@ -214,7 +222,7 @@
     hitung_total_lembur();
 
     jQuery('.datepicker').datepicker({
-        format: 'yyyy-mm-dd',
+        dateFormat: 'yy-mm-dd',
     });
 
     // Clock pickers
@@ -240,21 +248,31 @@
                 $('.department').val(data.data.department_name);
             }
         });
-
     });
 
+
     $("#add").click(function(){
+
+        var disabledDates = [];
+        $("input[name='tanggal[]']").each(function(){
+            if($(this).val() != "")
+            {
+                disabledDates.push($(this).val());
+            }
+        });
+
+       
 
         var no = $('.table-content-lembur tr').length;
 
         var html = '<tr>';
             html += '<td>'+ (no+1) +'</td>';
-            html += '<td><input type="text" name="tanggal[]" class="form-control datepicker"></td>';
-            html += '<td><input type="text" name="description[]" class="form-control"></td>';
-            html += '<td><input type="text" name="awal[]" class="form-control time-picker awal" /></td>';
-            html += '<td><input type="text" name="akhir[]" class="form-control time-picker akhir" /></td>';
+            html += '<td><input type="text" name="tanggal[]" class="form-control datepicker input"></td>';
+            html += '<td><input type="text" name="description[]" class="form-control input"></td>';
+            html += '<td><input type="text" name="awal[]" class="form-control time-picker awal input" /></td>';
+            html += '<td><input type="text" name="akhir[]" class="form-control time-picker akhir input" /></td>';
             html += '<td><input type="text" name="total_lembur[]" class="form-control total_lembur" readonly="true" /></td>';
-            html += '<td><a class="btn btn-danger btn-xs" onclick="hapus_(this)">hapus</a></td>';
+            html += '<td><a class="btn btn-danger btn-xs" onclick="hapus_(this)"><i class="fa fa-trash"></i> hapus</a></td>';
             html += '</tr>';
 
         $('.table-content-lembur').append(html);
@@ -267,13 +285,17 @@
         });
 
         jQuery('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+            dateFormat: 'yy-mm-dd',
+            beforeShowDay: function(date){
+                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                return [ disabledDates.indexOf(string) == -1 ]
+            }
         });
 
         hitung_total_lembur();
     });
 
-    function hapus_(el)
+    function hapus_(el) 
     {
         $(el).parent().parent().remove();
     }
@@ -308,6 +330,17 @@
                 $(this).parent().parent().find('.total_lembur').val(hours-a+ ':' + minutes);
             });
         });
+    }
+
+    function cek_form()
+    {
+        validate_form = true;
+        $(".input").each(function(){
+            if($(this).val() == "")
+            {
+                validate_form = false;
+            }
+        });   
     }
 
 </script>

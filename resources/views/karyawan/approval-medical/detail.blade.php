@@ -45,25 +45,23 @@
                             </div>
                         @endif
                         @php ($readonly="")
-                        @if($data->is_approved_atasan == 1)
-                                @if($approval->nama_approval == 'HR Benefit')
-                                    @if($data->is_approved_hr_benefit !== NULL)
-                                        @php($readonly='readonly="true"')
-                                    @endif
-                                @endif
-
-                                @if($approval->nama_approval == 'Manager HR')
-                                    @if($data->is_approved_manager_hr !== NULL)
-                                        @php($readonly='readonly="true"')
-                                    @endif
-                                @endif
-
-                                @if($approval->nama_approval == 'GM HR')
-                                    @if($data->is_approved_gm_hr !== NULL)
-                                        @php($readonly='readonly="true"')
-                                    @endif
-                                @endif
+                        @if($approval->nama_approval == 'HR Benefit')
+                            @if($data->is_approved_hr_benefit !== NULL)
+                                @php($readonly='readonly="true"')
                             @endif
+                        @endif
+
+                        @if($approval->nama_approval == 'Manager HR')
+                            @if($data->is_approved_manager_hr !== NULL)
+                                @php($readonly='readonly="true"')
+                            @endif
+                        @endif
+
+                        @if($approval->nama_approval == 'GM HR')
+                            @if($data->is_approved_gm_hr !== NULL)
+                                @php($readonly='readonly="true"')
+                            @endif
+                        @endif
 
                         {{ csrf_field() }}
 
@@ -172,10 +170,9 @@
                               </tbody>
                               <tfoot>
                                   <tr>
-                                      <th colspan="5" style="text-align: right;">Total</th>
-                                      <th class="total_nominal">{{ number_format($total_nominal) }}</th>
-                                      <th></th>
-                                      <th class="total_nominal_approve">{{ number_format($total_approve) }}</th>
+                                      <th colspan="6" style="text-align: right;font-size: 14px;">Total</th>
+                                      <th class="total_nominal" style="font-size: 14px;">{{ number_format($total_nominal) }}</th>
+                                      <th class="total_nominal_approve" style="font-size: 14px;">{{ number_format($total_approve) }}</th>
                                   </tr>
                               </tfoot>
                           </table>
@@ -190,22 +187,22 @@
                         <a href="{{ route('karyawan.approval.medical.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
                             @if($approval->nama_approval == 'HR Benefit')
                                 @if($data->is_approved_hr_benefit === NULL)
-                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                     <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                 @endif
                             @endif
 
                             @if($approval->nama_approval == 'Manager HR')
                                 @if($data->is_approved_manager_hr === NULL)
-                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                     <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                 @endif
                             @endif
 
                             @if($approval->nama_approval == 'GM HR')
                                 @if($data->is_approved_gm_hr === NULL)
-                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                     <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                 @endif
                             @endif
                             <br style="clear: both;" />

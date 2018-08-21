@@ -65,11 +65,10 @@
                                                             <label class="btn btn-danger btn-xs">Denied</label>
                                                         @endif
 
-                                                        @if($item->is_hr_manager == null)
+                                                        @if($item->is_hr_manager === NULL)
                                                             <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                         @endif
                                                     @endif
-
 
                                                     @if($approval->nama_approval == 'HR Operation')
                                                         @if($item->is_hr_benefit_approved == 1)
@@ -80,7 +79,7 @@
                                                             <label class="btn btn-danger btn-xs">Denied</label>
                                                         @endif
 
-                                                        @if($item->is_hr_benefit_approved == "")
+                                                        @if($item->is_hr_benefit_approved === NULL)
                                                             <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                         @endif
                                                     @endif
@@ -101,22 +100,18 @@
                                             @if($item->is_approved_atasan == 1)
                                                 <a href="{{ route('karyawan.approval.overtime.detail', ['id' => $item->id]) }}">
                                                 @if($approval->nama_approval == 'Manager HR')
-                                                    @if($item->is_hr_manager == 1 or $item->is_hr_manager === 0)
-                                                        <label class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</label>
-                                                    @endif
-
-                                                    @if($item->is_hr_manager == null)
+                                                    @if($item->is_hr_manager === NULL)
                                                         <label class="btn btn-info btn-xs">proses <i class="fa fa-arrow-right"></i></label>
+                                                    @else
+                                                        <label class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</label>
                                                     @endif
                                                 @endif
 
                                                 @if($approval->nama_approval == 'HR Operation')
-                                                    @if($item->is_hr_benefit_approved == 1 or $item->is_hr_manager === 0)
-                                                        <label class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</label>
-                                                    @endif
-
-                                                    @if($item->is_hr_benefit_approved == null)
+                                                    @if($item->is_hr_benefit_approved === NULL)
                                                         <label class="btn btn-info btn-xs">proses <i class="fa fa-arrow-right"></i></label>
+                                                    @else
+                                                        <label class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</label>
                                                     @endif
                                                 @endif
                                             @else

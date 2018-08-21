@@ -60,46 +60,39 @@ class ApprovalOvertimeController extends Controller
         {
             if($approval->nama_approval =='Manager HR')
             {
-                $overtime->is_hr_manager = 1;
+                $overtime->is_hr_manager    = $request->status;
+                $overtime->hr_manager_date  = date('Y-m-d H:i:s');
+                $overtime->hr_manager_id    = \Auth::user()->id;
             }
 
             if($approval->nama_approval =='HR Operation')
             {
-                $overtime->is_hr_benefit_approved = 1;
+                $overtime->is_hr_benefit_approved   = $request->status;
+                $overtime->hr_benefit_date          = date('Y-m-d H:i:s');
+                $overtime->hr_benefit_id            = \Auth::user()->id;
             }
         }
-        $overtime->save();
 
-        $overtime = \App\OvertimeSheet::where('id', $request->id)->first();
         if($overtime->is_hr_benefit_approved ==1 and $overtime->is_hr_manager ==1)
         {
-            // cek semua approval
-            $status = \App\StatusApproval::where('jenis_form', 'overtime')
-                                            ->where('foreign_id', $request->id)
-                                            ->where('status', 0)
-                                            ->count();
-            $overtime = \App\OvertimeSheet::where('id', $request->id)->first();
-            if($status >=1)
-            {
-                $status = 3;
+            $overtime->status = 2;
+        }
 
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $overtime->user->name .'</p><p> Pengajuan Overtime anda ditolak.</p>' ;    
-            }
-            else
-            {
-                $status = 2;
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $overtime->user->name .'</p><p> Pengajuan Overtime anda disetujui.</p>' ; 
-            }
-            
-            //\Mail::to($overtime->user->)->send(new \App\Mail\GeneralMail($objDemo));
-            //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
+        if($request->status == 0)
+        {
+            $overtime->status = 3; // Reject
+        }
+        $overtime->total_approval_all   = $request->total_approval_all;
+        $overtime->total_meal_all       = $request->total_meal_all;
+        $overtime->save();
 
-            $overtime->status = $status;
-            $overtime->save();
+        # form
+        foreach($request->total_approval as $id => $val)
+        {
+            $data                   = \App\OvertimeSheetForm::where('id', $id)->first();
+            $data->total_approval   = $val;
+            $data->total_meal       = $request->total_meal[$id];
+            $data->save();
         }
 
         return redirect()->route('karyawan.approval.overtime.index')->with('messages-success', 'Form Cuti Berhasil diproses !');

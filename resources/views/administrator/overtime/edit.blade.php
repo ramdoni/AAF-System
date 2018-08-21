@@ -1,4 +1,4 @@
-@extends('layouts.karyawan')
+@extends('layouts.administrator')
 
 @section('title', 'Overtime Sheet - PT. Arthaasia Finance')
 
@@ -27,7 +27,7 @@
         </div>
         <!-- .row -->
         <div class="row">
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="POST" action="{{ route('administrator.overtime.update', $data->id) }}">
                 <div class="col-md-12">
                     <div class="white-box">
                         <h3 class="box-title m-b-0">Form Overtime Sheet</h3>
@@ -93,12 +93,15 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <input type="hidden" name="status" value="0" />
+                            <input type="hidden" name="id" value="{{ $data->id }}">
                         </div>
                         <hr />
-                        
                         <div class="clearfix"></div>
                         <br />
                         <a href="{{ route('administrator.overtime.index') }}" class="btn btn-sm btn-default waves-effect waves-light m-r-10"><i class="fa fa-arrow-left"></i> Back</a>
+                        <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied sebagai Atasan</a>
+                        <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve sebagai Atasan</a>
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>
@@ -114,4 +117,32 @@
 <!-- ============================================================== -->
 <!-- End Page Content -->
 <!-- ============================================================== -->
+
+@section('footer-script')
+<script type="text/javascript">
+    $("#btn_approved").click(function(){
+        bootbox.confirm('Approve Overtime Karyawan ?', function(result){
+
+            $("input[name='status']").val(1);
+            if(result)
+            {
+                $('#form-overtime').submit();
+            }
+
+        });
+    });
+
+    $("#btn_tolak").click(function(){
+        bootbox.confirm('Tolak Overtime Karyawan ?', function(result){
+            $("input[name='status']").val(0);
+            if(result)
+            {
+                $('#form-overtime').submit();
+            }
+
+        });
+    });
+</script>
+@endsection
+
 @endsection
