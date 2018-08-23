@@ -27,6 +27,43 @@
         <div class="row"> 
             <div class="col-md-4">
                 <div class="white-box">
+                    <h3 class="box-title m-b-0 pull-left">Direktur</h3>
+                    <a class="btn btn-info btn-xs pull-right add-manager-hr"><i class="fa fa-plus"></i> Tambah</a>
+                    <div class="clearfix"></div>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table display nowrap" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="30" class="text-center">#</th>
+                                    <th>NAMA</th>
+                                    <th>JABATAN</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($manager_hr as $no =>  $item)
+                                <tr>
+                                    <td>{{ ($no + 1) }}</td>
+                                    <td>{{ isset($item->user->name) ? $item->user->nik .' / '. $item->user->name : '' }}</td>
+                                    <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name . ' / '. $item->user->department->name : '' }}</td>
+                                    <td>
+                                        <form action="{{ route('administrator.setting-overtime.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}                                               
+                                            <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="col-md-4">
+                <div class="white-box">
                     <h3 class="box-title m-b-0 pull-left">HR Benefit</h3>
                     <a class="btn btn-info btn-xs pull-right add-hr-operation"><i class="fa fa-plus"></i> Tambah</a>
                     <div class="clearfix"></div>
@@ -60,43 +97,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="white-box">
-                    <h3 class="box-title m-b-0 pull-left">Manager HR</h3>
-                    <a class="btn btn-info btn-xs pull-right add-manager-hr"><i class="fa fa-plus"></i> Tambah</a>
-                    <div class="clearfix"></div>
-                    <br />
-                    <div class="table-responsive">
-                        <table class="table display nowrap" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th width="30" class="text-center">#</th>
-                                    <th>NAMA</th>
-                                    <th>JABATAN</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($manager_hr as $no =>  $item)
-                                <tr>
-                                    <td>{{ ($no + 1) }}</td>
-                                    <td>{{ isset($item->user->name) ? $item->user->nik .' / '. $item->user->name : '' }}</td>
-                                    <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name . ' / '. $item->user->department->name : '' }}</td>
-                                    <td>
-                                        <form action="{{ route('administrator.setting-overtime.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}                                               
-                                            <button type="submit" class="btn btn-danger btn-xs m-r-5"><i class="ti-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>                       
+            </div>                      
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
@@ -141,7 +142,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Tambah Manager HR Approval</h4> </div>
+                <h4 class="modal-title" id="myModalLabel">Tambah Direktur Approval</h4> </div>
                 <div class="modal-body">
                    <form class="form-horizontal">
                        <div class="form-group">
@@ -232,7 +233,7 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-manager-up') }}",
               method : 'POST',
               data: {
                 'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')

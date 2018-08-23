@@ -43,6 +43,12 @@ class AjaxController extends Controller
         return ;
     }
 
+
+    public function getKaryawanManagerUp(Request $request)
+    {
+
+    }
+
     /**
      * [calculateHoursTime description]
      * @param  Request $request [description]

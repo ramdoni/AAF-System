@@ -96,7 +96,7 @@
                             <a class="btn btn-info btn-xs pull-right" id="add"><i class="fa fa-plus"></i> Tambah</a>
                         </div>
                         <hr />
-                        
+
                         <h4><b>Approval</b></h4>
                         <div class="col-md-6" style="border: 1px solid #eee; padding: 15px">
                             <div class="form-group">
@@ -133,8 +133,8 @@
                         <br style="clear: both;" />
                         <div class="clearfix"></div>
                     </div>
-                </div>    
-            </form>                    
+                </div>
+            </form>
         </div>
         <!-- /.row -->
         <!-- ============================================================== -->
@@ -147,9 +147,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link href="{{ asset('admin-css/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css') }}" rel="stylesheet">
 <script src="{{ asset('admin-css/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
-
 <script type="text/javascript">
-
     var list_atasan = [];
 
     @foreach(get_atasan_langsung() as $item)
@@ -159,13 +157,15 @@
 <script type="text/javascript">
 
     var validate_form = true;
+    validate_button_tambah();
+    input_change_form();
 
     $(".autcomplete-atasan" ).autocomplete({
         source: list_atasan,
         minLength:0,
         select: function( event, ui ) {
             $( "input[name='atasan_user_id']" ).val(ui.item.id);
-            
+
             var id = ui.item.id;
 
             $.ajax({
@@ -174,7 +174,6 @@
                 data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
                 success: function (data) {
-
                     $('.jabatan_atasan').val(data.data.organisasi_job_role);
                     $('.department_atasan').val(data.data.department_name);
                     $('.no_handphone_atasan').val(data.data.telepon);
@@ -187,16 +186,15 @@
     });
 
     $("#btn_submit").click(function(){
-
         cek_form();
-        
+
         if(!validate_form)
         {
             bootbox.alert('Form belum lengkap !');
 
             return false;
         }
-        
+
         var total = $('.table-content-lembur tr').length;
 
         if(total == 0) return false;
@@ -207,16 +205,12 @@
             return false;
         }
 
-        
-
         bootbox.confirm('Apakah anda ingin mengajukan Overtime ?', function(result){
-
             if(result)
             {
                 $('form.form-horizontal').submit();
             }
         });
-
     });
 
     hitung_total_lembur();
@@ -234,7 +228,6 @@
     });
 
     $("select[name='user_id']").on('change', function(){
-
         var id = $(this).val();
 
         $.ajax({
@@ -243,13 +236,11 @@
             data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
             dataType: 'json',
             success: function (data) {
-
                 $('.jabatan').val(data.data.nama_jabatan);
                 $('.department').val(data.data.department_name);
             }
         });
     });
-
 
     $("#add").click(function(){
 
@@ -259,9 +250,7 @@
             {
                 disabledDates.push($(this).val());
             }
-        });
-
-       
+        }); 
 
         var no = $('.table-content-lembur tr').length;
 
@@ -293,9 +282,11 @@
         });
 
         hitung_total_lembur();
+        input_change_form();
+        validate_button_tambah();
     });
 
-    function hapus_(el) 
+    function hapus_(el)
     {
         $(el).parent().parent().remove();
     }
@@ -308,23 +299,23 @@
 
                 var timeOfCall = $(this).parent().parent().find('.awal').val(),
                     timeOfResponse = $(this).parent().parent().find('.akhir').val();
-                
+
                 if(timeOfCall =="" || timeOfResponse == "") { return false; }
 
                 var hours = timeOfResponse.split(':')[0] - timeOfCall.split(':')[0],
                     minutes = timeOfResponse.split(':')[1] - timeOfCall.split(':')[1];
-                
+
                 if (timeOfCall <= "12:00:00" && timeOfResponse >= "13:00:00"){
                     a = 1;
                 } else {
                     a = 0;
                 }
                 minutes = minutes.toString().length<2?'0'+minutes:minutes;
-                if(minutes<0){ 
+                if(minutes<0){
                     hours--;
-                    minutes = 60 + minutes;        
+                    minutes = 60 + minutes;
                 }
-                
+
                 hours = hours.toString().length<2?'0'+hours:hours;
 
                 $(this).parent().parent().find('.total_lembur').val(hours-a+ ':' + minutes);
@@ -340,14 +331,32 @@
             {
                 validate_form = false;
             }
-        });   
+        });
     }
 
+    function input_change_form()
+    {
+        $(".input").each(function(){
+            $(this).on('change', function(){
+                validate_button_tambah();
+            });
+            $(this).on('input', function(){
+                validate_button_tambah();
+            });
+        });
+    }
+
+    function validate_button_tambah()
+    {
+        $("#add").show();
+
+        $(".input").each(function(){
+            if($(this).val() == "")
+            {
+                $("#add").hide();
+            }
+        });
+    }
 </script>
-
-
 @endsection
-<!-- ============================================================== -->
-<!-- End Page Content -->
-<!-- ============================================================== -->
 @endsection

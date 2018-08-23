@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::post('ajax/update-first-password', 'AjaxController@updatePassword')->name('ajax.update-first-password');		
 	Route::post('ajax/get-position-by-section', 'AjaxController@getPositionBySection')->name('ajax.get-position-by-section');
 	Route::post('ajax/calculate-hours-time', 'AjaxController@calculateHoursTime')->name('ajax.calculate-hours-time');
+	Route::post('ajax/get-karyawan-manager-up', 'AjaxController@getKaryawanManagerUp')->name('ajax.get-karyawan-manager-up');
 });
 
 
