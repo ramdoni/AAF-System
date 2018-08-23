@@ -31,8 +31,6 @@
     
     <link href="{{ asset('admin-css/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-    
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -52,7 +50,6 @@
         }
     </style>
 </head>
-
 <body class="fix-header">
 
      <!-- ============================================================== -->
@@ -575,6 +572,31 @@
                                 '<div class="steamline">'+
                                     '<div class="sl-item">';
 
+                                    if(data.data.is_hr_manager == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_hr_manager == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_hr_manager === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right"><div><a href="#">DIREKTUR </a> </div>';
+
+                                    if(data.data.is_hr_manager !== null){
+                                       el += '<div class="desc">'+ data.data.hr_manager.name +' / '+ data.data.hr_manager.nik +'<p>'+ data.data.hr_manager_date +'</p></div>'; 
+                                    }
+                                    
+                                    el += '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
+
+                    el += '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+
                                     if(data.data.is_hr_benefit_approved == 1){
                                         el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
                                     }
@@ -598,30 +620,7 @@
                                 '</div>'+
                             '</div>';
 
-                    el += '<div class="panel-body">'+
-                                '<div class="steamline">'+
-                                    '<div class="sl-item">';
-
-                                    if(data.data.is_hr_manager == 1){
-                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                                    }
-                                    if(data.data.is_hr_manager == 0){
-                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
-                                    }
-                                    if(data.data.is_hr_manager === null){
-                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
-                                    }
-
-                                    el += '<div class="sl-right"><div><a href="#">SR. MANAGER HR OPR </a> </div>';
-
-                                    if(data.data.is_hr_manager !== null){
-                                       el += '<div class="desc">'+ data.data.hr_manager.name +' / '+ data.data.hr_manager.nik +'<p>'+ data.data.hr_manager_date +'</p></div>'; 
-                                    }
-                                    
-                                    el += '</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
+                    
 
                     $("#modal_content_history_approval").html(el);
                 }

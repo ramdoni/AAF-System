@@ -682,6 +682,31 @@
                                             '</div>'+
                                         '</div>'+
                                     '</div>';
+                                    
+                    el += '<div class="panel-body">'+
+                                '<div class="steamline">'+
+                                    '<div class="sl-item">';
+
+                                    if(data.data.is_hr_manager == 1){
+                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
+                                    }
+                                    if(data.data.is_hr_manager == 0){
+                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
+                                    }
+                                    if(data.data.is_hr_manager === null){
+                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
+                                    }
+
+                                    el += '<div class="sl-right"><div><a href="#">DIREKTUR </a> </div>';
+
+                                    if(data.data.is_hr_manager !== null){
+                                       el += '<div class="desc">'+ data.data.hr_manager.name +' / '+ data.data.hr_manager.nik +'<p>'+ data.data.hr_manager_date +'</p></div>'; 
+                                    }
+                                    
+                                    el += '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>';
 
                      el += '<div class="panel-body">'+
                                 '<div class="steamline">'+
@@ -706,32 +731,6 @@
                                     }
                                     
                                     el +='</div>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
-
-
-                    el += '<div class="panel-body">'+
-                                '<div class="steamline">'+
-                                    '<div class="sl-item">';
-
-                                    if(data.data.is_hr_manager == 1){
-                                        el += '<div class="sl-left bg-success"> <i class="fa fa-check"></i></div>';
-                                    }
-                                    if(data.data.is_hr_manager == 0){
-                                        el += '<div class="sl-left bg-danger"> <i class="fa fa-close"></i></div>';
-                                    }
-                                    if(data.data.is_hr_manager === null){
-                                        el += '<div class="sl-left bg-warning"> <i class="fa fa-info"></i></div>';
-                                    }
-
-                                    el += '<div class="sl-right"><div><a href="#">SR. MANAGER HR OPR </a> </div>';
-
-                                    if(data.data.is_hr_manager !== null){
-                                       el += '<div class="desc">'+ data.data.hr_manager.name +' / '+ data.data.hr_manager.nik +'<p>'+ data.data.hr_manager_date +'</p></div>'; 
-                                    }
-                                    
-                                    el += '</div>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>';
