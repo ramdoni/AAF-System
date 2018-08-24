@@ -228,7 +228,7 @@
             $(this).autocomplete("search", "");
     });
 
-    $(".autocomplete-manager-hr" ).autocomplete({
+    $(".autocomplete-manager-hr").autocomplete({
         minLength:0,
         limit: 25,
         source: function( request, response ) {
@@ -236,7 +236,7 @@
               url: "{{ route('ajax.get-karyawan-manager-up') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );

@@ -54,13 +54,13 @@ class AjaxController extends Controller
         if($request->ajax())
         {
             $data =  \App\User::select('users.*')->join('organisasi_position', 'organisasi_position.id', 'users.organisasi_position')->where(function($table) use ($request){
-                    if(!empty($requets->name))
-                        $table->where('users.name', 'LIKE', "%". $request->name . "%");
-
-                    if(!empty($requets->name) and !empty($request->nik))
-                        $table->orWhere('users.nik', 'LIKE', '%'. $request->name .'%');
+                    $table->where('users.name', 'LIKE', "%". $request->name . "%");
+                    $table->orWhere('users.nik', 'LIKE', '%'. $request->name .'%');
                 })
-                ->where('organisasi_position.name', '<>', 'Staff')->where('organisasi_position.name', '<>', 'Head')->where('organisasi_position.name', '<>', 'Supervisor')->get();
+                ->where('organisasi_position.name', '<>', 'Staff')
+                ->where('organisasi_position.name', '<>', 'Head')
+                ->where('organisasi_position.name', '<>', 'Supervisor')
+                ->get();
             
             $params = [];
             foreach($data as $k => $item)

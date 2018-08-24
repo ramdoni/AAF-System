@@ -44,6 +44,7 @@
                         @endif
                         
                         @php($readonly="")
+
                         @if($approval->nama_approval == 'HR Operation')
                             @if($data->is_hr_benefit_approved !== NULL)
                                 @php($readonly='readonly="true"')
@@ -87,8 +88,10 @@
                                         <th>AWAL</th>
                                         <th>AKHIR</th>
                                         <th>TOTAL LEMBUR (JAM)</th>
+                                        @if($approval->nama_approval != 'Manager HR')
                                         <th>TOTAL APPROVAL</th>
                                         <th>TOTAL MEAL</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody class="table-content-lembur">
@@ -101,8 +104,10 @@
                                         <td><input type="text" readonly="true" class="form-control" value="{{ $item->awal }}" /></td>
                                         <td><input type="text" readonly="true" class="form-control" value="{{ $item->akhir }}" /></td>
                                         <td><input type="text" readonly="true" class="form-control" value="{{ $item->total_lembur }}" /></td>
+                                        @if($approval->nama_approval != 'Manager HR')
                                         <td><input type="text" class="form-control  input_approval_jam" {{ $readonly }} name="total_approval[{{ $item->id }}]" value="{{ $item->total_approval }}" placeholder="Total Approval" ></td>
                                         <td><input type="text" class="form-control input_total_meal" {{ $readonly }} name="total_meal[{{ $item->id }}]" value="{{ $item->total_meal }}" placeholder="Total Meal" ></td>
+                                        @endif
                                     </tr>
                                     @php($total_lembur[]=$item->total_lembur)
                                     @endforeach
@@ -111,8 +116,10 @@
                                     <tr>
                                         <th colspan="5" style="text-align: right;">Total : </th>
                                         <th>{{ sum_lembur_jam($total_lembur) }}</th>
+                                        @if($approval->nama_approval != 'Manager HR')
                                         <th class="total_approve_jam"></th>
                                         <th class="total_meal"></th>
+                                        @endif
                                     </tr>
                                 </tfoot>
                             </table>
@@ -214,6 +221,10 @@
     $('.input_approval_jam').each(function(){
 
         var this_now  = $(this).val();
+        if(this_now == "")
+        {
+            this_now = "00 : 00";
+        }
 
         $(this).wickedpicker({
             now : this_now,

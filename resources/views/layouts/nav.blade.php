@@ -116,7 +116,7 @@
                     <a href="{{ route('administrator.libur-nasional.index') }}"><i class="mdi mdi-settings fa-fw"></i><span class="hide-menu">Libur Nasional</span></a>
                 </li>
                 <li>
-                    <a href="{{ route('administrator.plafond-dinas.index') }}"><i class="mdi mdi-settings fa-fw"></i><span class="hide-menu">Plafond Perjalanan Dinas & Training</span></a>
+                    <a href="{{ route('administrator.plafond-dinas.index') }}" style="width: 250px"><i class="mdi mdi-settings fa-fw"></i><span class="hide-menu">Plafond Perjalanan Dinas & Training</span></a>
                 </li>
             </ul>
         </li>

@@ -87,12 +87,15 @@ class ApprovalOvertimeController extends Controller
         $overtime->save();
 
         # form
-        foreach($request->total_approval as $id => $val)
+        if(isset($request->total_approval))
         {
-            $data                   = \App\OvertimeSheetForm::where('id', $id)->first();
-            $data->total_approval   = $val;
-            $data->total_meal       = $request->total_meal[$id];
-            $data->save();
+            foreach($request->total_approval as $id => $val)
+            {
+                $data                   = \App\OvertimeSheetForm::where('id', $id)->first();
+                $data->total_approval   = $val;
+                $data->total_meal       = $request->total_meal[$id];
+                $data->save();
+            }
         }
 
         return redirect()->route('karyawan.approval.overtime.index')->with('messages-success', 'Form Cuti Berhasil diproses !');
