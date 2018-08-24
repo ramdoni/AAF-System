@@ -44,21 +44,17 @@
                         @endif
                         
                         @php($readonly="")
-
                         @if($approval->nama_approval == 'HR Operation')
                             @if($data->is_hr_benefit_approved !== NULL)
                                 @php($readonly='readonly="true"')
-                            @endif;
+                            @endif
                         @endif
-
                         @if($approval->nama_approval == 'Manager HR')
                             @if($data->is_hr_manager === NULL)
                                 @php($readonly='readonly="true"')
                             @endif
                         @endif
-                            
                         {{ csrf_field() }}
-                        
                         <div class="form-group">
                             <label class="col-md-6">NIK / Nama Karyawan</label>
                             <label class="col-md-6">Department</label>
@@ -71,12 +67,10 @@
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Jabatan</label>
-
                             <div class="col-md-6">
                                 <input type="text" readonly="true" class="form-control" value="{{ $data->user->organisasi_job_role }}">
                             </div>
                         </div>
-                       
                         <div class="clearfix"></div>
                         <div class="table-responsive">
                             <table class="table table-hover manage-u-table">
@@ -158,7 +152,6 @@
     <!-- /.container-fluid -->
     @extends('layouts.footer')
 </div>
-
 @section('footer-script')
 <link rel="stylesheet" href="{{ asset('js/wickedpicker/dist/wickedpicker.min.css') }}" type="text/css" />
 <script type="text/javascript" src="{{ asset('js/wickedpicker/dist/wickedpicker.min.js') }}"></script>
