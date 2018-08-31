@@ -8,24 +8,23 @@
 <body style="margin:0px; background: #f8f8f8; ">
 <div width="100%" style="background: #f8f8f8; padding: 0px 0px; font-family:arial; line-height:28px; height:100%;  width: 100%; color: #514d6a;">
   <div style="max-width: 700px; padding:50px 0;  margin: 0px auto; font-size: 14px">
-    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 20px">
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 10px">
       <tbody>
         <tr>
-          <td style="vertical-align: top; padding-bottom:10px;">
-            <a href="#" target="_blank" style="text-decoration: none;color: #484848;"><img src="http://www.arthaasiafinance.co.id/images/logo.png" style="border:none; width: 150px; ">
-            </a>
+          <td style="vertical-align: top;">
+            <a href="#" target="_blank" style="text-decoration: none;color: #484848;"><img src="{{ asset('logo.png') }}" style="border:none; width: 150px; ">
           </td>
         </tr>
       </tbody>
     </table>
     <div style="padding: 40px; background: #fff;">
-        {!! $data->content !!}
-        <p><i>Email ini terkirim otomatis oleh sistem anda tidak bisa membalas pesan ini, silahkan login ke akun anda untuk info lebih lanjut</i></p>
-        <br />
-        <b>Thanks,<br /> PT. Arthaasia Finance</b>
+        @yield('content')
+        <p>Email ini terkirim otomatis oleh sistem anda tidak bisa membalas pesan ini, silahkan login ke akun anda untuk info lebih lanjut</p>
+         <br />
+          <b>Thanks,<br /> PT. Arthaasia Finance</b>
     </div>
     <div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px">
-      <p> PT. Arthaasia Finance System <br></p>
+      <p> PT. Arthaasia Finance</p>
     </div>
   </div>
 </div>

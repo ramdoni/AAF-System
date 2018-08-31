@@ -226,6 +226,11 @@
                     <?php if($item['link'] == 'training_mengetahui') { continue; } ?>
                     <li>
                         <a href="{{ route('karyawan.approval.'.  $item['link'].'.index') }}"><i class="ti-check-box fa-fw"></i><span class="hide-menu">{{ $item['nama_menu'] }}</span>
+                            
+                            @if($item['link'] == 'cuti')
+                                <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{ count_cuti_approved_personalia() }}</label>
+                            @endif
+
                             @if($item['link'] == 'overtime')
                                 <label class="btn btn-danger btn-xs" style="position: absolute;right:10px; top: 10px;">{{cek_overtime_approval_user_2()}}</label>
                             @endif

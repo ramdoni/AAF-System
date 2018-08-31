@@ -183,11 +183,22 @@
         $(this).on('change', function(){
             var split = $(this).val().split(':');
             
-            if(split[0] >= 2 && $(this).parent().parent().find('.input_total_meal').val() == "")
+            if(split[0] >= 2 )
             {
-                $(this).parent().parent().find('.input_total_meal').val(20000);  
+                if($(this).parent().parent().find('.input_total_meal').val() == "")
+                {
+                    $(this).parent().parent().find('.input_total_meal').val(20000); 
+                }
             }
-
+            else
+            {
+                if($(this).parent().parent().find('.input_total_meal').val() == 20000)
+                {
+                    $(this).parent().parent().find('.input_total_meal').val(""); 
+                }
+            }
+            
+            calculate_total_meal();       
             calculate_total_jam_approve();
         }); 
     })
@@ -198,7 +209,8 @@
 
         $(".input_approval_jam").each(function(){
             if($(this).val() != '') { params.push($(this).val()); }
-        })
+        });
+
         $.ajax({
             type: 'POST',
             url: '{{ route('ajax.calculate-hours-time') }}',

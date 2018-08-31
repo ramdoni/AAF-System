@@ -1,4 +1,4 @@
-@extends('layouts.administrator')
+@extends('layouts.karyawan')
 
 @section('title', 'Medical Reimbursement - PT. Arthaasia Finance')
 
@@ -139,7 +139,7 @@
                                         @if($data->user->id == $f->user_family_id)
                                             <input type="text" readonly="true" class="form-control" value="Saya Sendiri">
                                         @else
-                                            <input type="text" readonly="true" class="form-control" value="{{ $f->UserFamily->nama }}">
+                                            <input type="text" readonly="true" class="form-control" value="{{ $f->UserFamily->hubungan }}">
                                         @endif
                                     </td>
                                     <td>
@@ -158,13 +158,18 @@
                                         </select>
                                     </td>
                                     <td>
-                                      <label class="btn btn-info btn-xs" onclick="show_file('{{ asset('storage/file-medical') }}/{{ $f->file_bukti_transaksi }}')"><i class="fa fa-file"></i> view</label>
+                                        @php ($url = public_path('storage/file-medical' .'/'. $f->file_bukti_transaksi) )
+                                        @if(!is_image($url))
+                                            <a class="btn btn-info btn-xs" href="{{ asset('storage/file-medical') }}/{{ $f->file_bukti_transaksi }}" target="_blank"><i class="fa fa-file"></i> view</a>
+                                        @else
+                                            <label class="btn btn-info btn-xs" onclick="show_file('{{ asset('storage/file-medical') }}/{{ $f->file_bukti_transaksi }}')"><i class="fa fa-file"></i> view</label>
+                                        @endif
                                     </td>
                                     <td><input type="text" class="form-control" required value="{{ number_format($f->jumlah) }}" readonly /></td>
                                     <td><input type="text" name="nominal_approve[{{ $f->id }}]" {{ $readonly }} class="form-control nominal_approve price_format" value="{{ number_format($f->nominal_approve) }}" /></td>
                                 </tr>
-                                @php($total_nominal=$f->jumlah)
-                                @php($total_approve=$f->nominal_approve)
+                                @php($total_nominal +=$f->jumlah)
+                                @php($total_approve +=$f->nominal_approve)
 
                                 @endforeach
                               </tbody>

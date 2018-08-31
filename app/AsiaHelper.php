@@ -1,5 +1,90 @@
 <?php
 
+
+/**
+ * [jenis_claim_medical description]
+ * @param  string $key [description]
+ * @return [type]      [description]
+ */
+function jenis_claim_medical($key="")
+{
+	$arr = ['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
+	if(!empty($key))
+	{
+		return $arr[$key];
+	}
+	else
+	{
+		return $arr;
+	}
+}
+
+/**
+ * [total_medical_nominal description]
+ * @return [type] [description]
+ */
+function total_medical_nominal($id)
+{
+	$data = \App\MedicalReimbursementForm::where('medical_reimbursement_id', $id)->get();
+	$nominal = 0;
+
+	foreach($data as $item)
+	{
+		$nominal  += $item->jumlah;
+	}
+
+	return $nominal;
+}
+
+/**
+ * [jenis_claim_strint description]
+ * @param  [type] $id [description]
+ * @return [type]     [description]
+ */
+function medical_jenis_claim_string($id)
+{
+	$data = \App\MedicalReimbursementForm::where('medical_reimbursement_id', $id)->get();
+	$string = "";
+
+	foreach($data as $item)
+	{
+		$string  .= jenis_claim_medical($item->jenis_klaim) .' ,';
+	}
+
+	return substr($string, 0, -1);
+}
+
+/**
+ * [cuti_personalia description]
+ * @param  [type] $id [description]
+ * @return [type]     [description]
+ */
+function count_cuti_approved_personalia()
+{
+	$data = \App\CutiKaryawan::whereNull('is_approved_personalia')->whereNotNull('is_approved_atasan')->where('status', 1)->count();
+
+	return $data;
+}
+
+/**
+ * [is_image description]
+ * @return boolean [description]
+ */
+function is_image($url)
+{
+	$allowedMimeTypes = ['image/jpeg','image/gif','image/png','image/bmp','image/svg+xml'];
+	$contentType = mime_content_type($url);
+	
+	if(in_array($contentType, $allowedMimeTypes))
+	{
+	  return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 /**
  * [sum_lembur_jam description]
  * @param  [type] $hours [description]
@@ -47,15 +132,6 @@ function skip_is_down_manager($id)
     {
     	return 'no';
     }
-}
-
-/**
- * [jenis_claim_medical description]
- * @return [type] [description]
- */
-function jenis_claim_medical()
-{
-	return ['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
 }
 
 /**

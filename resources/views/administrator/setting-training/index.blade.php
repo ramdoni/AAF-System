@@ -240,16 +240,15 @@
     } 
 </style>
 <script type="text/javascript">
-
     $(".autocomplete-finance" ).autocomplete({
         minLength:0,
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form': 'training', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -268,10 +267,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form': 'training', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -290,10 +289,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form' : 'training', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );

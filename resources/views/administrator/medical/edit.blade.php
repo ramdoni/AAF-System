@@ -44,9 +44,7 @@
                                 </ul>
                             </div>
                         @endif
-
                         {{ csrf_field() }}
-                        
                         <div class="col-md-6" style="padding-left: 0;">
                             <div class="form-group">
                                 <label class="col-md-12">NIK / Nama Karyawan</label>
@@ -118,7 +116,7 @@
                                         @if($data->user->id == $f->user_family_id)
                                             <input type="text" readonly="true" class="form-control" value="Saya Sendiri">
                                         @else
-                                            <input type="text" readonly="true" class="form-control" value="{{ $f->UserFamily->nama }}">
+                                            <input type="text" readonly="true" class="form-control" value="{{ $f->UserFamily->hubungan }}">
                                         @endif
                                     </td>
                                     <td>
@@ -130,7 +128,7 @@
                                     </td>
                                     <td>
                                         <select class="form-control" readonly>
-                                            <option value="">Pilih Jenis Klaim</option>
+                                            <option value="">    Jenis Klaim</option>
                                             @foreach(jenis_claim_medical() as $k => $i)
                                             <option value="{{ $k }}" {{ $f->jenis_klaim == $k ? 'selected' : '' }} >{{ $i }}</option>
                                             @endforeach

@@ -119,7 +119,7 @@ class MedicalController extends Controller
             $form                           = new MedicalReimbursementForm();
             $form->medical_reimbursement_id = $data->id;
             $form->tanggal_kwitansi         = $request->tanggal_kwitansi[$key];
-            $form->user_family_id              = $request->user_family_id[$key];
+            $form->user_family_id           = $request->user_family_id[$key];
             $form->jenis_klaim              = $request->jenis_klaim[$key];
             $form->jumlah                   = str_replace(',', '', $request->jumlah[$key]);
             

@@ -46,7 +46,7 @@
                                 <tr>
                                     <td>{{ ($no + 1) }}</td>
                                     <td>{{ isset($item->user->name) ? $item->user->nik .' / '. $item->user->name : '' }}</td>
-                                    <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name . ' / '. $item->user->department->name : '' }}</td>
+                                    <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name : '' }}</td>
                                     <td>
                                         <form action="{{ route('administrator.setting-overtime.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
                                             {{ csrf_field() }}
@@ -83,7 +83,7 @@
                                 <tr>
                                     <td>{{ ($no + 1) }}</td>
                                     <td>{{ isset($item->user->name) ? $item->user->nik .' / '. $item->user->name : '' }}</td>
-                                    <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name . ' / '. $item->user->department->name : '' }}</td>
+                                    <td>{{ isset($item->user->organisasiposition->name) ? $item->user->organisasiposition->name : ''  }}</td>
                                     <td>
                                         <form action="{{ route('administrator.setting-overtime.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
                                             {{ csrf_field() }}
@@ -135,7 +135,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 <!-- sample modal content -->
 <div id="modal_manager_hr" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -163,7 +162,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 <!-- sample modal content -->
 <div id="modal_manager_department" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -195,7 +193,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 @section('footer-script')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -205,16 +202,15 @@
     }
 </style>
 <script type="text/javascript">
-
     $(".autocomplete-hr-operation" ).autocomplete({
         minLength:0,
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term,'jenis_form' : 'overtime','_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -249,8 +245,6 @@
     }).on('focus', function () {
             $(this).autocomplete("search", "");
     });
-
-
 
     $('.add-hr-operation').click(function(){
         $('#modal_hr_operation').modal('show');

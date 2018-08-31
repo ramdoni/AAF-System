@@ -97,7 +97,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-4">
                 <div class="white-box">
                     <h3 class="box-title m-b-0 pull-left">Check From IT</h3>
@@ -309,10 +308,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term,'jenis_form' : 'exit_clearance', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -332,10 +331,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form' : 'exit_clearance', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -386,10 +385,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form': 'exit_clearance', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -425,10 +424,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form': 'exit_clearance', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );

@@ -75,11 +75,33 @@ class ApprovalOvertimeController extends Controller
 
         if($overtime->is_hr_benefit_approved ==1 and $overtime->is_hr_manager ==1)
         {
+            $params['data']     = $overtime;
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $overtime->user->name .'</strong>,</p> <p>  Pengajuan Overtime anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+
+            \Mail::send('email.overtime-approval', $params,
+                function($message) use($overtime) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($overtime->user->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Overtime');
+                }
+            );
+
             $overtime->status = 2;
         }
 
         if($request->status == 0)
         {
+            $params['data']     = $overtime;
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $overtime->user->name .'</strong>,</p> <p>  Pengajuan Overtime anda <strong style="color: red;">DITOLAK</strong>.</p>';
+
+            \Mail::send('email.overtime-approval', $params,
+                function($message) use($overtime) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($overtime->user->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Overtime');
+                }
+            );
+
             $overtime->status = 3; // Reject
         }
         $overtime->total_approval_all   = $request->total_approval_all;

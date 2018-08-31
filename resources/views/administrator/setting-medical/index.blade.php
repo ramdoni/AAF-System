@@ -83,7 +83,7 @@
                                     <td>{{ ($no + 1) }}</td>
                                     <td>{{ isset($item->user->name) ? $item->user->nik .' / '. $item->user->name : '' }}</td>
                                     <td>{{ isset($item->user->organisasi_job_role) ? $item->user->organisasi_job_role : '' }}</td>
-                                    <td>
+                                    <td> 
                                         <form action="{{ route('administrator.setting-medical.destroy', $item->id) }}" onsubmit="return confirm('Hapus data ini?')" method="post" style="float: left;">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}                                               
@@ -243,10 +243,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form' : 'medical', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -263,10 +263,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form' : 'medical', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -283,10 +283,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form': 'medical', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );
@@ -328,7 +328,6 @@
             }
         });
     });
-
 
     $('.add-gm-hr').click(function(){
         $('#modal_gm_hr').modal('show');

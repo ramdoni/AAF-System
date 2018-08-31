@@ -292,6 +292,7 @@
 
             if(result)
             {
+                $("input[name='status']").val(0);
                 $('#form-training').submit();
             }
 

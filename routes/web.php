@@ -11,6 +11,8 @@
 |
 */
 
+date_default_timezone_set("Asia/Bangkok");
+
 Route::get('/', function () 
 {
 	if (!Auth::check() && !Request::is('login')) {
@@ -84,6 +86,7 @@ Route::group(['middleware' => ['auth']], function(){
 	Route::post('ajax/get-position-by-section', 'AjaxController@getPositionBySection')->name('ajax.get-position-by-section');
 	Route::post('ajax/calculate-hours-time', 'AjaxController@calculateHoursTime')->name('ajax.calculate-hours-time');
 	Route::post('ajax/get-karyawan-manager-up', 'AjaxController@getKaryawanManagerUp')->name('ajax.get-karyawan-manager-up');
+	Route::post('ajax/get-karyawan-approval', 'AjaxController@getKaryawanApproval')->name('ajax.get-karyawan-approval');
 });
 
 

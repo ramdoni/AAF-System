@@ -1,4 +1,4 @@
-@extends('layouts.administrator')
+@extends('layouts.karyawan')
 
 @section('title', 'Payment Request - PT. Arthaasia Finance')
 
@@ -62,7 +62,6 @@
                                 <div class="col-md-12">
                                     <label style="font-weight: normal;"><input type="radio" name="payment_method" value="Cash" {{ $data->payment_method == 'Cash' ? 'checked' : '' }} /> Cash</label> &nbsp;&nbsp;
                                     <label style="font-weight: normal;"><input type="radio" name="payment_method" value="Bank Transfer" {{ $data->payment_method == 'Bank Transfer' ? 'checked' : '' }}  /> Bank Transfer</label>
-
                                 </div>
                             </div>
                         </div>
@@ -70,7 +69,7 @@
                             <div class="form-group">
                                 <label class="col-md-12">Nama Pemilik Rekening / Name of Account</label>
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" readonly="true" value="{{ isset($data->user->nama_pemilik) ? $data->user->nama_pemilik : '' }}" />
+                                    <input type="text" class="form-control" readonly="true" value="{{ isset($data->user->nama_rekening) ? $data->user->nama_rekening : '' }}" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -103,10 +102,12 @@
                                 <tbody class="table-content-lembur">
                                     @php($total_estimation = 0)
                                     @php($total_amount = 0)
+                                    @php($total_approved=0)
 
                                     @foreach($data->payment_request_form as $key => $item)
                                     @php($total_estimation += $item->estimation_cost )
                                     @php($total_amount += $item->amount )
+                                    @php($total_approved += $item->nominal_approved )
                                     <tr>
                                         <td>{{ ($key+1) }}</td>
                                         <td>{{ $item->jenis_form }}</td>
@@ -115,23 +116,24 @@
                                         <td>{{ number_format($item->estimation_cost) }}</td>
                                         <td>{{ number_format($item->amount) }}</td>
                                         <td>
-                                            <input type="text" name="nominal_approve[{{ $item->id }}]" class="form-control nominal_approve" placeholder="Nominal Approve">
-                                            <textarea name="note[{{ $item->id }}]" placeholder="Catatan" class="form-control"></textarea>
+                                            <input type="text" name="nominal_approve[{{ $item->id }}]" value="{{ $item->nominal_approved }}" class="form-control nominal_approve" placeholder="Nominal Approve">
+                                            <textarea name="note[{{ $item->id }}]" placeholder="Catatan" class="form-control">{{ $item->note }}</textarea>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="3" style="text-align: right;">Total</th>
+                                        <th colspan="4" style="text-align: right;">Total</th>
                                         <th>{{ number_format($total_estimation) }}</th>
-                                        <th colspan="2">{{ number_format($total_amount) }}</th>
+                                        <th>{{ number_format($total_amount) }}</th>
+                                        <th>{{ number_format($total_approved) }}</th>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                         <div class="clearfix"></div>
-                        <br />
+                        <hr />
                         
                         <input type="hidden" name="status" value="0" />
                         <input type="hidden" name="id" value="{{ $data->id }}">

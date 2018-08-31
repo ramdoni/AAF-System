@@ -131,7 +131,6 @@
                                         </select>
                                     </td>
                                     <td><input type="file" class="form-control input" name="file_bukti_transaksi[]" required /></td>
-
                                     <td><input type="text" class="form-control input price_format" name="jumlah[]" required /></td>
                                 </tr>
                               </tbody>
