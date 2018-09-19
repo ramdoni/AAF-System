@@ -37,19 +37,6 @@ class CutiController extends Controller
      */
     public function create()
     {   
-        // $params['atasan']   = \App\User::where('id', 2)->first();
-        // $params['user']     = \App\User::where('id', 3)->first();
-        // $params['cuti']     = \App\CutiKaryawan::where('id', 1)->first();
-
-        // $objDemo = new \stdClass();
-        // $objDemo->content = view('email.cuti-approval')->with($params);
-
-        // $params['data'] = $objDemo;
-        
-        // \Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
-
-        // return view('email.general')->with($params);
-
         $params['karyawan'] = User::where('access_id', 2)->get();
         $params['karyawan_backup'] = User::where('access_id', 2)->where('department_id', \Auth::user()->department_id)->get();
 
@@ -123,13 +110,18 @@ class CutiController extends Controller
             }
         }
 
-        // send email atasan
-        $objDemo = new \stdClass();
-        $objDemo->content = '<p>Dear '. $atasan->name .'</p><p> '. \Auth::user()->name .' mengajukan Cuti dan butuh persetujuan Anda.</p>' ;
- 
-        //\Mail::to($atasan->email)->send(new \App\Mail\GeneralMail($objDemo));
-
         $data->save();
+
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Cuti butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.cuti-approval', $params,
+            function($message) use($data) {
+                $message->from('services@asiafinance.com');
+                $message->to($data->user->email);
+                $message->subject('PT. Arthaasia Finance - Pengajuan Cuti');
+            }
+        );
 
         return redirect()->route('karyawan.cuti.index')->with('message-success', 'Data berhasil disimpan !');
     }

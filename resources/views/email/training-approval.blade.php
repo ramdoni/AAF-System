@@ -71,7 +71,9 @@
 				<div class="sl-right" style="padding-left: 50px;">
 					<div>
 						<strong>HRD</strong> <br>
+						@if(isset($data->hrd->nik))
 						<a href="#">{{ $data->hrd->nik }} - {{ $data->hrd->name }}</a> 
+						@endif
 					</div>
 					@if($data->approved_hrd !== NULL)
 						<div class="desc">{{ date('d F Y', strtotime($data->approved_hrd_date)) }}<p></p></div>

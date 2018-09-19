@@ -68,7 +68,9 @@
 				<div class="sl-right" style="padding-left: 50px;">
 					<div>
 						<strong>Direktur</strong> <br>
+						@if(isset($data->hr_manager->nik))
 						<a href="#">{{ $data->hr_manager->nik }} - {{ $data->hr_manager->name }}</a> 
+						@endif
 					</div>
 					@if($data->is_hr_manager !== NULL)
 						<div class="desc">{{ date('d F Y', strtotime($data->hr_manager_date)) }}<p></p></div>
@@ -94,7 +96,9 @@
 				<div class="sl-right" style="padding-left: 50px;">
 					<div>
 						<strong>HR Benefit</strong> <br>
+						@if(isset($data->hr_benefit->nik))
 						<a href="#">{{ $data->hr_benefit->nik }} - {{ $data->hr_benefit->name }}</a> 
+						@endif
 					</div>
 					@if($data->is_hr_benefit_approved !== NULL)
 						<div class="desc">{{ date('d F Y', strtotime($data->hr_benefit_date)) }}<p></p></div>

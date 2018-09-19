@@ -99,6 +99,17 @@ class PaymentRequestController extends Controller
         $data->approved_atasan_id   = $request->atasan_user_id;
         $data->save();
 
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Payment Request butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.payment-request-approval', $params,
+            function($message) use($data) {
+                $message->from('services@asiafinance.com');
+                $message->to($data->user->email);
+                $message->subject('PT. Arthaasia Finance - Pengajuan Payment Request');
+            }
+        );
+
         // jika ada overtime
         if(isset($request->overtime))
         {

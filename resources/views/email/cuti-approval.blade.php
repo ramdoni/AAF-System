@@ -68,7 +68,9 @@
 				<div class="sl-right" style="padding-left: 50px;">
 					<div>
 						<strong>Personalia</strong> <br>
+						@if(isset($data->personalia->nik))
 						<a href="#">{{ $data->personalia->nik }} - {{ $data->personalia->name }}</a> 
+						@endif
 					</div>
 					@if($data->is_approved_personalia !== NULL)
 						<div class="desc">{{ date('d F Y', strtotime($data->personalia_proses_date)) }}<p></p></div>
