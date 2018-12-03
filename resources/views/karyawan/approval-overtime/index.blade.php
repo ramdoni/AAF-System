@@ -24,7 +24,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-
         <!-- .row -->
         <div class="row">
             <div class="col-md-12">
@@ -69,18 +68,23 @@
                                                             <label class="btn btn-warning btn-xs">Waiting Approval</label>
                                                         @endif
                                                     @endif
-
                                                     @if($approval->nama_approval == 'HR Operation')
-                                                        @if($item->is_hr_benefit_approved == 1)
-                                                            <label class="btn btn-success btn-xs">Approved</label>
-                                                        @endif
-
-                                                        @if($item->is_hr_benefit_approved === 0)
-                                                            <label class="btn btn-danger btn-xs">Denied</label>
-                                                        @endif
-
-                                                        @if($item->is_hr_benefit_approved === NULL)
-                                                            <label class="btn btn-warning btn-xs">Waiting Approval</label>
+                                                        @if($item->is_hr_manager == 1)
+                                                            @if($item->is_hr_benefit_approved == 1)
+                                                                <label class="btn btn-success btn-xs">Approved</label>
+                                                            @endif
+                                                            @if($item->is_hr_benefit_approved === 0)
+                                                                <label class="btn btn-danger btn-xs">Denied</label>
+                                                            @endif
+                                                            @if($item->is_hr_benefit_approved === NULL)
+                                                                <label class="btn btn-warning btn-xs">Waiting Approval</label>
+                                                            @endif
+                                                        @elseif($item->is_hr_manager === NULL)
+                                                            <label class="btn btn-warning btn-xs">Waiting Approval Direktur</label>
+                                                        @else
+                                                            @if($item->status == 3)
+                                                                <label class="btn btn-danger btn-xs">Denied</label>
+                                                            @endif
                                                         @endif
                                                     @endif
                                                 @else
@@ -106,10 +110,11 @@
                                                         <label class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</label>
                                                     @endif
                                                 @endif
-
                                                 @if($approval->nama_approval == 'HR Operation')
-                                                    @if($item->is_hr_benefit_approved === NULL)
-                                                        <label class="btn btn-info btn-xs">proses <i class="fa fa-arrow-right"></i></label>
+                                                    @if($item->is_hr_manager == 1)
+                                                        @if($item->is_hr_benefit_approved === NULL)
+                                                            <label class="btn btn-info btn-xs">proses <i class="fa fa-arrow-right"></i></label>
+                                                        @endif
                                                     @else
                                                         <label class="btn btn-info btn-xs"><i class="fa fa-search-plus"></i> detail</label>
                                                     @endif

@@ -42,10 +42,12 @@
                                 </ul>
                             </div>
                         @endif
-                        
                         @php($readonly="")
                         @if($approval->nama_approval == 'HR Operation')
                             @if($data->is_hr_benefit_approved !== NULL)
+                                @php($readonly='readonly="true"')
+                            @endif
+                            @if($data->is_hr_manager == NULL || $data->is_hr_manager === 0)
                                 @php($readonly='readonly="true"')
                             @endif
                         @endif
@@ -99,8 +101,8 @@
                                         <td><input type="text" readonly="true" class="form-control" value="{{ $item->akhir }}" /></td>
                                         <td><input type="text" readonly="true" class="form-control" value="{{ $item->total_lembur }}" /></td>
                                         @if($approval->nama_approval != 'Manager HR')
-                                        <td><input type="text" class="form-control  input_approval_jam" {{ $readonly }} name="total_approval[{{ $item->id }}]" value="{{ $item->total_approval }}" placeholder="Total Approval" ></td>
-                                        <td><input type="text" class="form-control input_total_meal" {{ $readonly }} name="total_meal[{{ $item->id }}]" value="{{ $item->total_meal }}" placeholder="Total Meal" ></td>
+                                            <td><input type="text" class="form-control  input_approval_jam" {{ $readonly }} name="total_approval[{{ $item->id }}]" value="{{ $item->total_approval }}" placeholder="Total Approval" ></td>
+                                            <td><input type="text" class="form-control input_total_meal" {{ $readonly }} name="total_meal[{{ $item->id }}]" value="{{ $item->total_meal }}" placeholder="Total Meal" ></td>
                                         @endif
                                     </tr>
                                     @php($total_lembur[]=$item->total_lembur)
@@ -133,11 +135,12 @@
                                     <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
                                 @endif
                             @endif
-
                             @if($approval->nama_approval == 'HR Operation')
-                                @if($data->is_hr_benefit_approved === NULL)
-                                    <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
-                                    <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
+                                @if($item->is_hr_manager == 1)
+                                    @if($data->is_hr_benefit_approved === NULL)
+                                        <a class="btn btn-sm btn-danger waves-effect waves-light m-r-10" id="btn_tolak"><i class="fa fa-close"></i> Denied</a>
+                                        <a class="btn btn-sm btn-success waves-effect waves-light m-r-10" id="btn_approved"><i class="fa fa-save"></i> Approve</a>
+                                    @endif
                                 @endif
                             @endif
                         @endif
