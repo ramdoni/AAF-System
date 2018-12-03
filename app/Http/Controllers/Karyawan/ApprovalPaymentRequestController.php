@@ -117,40 +117,40 @@ class ApprovalPaymentRequestController extends Controller
         $payment->save();
 
         $payment = \App\PaymentRequest::where('id', $request->id)->first();
+        $params['data'] = $payment;
+        
         if($payment->is_proposal_approved==1 and $payment->is_proposal_verification_approved ==1 and $payment->is_payment_approved ==1)
         {
-            // cek semua approval
-            $status = \App\StatusApproval::where('jenis_form', 'payment_request')
-                                            ->where('foreign_id', $request->id)
-                                            ->where('status', 0)
-                                            ->count();
-            if($status >=1)
-            {
-                $status = 3;
+            
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $payment->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: green;">DISETUJUI</strong>.</p>';
 
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $payment->user->name .'</p><p> Pengajuan Payment Request anda ditolak.</p>' ;
-            }
-            else
-            {
-                $status = 2;
+            \Mail::send('email.payment-request-approval', $params,
+                function($message) use($payment) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($payment->user->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Payment Request');
+                }
+            );
 
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $payment->user->name .'</p><p> Pengajuan Payment Request anda disetujui.</p>' ;
-            }
-
-            $payment->status = $status;
+            //$payment->status = 2;
             $payment->save();
         }
 
         // Jika ada salah satu yang reject maka statusnya berubah jadi reject untuk payment request ini
         if($request->status==0)
         {
-            $status = 3;
-            $payment->status = $status;
+            $payment->status = 3;
             $payment->save();
+
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $payment->user->name .'</strong>,</p> <p>  Pengajuan Payment Request anda <strong style="color: red;">DITOLAK</strong>.</p>';
+
+            \Mail::send('email.payment-request-approval', $params,
+                function($message) use($payment) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($payment->user->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Payment Request');
+                }
+            );
         }
 
         return redirect()->route('karyawan.approval.payment_request.index')->with('message-success', 'Form Payment Request Berhasil diproses !');

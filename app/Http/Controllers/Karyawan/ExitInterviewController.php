@@ -133,12 +133,6 @@ class ExitInterviewController extends Controller
 
         $atasan = \App\User::where('id', $request->atasan_user_id)->first();
 
-        // send email atasan
-        $objDemo = new \stdClass();
-        $objDemo->content = '<p>Dear '. $atasan->name .'</p><p> '. \Auth::user()->name .' mengajukan Exit Interview dan butuh persetujuan Anda.</p>' ;
-        
-        //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
-
         if($request->exit_interview_reason == 'other')
             $data->other_reason = $request->other_reason;
         else

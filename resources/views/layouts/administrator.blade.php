@@ -841,7 +841,7 @@
     <!-- Custom tab JavaScript -->
     <script src="{{ asset('admin-css/js/cbpFWTabs.js') }}"></script>
     <script src="{{ asset('js/general.js?v='. date('His')) }}"></script>
-    <script src="{{ asset('js/bootbox.min.js') }}"></script>
+    <script src="{{ asset('js/bootbox.min.js') }}"></script> 
 
     <!-- start - This is for export functionality only -->
     <script src="{{ asset('admin-css/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>

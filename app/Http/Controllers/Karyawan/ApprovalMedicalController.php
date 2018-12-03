@@ -102,8 +102,10 @@ class ApprovalMedicalController extends Controller
             $list->save();
         }
 
-        $skip_gm_hr = ['Staff', 'Head','Supervisor'];
-        $status = $request->status;
+        $skip_gm_hr             = ['Staff', 'Head','Supervisor'];
+        $status                 = $request->status;
+        $params['approval_gm']  = false;
+        $params['data']         = $medical;
 
         if(isset($medical->user->organisasiposition->name))
         {
@@ -119,18 +121,42 @@ class ApprovalMedicalController extends Controller
             {
               if($medical->is_approved_hr_benefit ==1 and $medical->is_approved_manager_hr ==1 and $medical->is_approved_gm_hr == 1)
               {
-                  $medical->status = 2;
+                    $medical->status = 2;
+                    $params['approval_gm'] = true;
               }
             }
+        }
+
+        if($medical->status == 2)
+        {
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $medical->user->name .'</strong>,</p> <p>  Pengajuan Medical Reimbursement anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+            // send email
+            \Mail::send('email.medical-approval', $params,
+                function($message) use($medical) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($medical->user->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Medical Reimbursement');
+                }
+            );
         }
 
         // Denied
         if($request->status == 0)
         {
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $medical->user->name .'</strong>,</p> <p>  Pengajuan Medical Reimbursement anda <strong style="color: red;">DITOLAK</strong>.</p>';
+            // send email
+            \Mail::send('email.medical-approval', $params,
+                function($message) use($medical) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($medical->user->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Medical Reimbursement');
+                }
+            );   
+
             $medical->status == 3;
         }
         $medical->save();
-
+ 
         return redirect()->route('karyawan.approval.medical.index')->with('message-success', 'Form Medical Reimbursement Berhasil diproses !');
     }
 

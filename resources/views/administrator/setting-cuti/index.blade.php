@@ -144,10 +144,10 @@
         limit: 25,
         source: function( request, response ) {
             $.ajax({
-              url: "{{ route('ajax.get-karyawan') }}",
+              url: "{{ route('ajax.get-karyawan-approval') }}",
               method : 'POST',
               data: {
-                'name': request.term,'_token' : $("meta[name='csrf-token']").attr('content')
+                'name': request.term, 'jenis_form' : 'cuti', '_token' : $("meta[name='csrf-token']").attr('content')
               },
               success: function( data ) {
                 response( data );

@@ -330,8 +330,18 @@ class TrainingController extends Controller
         $data->pergi_bersama            = $request->pergi_bersama;
         $data->note                     = $request->note;
         $data->no_telpon                = $request->no_telpon;
-
         $data->save();
+
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Training dan Perjalanan Dinas butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.training-approval', $params,
+            function($message) use($data) {
+                $message->from('services@asiafinance.com');
+                $message->to($data->user->email);
+                $message->subject('PT. Arthaasia Finance - Pengajuan Training dan Perjalanan Dinas');
+            }
+        );
 
         return redirect()->route('karyawan.training.index')->with('message-success', 'Payment Request berhasil di proses');
     }

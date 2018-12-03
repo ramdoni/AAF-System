@@ -44,6 +44,39 @@ class AjaxController extends Controller
     }
 
     /**
+     * [getKaryawanApproval description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getKaryawanApproval(Request $request)
+    {
+        $params = [];
+        if($request->ajax())
+        {
+            // Skip Exist User
+            $approvalExistUser = \App\SettingApproval::select('user_id')->where('jenis_form', $request->jenis_form)->get()->toArray();
+            
+            // SKIP SUPERADMIN, ACCESS_ID 1
+            $data =  \App\User::whereNotIn('id', $approvalExistUser)->where(function($table) use ($request) {
+
+                $table->where('name', 'LIKE', "%". $request->name . "%")
+                ->orWhere('nik', 'LIKE', '%'. $request->name .'%');  
+            })->where('access_id', 2)->get();
+
+            $params = [];
+            foreach($data as $k => $item)
+            {
+                if($k >= 10) continue;
+
+                $params[$k]['id'] = $item->id;
+                $params[$k]['value'] = $item->nik .' - '. $item->name;
+            }
+        }
+        
+        return response()->json($params); 
+    }
+
+    /**
      * [getKaryawanManagerUp description]
      * @param  Request $request [description]
      * @return [type]           [description]
@@ -53,13 +86,17 @@ class AjaxController extends Controller
         $params = [];
         if($request->ajax())
         {
+            $approvalExistUser = \App\SettingApproval::select('user_id')->where('jenis_form', 'overtime')->get()->toArray();
+
             $data =  \App\User::select('users.*')->join('organisasi_position', 'organisasi_position.id', 'users.organisasi_position')->where(function($table) use ($request){
                     $table->where('users.name', 'LIKE', "%". $request->name . "%");
                     $table->orWhere('users.nik', 'LIKE', '%'. $request->name .'%');
                 })
+                ->whereNotIn('users.id', $approvalExistUser)
                 ->where('organisasi_position.name', '<>', 'Staff')
                 ->where('organisasi_position.name', '<>', 'Head')
                 ->where('organisasi_position.name', '<>', 'Supervisor')
+                ->where('access_id', '<>', 1)
                 ->get();
             
             $params = [];

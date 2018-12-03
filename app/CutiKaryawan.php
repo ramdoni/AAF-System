@@ -18,6 +18,24 @@ class CutiKaryawan extends Model
     }   
 
     /**
+     * [atasan description]
+     * @return [type] [description]
+     */
+    public function atasan()
+    {
+        return $this->hasOne('App\User', 'id', 'approved_atasan_id');
+    }
+    
+    /**
+     * [pesonalia description]
+     * @return [type] [description]
+     */
+    public function personalia()
+    {
+        return $this->hasOne('App\User', 'id', 'is_personalia_id');
+    }
+
+    /**
      * [user description]
      * @return [type] [description]
      */

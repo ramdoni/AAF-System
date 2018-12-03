@@ -45,19 +45,38 @@ class ApprovalCutiController extends Controller
         $status->save();    
 
         $cuti = \App\CutiKaryawan::where('id', $request->id)->first();
+        $cuti->is_personalia_id = \Auth::user()->id;
+        $cuti->personalia_proses_date = date('Y-m-d H:i:s');
+        $cuti->is_approved_personalia = $request->status;
+        $cuti->save();
+
+        $params['data'] = $cuti;
         if($request->status == 0)
         {
             $status = 3;
 
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p> Pengajuan Cuti anda ditolak.</p>' ;    
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: red;">DITOLAK</strong>.</p>';
+            // send email
+            \Mail::send('email.cuti-approval', $params,
+                function($message) use($cuti) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($cuti->karyawan->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Cuti / Izin');
+                }
+            );      
             
         }else{
             $status = 2;
-            // send email atasan
-            $objDemo = new \stdClass();
-            $objDemo->content = '<p>Dear '. $cuti->user->name .'</p><p> Pengajuan Cuti anda disetujui.</p>' ; 
+
+            $params['text']     = '<p><strong>Dear Bapak/Ibu '. $cuti->user->name .'</strong>,</p> <p>  Pengajuan Cuti / Ijin anda <strong style="color: green;">DISETUJUI</strong>.</p>';
+            // send email
+            \Mail::send('email.cuti-approval', $params,
+                function($message) use($cuti) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($cuti->karyawan->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Cuti / Izin');
+                }
+            );
 
             $user_cuti = \App\UserCuti::where('user_id', $cuti->user_id)->where('cuti_id', $cuti->jenis_cuti)->first();
 
@@ -91,12 +110,7 @@ class ApprovalCutiController extends Controller
             }
         }
         
-        //\Mail::to($overtime->user->)->send(new \App\Mail\GeneralMail($objDemo));
-        //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
-
-        $cuti->status = $status;
-        $cuti->is_approved_personalia = $request->status;
-        $cuti->is_personalia_id = \Auth::user()->id;
+        //$cuti->status = $status;
         $cuti->save();
 
         return redirect()->route('karyawan.approval.cuti.index')->with('messages-success', 'Form Cuti Berhasil diproses !');

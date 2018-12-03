@@ -147,35 +147,50 @@ class ApprovalTrainingController extends Controller
         }
         $training->save();
 
-        $training = \App\Training::where('id', $request->id)->first();
+        $training           = \App\Training::where('id', $request->id)->first();
+        $params['data']     = $training;
         // jika ada uang muka maka butuh approval di finance
-        if(empty($training->pengambilan_uang_muka))
+        if($training->pengambilan_uang_muka !== NULL)
         {   
             if($training->approved_hrd == 1 and $training->approved_finance == 1)
             {
                 $training->status = 2;
             }
-            else
-            {
-                $training->status = 3; 
-            }
         }else{
 
-            if($status ==0)
+            if($status == 0)
             {
-                $training->status = 3;
-
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Pengajuan Training dan Perjalanan Dinas  anda ditolak.</p>' ;    
+                $training->status = 3;   
             }
             else
             {
                 $training->status = 2;
-                // send email atasan
-                $objDemo = new \stdClass();
-                $objDemo->content = '<p>Dear '. $training->user->name .'</p><p> Pengajuan Training dan Perjalanan Dinas  anda disetujui.</p>' ; 
             }
+        }
+
+        if($status == 0)
+        {
+            $training->status = 3;
+        }
+
+        if($training->status == 2 || $training->status == 3)
+        {
+            if($training->status == 2)
+            {
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $training->user->name .'</strong>,</p> <p>  Pengajuan Training dan Perjalan Dinas anda <strong style="color: green;">DISETUJUI</strong>.</p>';                
+            }
+            else
+            {
+                $params['text']     = '<p><strong>Dear Bapak/Ibu '. $training->user->name .'</strong>,</p> <p>  Pengajuan Training dan Perjalan Dinas anda <strong style="color: red;">DITOLAK</strong>.</p>';                
+            }
+
+            \Mail::send('email.training-approval', $params,
+                function($message) use($training) {
+                    $message->from('services@asiafinance.com');
+                    $message->to($training->user->email);
+                    $message->subject('PT. Arthaasia Finance - Pengajuan Training dan Perjalanan Dinas');
+                }
+            );
         }
         
         // cek user yang mengetahui
@@ -186,8 +201,6 @@ class ApprovalTrainingController extends Controller
             //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
         }
 
-        //\Mail::to($overtime->user->)->send(new \App\Mail\GeneralMail($objDemo));
-        //\Mail::to('doni.enginer@gmail.com')->send(new \App\Mail\GeneralMail($objDemo));
         $training->save();
 
         return redirect()->route('karyawan.approval.training.index')->with('messages-success', 'Form Cuti Berhasil diproses !');

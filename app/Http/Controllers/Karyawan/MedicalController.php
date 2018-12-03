@@ -114,12 +114,23 @@ class MedicalController extends Controller
         $data->approved_atasan_id   = $request->atasan_user_id;
         $data->save();
 
+        $params['data']     = $data;
+        $params['text']     = '<p><strong>Dear Bapak/Ibu '. $data->atasan->name .'</strong>,</p> <p> '. $data->user->name .'  / '.  $data->user->nik .' mengajukan Medical Reimbursement butuh persetujuan Anda.</p>';
+
+        \Mail::send('email.medical-approval', $params,
+            function($message) use($data) {
+                $message->from('services@asiafinance.com');
+                $message->to($data->user->email);
+                $message->subject('PT. Arthaasia Finance - Pengajuan Medical Reimbursement');
+            }
+        );
+
         foreach($request->tanggal_kwitansi as $key => $item)
         {
             $form                           = new MedicalReimbursementForm();
             $form->medical_reimbursement_id = $data->id;
             $form->tanggal_kwitansi         = $request->tanggal_kwitansi[$key];
-            $form->user_family_id              = $request->user_family_id[$key];
+            $form->user_family_id           = $request->user_family_id[$key];
             $form->jenis_klaim              = $request->jenis_klaim[$key];
             $form->jumlah                   = str_replace(',', '', $request->jumlah[$key]);
             
