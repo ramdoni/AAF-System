@@ -180,9 +180,6 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
-                         
                         <div class="clearfix"></div>
                         <br />
                         <div class="form-group">

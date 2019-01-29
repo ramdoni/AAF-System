@@ -81,12 +81,18 @@ class KaryawanController extends Controller
                 $user->password     = bcrypt('password'); // set default password
             }
 
+            $user->employee_number  = empty($item->employee_number) ? $user->employee_number : $item->employee_number;
+            $user->absensi_number   = empty($item->absensi_number) ? $user->absensi_number : $item->absensi_number;
             $user->name             = empty($item->name) ? $user->name : $item->name;
             $user->join_date        = empty($item->join_date) ? $user->join_date : $item->join_date;
             $user->jenis_kelamin    = empty($item->gender) ? $user->jenis_kelamin : $item->gender;
             $user->marital_status   = empty($item->marital_status) ? $user->marital_status : $item->marital_status;
             $user->agama            = empty($item->agama) ? $user->agama : $item->agama;
             $user->bpjs_number      = empty($item->no_bpjs_kesehatan) ? $user->bpjs_kesehatan : $item->no_bpjs_kesehatan;
+            $user->ktp_number       = empty($item->ktp_number) ? $user->ktp_number : $item->ktp_number;
+            $user->passport_number  = empty($item->passport_number) ? $user->passport_number : $item->passport_number;
+            $user->kk_number        = empty($item->kk_number) ? $user->kk_number : $item->kk_number;
+            $user->npwp_number      = empty($item->npwp_number) ? $user->npwp_number : $item->npwp_number;
             $user->tempat_lahir     = empty($item->place_of_birth) ? $user->tempat_lahir : $item->place_of_birth ;
             $user->tanggal_lahir    = empty($item->date_of_birth) ? $user->tanggal_lahir : $item->date_of_birth ;
             $user->id_address       = empty($item->id_address) ? $user->id_address : $item->id_address;

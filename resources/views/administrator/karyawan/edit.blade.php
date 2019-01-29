@@ -297,7 +297,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Absensi Number</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="absensi_number" class="form-control" value="{{ $data->employee_number }}"> </div>
+                                        <input type="text" name="absensi_number" class="form-control" value="{{ $data->absensi_number }}"> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">NIK</label>
@@ -470,7 +470,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12">KK Number</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="kk_number" class="form-control" value="{{ $data->ktp_number }}">
+                                        <input type="text" name="kk_number" class="form-control" value="{{ $data->kk_number }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
