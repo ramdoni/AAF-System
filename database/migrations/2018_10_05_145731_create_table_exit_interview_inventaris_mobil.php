@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExitClearanceAccountingFinance extends Migration
+class CreateTableExitInterviewInventarisMobil extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateExitClearanceAccountingFinance extends Migration
      */
     public function up()
     {
-        Schema::create('create_clearance_accounting_finance', function (Blueprint $table) {
+        Schema::create('exit_interview_inventaris_mobil', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->nullable();
-            $table->text('name')->nullable();
-            $table->integer('department_id')->nullable();
-            $table->integer('pic_id')->nullable();
-            $table->string('stamp')->nullable();
+            $table->integer('user_inventaris_mobil_id')->nullable();
+            $table->integer('exit_interview_id')->nullable();
+            $table->smallInteger('check_by_hr')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });
@@ -32,6 +30,6 @@ class CreateExitClearanceAccountingFinance extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('create_clearance_accounting_finance');
+        Schema::dropIfExists('exit_interview_inventaris_mobil');
     }
 }

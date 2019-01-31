@@ -210,7 +210,7 @@
                 <li>
                     <a href="{{ route('karyawan.medical.index') }}"><i class="ti-user fa-fw"></i><span class="hide-menu">Medical Reimbursement</span></a>
                 </li>
-            </ul>
+            </ul> 
         </li>
 
         @if(cek_approval_user())
