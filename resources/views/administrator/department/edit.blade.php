@@ -51,7 +51,7 @@
                                <select class="form-control" name="directorate_id" required>
                                     <option value=""> Pilih Directorate</option>
                                     @foreach($directorate as $item)
-                                    <option value="{{ $item->id }}" {{ $data->directorate_id == $item->id ? ' selected': '' }}>{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}" {{ $data->organisasi_directorate_id == $item->id ? ' selected': '' }}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -62,7 +62,7 @@
                                 <select class="form-control" name="division_id" required>
                                     <option value=""> Pilih Division</option>
                                     @foreach($division as $item)
-                                    <option value="{{ $item->id }}" {{ $data->division_id == $item->id ? 'selected':'' }} >{{ $item->name }}</option>
+                                    <option value="{{ $item->id }}" {{ $data->organisasi_division_id == $item->id ? 'selected':'' }} >{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

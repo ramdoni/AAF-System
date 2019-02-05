@@ -2,15 +2,7 @@
 
 @section('title', 'Karyawan - PT. Arthaasia Finance')
 
-@section('sidebar')
-
-@endsection
-
 @section('content')
-
-<!-- ============================================================== -->
-<!-- Page Content -->
-<!-- ============================================================== -->
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row bg-title">
@@ -27,9 +19,9 @@
         </div>
         <!-- .row -->
     <div class="row">
-        <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.karyawan.update', $data->id ) }}" method="POST">
+        <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.karyawan.update', $data->id ) }}" autocomplete="off" method="POST">
             <input type="hidden" name="_method" value="PUT">
-            <div class="col-md-12">
+            <div class="col-md-12 p-l-0 p-r-0">
                 <div class="white-box">
 
                     @if (count($errors) > 0)
@@ -327,7 +319,11 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Marital Status</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="marital_status" value="{{ $data->marital_status }}" class="form-control">
+                                        <select class="form-control" name="marital_status">
+                                            @foreach(['T/K', 'K/0','K/1','K/2','K/3'] as $item)
+                                            <option {{ $data->marital_status == $item ? 'selected' : '' }}>{{ $item }}</option>
+                                            @endforeach                                            
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -352,39 +348,41 @@
                                         <input type="email" value="{{ $data->email }}" class="form-control" name="email" id="example-email"> </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Password</label>
-                                    <div class="col-md-12">
+                                    <label class="col-md-5">Password</label>
+                                    <label class="col-md-5">Confirm Password</label>
+                                    <div class="col-md-5">
                                         <input type="password" name="password" class="form-control">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Confirm Password</label>
-                                    <div class="col-md-12">
+                                    <div class="col-md-5">
                                         <input type="password" name="confirm" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Join Date</label>
-                                    <div class="col-md-12">
-                                        <input type="text" name="join_date" class="form-control datepicker" value="{{ ($data->join_date == '0000-00-00' ? '' : $data->join_date) }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-6">Employee Status</label>
-                                    <label class="col-md-6">Status Login</label>
-                                    <div class="col-md-6">
+                                    <label class="col-md-5">Employee Status</label>
+                                    <label class="col-md-5">Status Login</label>
+                                    <div class="col-md-5">
                                         <select class="form-control" name="organisasi_status">
                                             <option value="">- select - </option>
-                                            @foreach(['Permanent', 'Contract'] as $item)
+                                            @foreach(['Contract', 'Probation', 'Permanent','Temporary','Outsourching'] as $item)
                                             <option {{ $data->organisasi_status == $item ? 'selected' : '' }}>{{ $item }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <select class="form-control">
                                             <option value="1" {{ $data->status == 1 ? 'selected' : '' }}>Active</option>
                                             <option value="0" {{ $data->status == 0 ? 'selected' : '' }}>Inactive</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5">Join Date</label>
+                                    <label class="col-md-5 label_end_date" style="{{ $data->organisasi_status == 'Permanent' ? 'display:none' : '' }}">End Date</label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="join_date" class="form-control datepicker" value="{{ ($data->join_date == '0000-00-00' ? '' : $data->join_date) }}">
+                                    </div>
+                                    <div class="col-md-5" style="{{ $data->organisasi_status == 'Permanent' ? 'display:none' : '' }}">
+                                        <input type="text" name="end_date" class="form-control datepicker" value="{{ ($data->end_date == '0000-00-00' ? '' : $data->end_date) }}">
                                     </div>
                                 </div>
                             </div>
@@ -441,14 +439,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">ID Zip Code</label>
-                                    <div class="col-md-12">
+                                    <label class="col-md-6">ID Zip Code</label>
+                                    <label class="col-md-6">Foto</label>
+                                    <div class="col-md-6">
                                         <input type="text" name="id_zip_code" class="form-control" value="{{ $data->id_zip_code }}" />
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Foto</label>
-                                    <div class="col-md-12">
+                                     <div class="col-md-6">
                                         <input type="file" name="foto" class="form-control" />
                                         @if(!empty($data->foto))
                                         <img src="{{ asset('storage/foto/'. $data->foto) }}" style="width: 200px;" />
@@ -485,6 +481,20 @@
                                         <input type="text" name="no_bpjs_number" value="{{ $data->bpjs_number }}" class="form-control">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-5">Nomor Asuransi</label>
+                                    <label class="col-md-5">Plan Asuransi</label>
+                                    <div class="col-md-5">
+                                        <input type="text" name="nomor_asuransi" value="{{ $data->nomor_asuransi }}" class="form-control">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <select class="form-control" name="plan_asuransi">
+                                            @foreach(plan_asuransi() as $key => $item)
+                                            <option value="{{ $key }}" {{ $key == $data->plan_asuransi ? 'selected' : '' }} >{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -505,6 +515,7 @@
                                             <th>Tanggal Meninggal</th>
                                             <th>Jenjang Pendidikan</th>
                                             <th>Pekerjaan</th>
+                                            <th>No BPJS</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -519,6 +530,7 @@
                                             <td>{{ $item->tanggal_meninggal }}</td>
                                             <td>{{ $item->jenjang_pendidikan }}</td>
                                             <td>{{ $item->pekerjaan }}</td>
+                                            <td>{{ $item->no_bpjs }}</td>
                                             <td>
                                                 <a href="javascript:;" onclick="edit_dependent({{ $item->id }}, '{{ $item->nama }}', '{{ $item->hubungan }}', '{{ $item->tempat_lahir }}', '{{ $item->tanggal_lahir }}', '{{ $item->tanggal_meninggal }}', '{{ $item->jenjang_pendidikan }}', '{{ $item->pekerjaan }}', '{{ $item->tertanggung }}')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> </a>
                                                     <a href="{{ route('administrator.karyawan.delete-dependent', $item->id) }}" onclick="return confirm('Hapus data ini ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> </a>
@@ -585,10 +597,8 @@
     <!-- ============================================================== -->
 </div>
     <!-- /.container-fluid -->
-    @extends('layouts.footer')
+    @include('layouts.footer')
 </div>
-
-
 <!-- modal content dependent  -->
 <div id="modal_dependent" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -668,6 +678,12 @@
                                     <option>Yes</option>
                                     <option>No</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <label class="col-md-12">No BPJS Kesehatan</label>
+                            <div class="col-md-12">
+                                <input type="text" class="form-control modal-no_bpjs" />
                             </div>
                         </div>
                         <input type="hidden" name="action_dependent" value="insert">
@@ -929,7 +945,35 @@
         var el_dependent;
         var el_education;
         var el_cuti;
-                
+        
+        $(".modal-hubungan").on('change', function(){
+            var el_hubungan = $(this).val();
+            if(el_hubungan == 'Suami' || el_hubungan == 'Istri' || el_hubungan == 'Anak 1' || el_hubungan == 'Anak 2' || el_hubungan == 'Anak 3')
+            {
+                $('.modal-no_bpjs').parent().parent().show();
+            }
+            else
+            {
+                $('.modal-no_bpjs').parent().parent().hide();
+            }
+
+        });
+
+
+        $("select[name='organisasi_status']").on('change', function(){
+
+            if($(this).val() !== 'Permanent')
+            {
+                $("input[name='end_date']").parent().show();
+                $('.label_end_date').show();
+            }
+            else
+            {
+                $("input[name='end_date']").parent().hide();
+                $('.label_end_date').hide();
+            }
+        });
+
         $(".modal-terpakai, .modal-kuota").on("input", function(){
 
             if($('.modal-terpakai').val() == "" || $('.modal-terpakai').val() == 0)
@@ -1266,6 +1310,7 @@
             var modal_jenjang_pendidikan    = $('.modal-jenjang_pendidikan').val();
             var modal_pekerjaan             = $('.modal-pekerjaan').val();
             var modal_tertanggung           = $('.modal-tertanggung').val();
+            var modal_no_bpjs               = $('.modal-no_bpjs').val();
             
             $('.modal-nama, .modal-hubungan, .modal-tempat_lahir, .modal-tanggal_lahir').val("");
 
@@ -1275,7 +1320,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('ajax.update-dependent') }}',
-                    data: {'id' : id, 'nama' : modal_nama, 'hubungan': modal_hubungan, 'tempat_lahir': modal_tempat_lahir, 'tanggal_lahir': modal_tanggal_lahir, 'tanggal_meninggal' : modal_tanggal_meninggal, 'jenjang_pendidikan' : modal_jenjang_pendidikan, 'pekerjaan' : modal_pekerjaan,'tertanggung': modal_tertanggung, '_token' : $("meta[name='csrf-token']").attr('content')},
+                    data: {'id' : id, 'no_bpjs' : modal_no_bpjs, 'nama' : modal_nama, 'hubungan': modal_hubungan, 'tempat_lahir': modal_tempat_lahir, 'tanggal_lahir': modal_tanggal_lahir, 'tanggal_meninggal' : modal_tanggal_meninggal, 'jenjang_pendidikan' : modal_jenjang_pendidikan, 'pekerjaan' : modal_pekerjaan,'tertanggung': modal_tertanggung, '_token' : $("meta[name='csrf-token']").attr('content')},
                     dataType: 'json',
                     success: function (data) {
 
@@ -1296,6 +1341,7 @@
             el +='<td>'+ modal_tanggal_meninggal +'</td>';
             el +='<td>'+ modal_jenjang_pendidikan +'</td>';
             el +='<td>'+ modal_pekerjaan +'</td>';
+            el +='<td>'+ modal_no_bpjs +'</td>';
             el +='<input type="hidden" name="dependent[nama][]" value="'+ modal_nama +'" />';
             el +='<input type="hidden" name="dependent[hubungan][]" value="'+ modal_hubungan +'" />';
             el +='<input type="hidden" name="dependent[tempat_lahir][]" value="'+ modal_tempat_lahir +'" />';
@@ -1304,9 +1350,10 @@
             el +='<input type="hidden" name="dependent[jenjang_pendidikan][]" value="'+ modal_jenjang_pendidikan +'" />';
             el +='<input type="hidden" name="dependent[pekerjaan][]" value="'+ modal_pekerjaan +'" />';
             el +='<input type="hidden" name="dependent[tertanggung][]" value="'+ modal_tertanggung +'" />';
+            el +='<input type="hidden" name="dependent[no_bpjs][]" value="'+ modal_no_bpjs +'" />';
             el += '<td>';
             el += '<a onclick="delete_row_dependent(this)" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>';
-            el += '<a onclick="update_row_dependent(this,\''+ modal_nama +'\',\''+ modal_hubungan +'\',\''+ modal_tempat_lahir +'\',\''+ modal_tanggal_lahir +'\',\''+ modal_tanggal_meninggal +'\',\''+ modal_jenjang_pendidikan +'\',\''+ modal_pekerjaan +'\',\''+ modal_tertanggung +'\')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a>';
+            el += '<a onclick="update_row_dependent(this,\''+ modal_nama +'\',\''+ modal_hubungan +'\',\''+ modal_tempat_lahir +'\',\''+ modal_tanggal_lahir +'\',\''+ modal_tanggal_meninggal +'\',\''+ modal_jenjang_pendidikan +'\',\''+ modal_pekerjaan +'\',\''+ modal_tertanggung +'\', \''+ modal_no_bpjs +'\')" class="btn btn-default btn-xs"><i class="fa fa-edit"></i></a>';
             el += '</td>';
 
             var act = $("input[name='action_dependent']").val();

@@ -1,5 +1,31 @@
 <?php
 
+/**
+ * Plan Asuransi
+ * @return array
+ */
+function plan_asuransi()
+{
+	return [1 => 'Plan 1', 2 => 'Plan 2', 3 => 'Plan 3', 4 => 'Plan 4', 5 => 'Plan 5'];
+}
+
+/**
+ * Counting Employe status
+ */
+function counting_employe_status($status, $date)
+{
+	if($date == "" and $status != "Permanent") return false;
+
+	$date_start = strtotime(date('Y-m-d'));
+    $date_end   = strtotime($date);
+    $diff = abs($date_end - $date_start);
+    $total = $diff / 86400; 
+
+    if($total <=30)
+    {
+    	return ' | <label class="text-danger"><i class="fa fa-warning"></i> '. $total .' days ago</label>';
+    }
+}
 
 /**
  * [jenis_claim_medical description]
@@ -8,7 +34,7 @@
  */
 function jenis_claim_medical($key="")
 {
-	$arr = ['RJ' => 'RJ (Rawat Jalan)', 'RI' => 'RI (Rawat Inap)', 'MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
+	$arr = ['MA' => 'MA (Melahirkan)','Frame' => 'Frame', 'Glasses' => 'Glasses'];
 	if(!empty($key))
 	{
 		return $arr[$key];
@@ -364,9 +390,16 @@ function get_cuti_terpakai($cuti_id, $user_id)
  * [plafond_perjalanan_dinas description]
  * @return [type] [description]
  */
-function plafond_perjalanan_dinas($name)
+function plafond_perjalanan_dinas($name, $type = 'Dalam Negeri')
 {
-	return \App\PlafondDinas::where('organisasi_position_text', 'LIKE', '%'. strtoupper($name) .'%')->first();
+	if($type == 'Dalam Negeri')
+	{
+		return \App\PlafondDinas::where('organisasi_position_text', 'LIKE', '%'. strtoupper($name) .'%')->first();		
+	}
+	else
+	{
+		return \App\PlafondDinasLuarNegeri::where('organisasi_position_text', 'LIKE', '%'. strtoupper($name) .'%')->first();		
+	}
 }
 
 /**
@@ -719,7 +752,6 @@ function get_atasan_langsung()
 				{
 					$karyawan->$k = $item; $no++;
 				}
-
 
 				if($no == 0)
 				{
@@ -1578,9 +1610,9 @@ function status_cuti($status)
 function get_section_by_department_id($department_id, $type='array')
 {
 	if($type == 'array')
-		$data = \App\Section::where('department_id', $department_id)->get();
+		$data = \App\OrganisasiUnit::where('organisasi_department_id', $department_id)->get();
 	else
-		$data = \App\Section::where('department_id', $department_id)->first();
+		$data = \App\OrganisasiUnit::where('organisasi_department_id', $department_id)->first();
 	
 	return $data;	
 }
@@ -1593,9 +1625,9 @@ function get_section_by_department_id($department_id, $type='array')
 function get_department_by_division_id($division_id, $type='array')
 {
 	if($type == 'array')
-		$data = \App\Department::where('division_id', $division_id)->get();
+		$data = \App\OrganisasiDepartment::where('organisasi_division_id', $division_id)->get();
 	else
-		$data = \App\Department::where('division_id', $division_id)->first();
+		$data = \App\OrganisasiDepartment::where('organisasi_division_id', $division_id)->first();
 	
 	return $data;	
 }
@@ -1607,9 +1639,9 @@ function get_department_by_division_id($division_id, $type='array')
 function get_division_by_directorate_id($directorate_id, $type = 'array')
 {
 	if($type == 'array')
-		$data = \App\Division::where('directorate_id', $directorate_id)->get();
+		$data = \App\OrganisasiDivision::where('organisasi_directorate_id', $directorate_id)->get();
 	else
-		$data = \App\Division::where('directorate_id', $directorate_id)->first();
+		$data = \App\OrganisasiDivision::where('organisasi_directorate_id', $directorate_id)->first();
 	
 	return $data;		
 }

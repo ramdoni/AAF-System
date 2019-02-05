@@ -2,37 +2,25 @@
 
 @section('title', 'Division - PT. Arthaasia Finance')
 
-@section('sidebar')
-
-@endsection
-
 @section('content')
-
-<!-- ============================================================== -->
-<!-- Page Content -->
-<!-- ============================================================== -->
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title">Form Division</h4> </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Division</li>
                 </ol>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
         <!-- .row -->
         <div class="row">
             <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.division.update', $data->id) }}" method="POST">
                 <input type="hidden" name="_method" value="PUT">
-                <div class="col-md-12">
+                <div class="col-md-12 p-l-0 p-r-0">
                     <div class="white-box">
-                        <h3 class="box-title m-b-0">Data Division</h3>
-                        <br />
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <strong>Whoops!</strong> There were some problems with your input.<br><br>

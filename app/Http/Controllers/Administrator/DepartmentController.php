@@ -62,7 +62,7 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data       = Department::where('id', $id)->first();
+        $data       = \App\OrganisasiDepartment::where('id', $id)->first();
         $data->organisasi_directorate_id   = $request->directorate_id; 
         $data->organisasi_division_id      = $request->division_id;
         $data->name             = $request->name;
@@ -78,7 +78,7 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        $data = \App\OrganisasiDivision::where('id', $id)->first();
+        $data = \App\OrganisasiDepartment::where('id', $id)->first();
         $data->delete();
 
         return redirect()->route('administrator.department.index')->with('message-sucess', 'Data berhasi di hapus');
@@ -91,7 +91,7 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $data       = new Department();
+        $data       = new \App\OrganisasiDepartment();
         $data->organisasi_directorate_id   = $request->directorate_id; 
         $data->organisasi_division_id      = $request->division_id;
         $data->name             = $request->name;

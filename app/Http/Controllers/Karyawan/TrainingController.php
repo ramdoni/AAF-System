@@ -119,7 +119,7 @@ class TrainingController extends Controller
     public function biaya($id)
     {
         $params['data']             = \App\Training::where('id', $id)->first();
-        $params['plafond_dinas']    = plafond_perjalanan_dinas( (\Auth::user()->organisasiposition->name == 'Head' ? 'Supervisor' : \Auth::user()->organisasiposition->name));
+        $params['plafond_dinas']    = plafond_perjalanan_dinas( (\Auth::user()->organisasiposition->name == 'Head' ? 'Supervisor' : \Auth::user()->organisasiposition->name), $params['data']->lokasi_kegiatan );
 
         return view('karyawan.training.biaya')->with($params);
     }   

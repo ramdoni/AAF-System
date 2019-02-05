@@ -853,6 +853,7 @@ class KaryawanController extends Controller
         $data->bank_id          = $request->bank_id;
         // $data->cabang           = $request->cabang;
         $data->join_date        = $request->join_date;
+        $data->end_date        = $request->end_date;
         $data->tempat_lahir     = $request->tempat_lahir;
         $data->tanggal_lahir    = $request->tanggal_lahir;
         
@@ -875,6 +876,8 @@ class KaryawanController extends Controller
         $data->branch_head_id       = $request->branch_head_id;
         $data->blood_type           = $request->blood_type; 
         $data->status               = $request->status;
+        $data->nomor_asuransi       = $request->nomor_asuransi;
+        $data->plan_asuransi        = $request->plan_asuransi;
         
         if ($request->hasFile('foto'))
         {
@@ -903,6 +906,7 @@ class KaryawanController extends Controller
                 $dep->jenjang_pendidikan = $request->dependent['jenjang_pendidikan'][$key];
                 $dep->pekerjaan = $request->dependent['pekerjaan'][$key];
                 $dep->tertanggung = $request->dependent['tertanggung'][$key];
+                $dep->no_bpjs = $request->dependent['no_bpjs'][$key];
                 $dep->save();
             }
         }
@@ -1003,6 +1007,7 @@ class KaryawanController extends Controller
         $data->nomor_rekening       = $request->nomor_rekening;
         $data->bank_id              = $request->bank_id;
         $data->join_date            = $request->join_date;
+        $data->end_date             = $request->end_date;
         $data->tempat_lahir         = $request->tempat_lahir;
         $data->tanggal_lahir        = $request->tanggal_lahir;
         $data->absensi_number       = $request->absensi_number;
@@ -1026,6 +1031,8 @@ class KaryawanController extends Controller
         $data->id_address           = $request->id_address;
         $data->id_city              = $request->id_city;
         $data->status               = $request->status;
+        $data->nomor_asuransi       = $request->nomor_asuransi;
+        $data->plan_asuransi        = $request->plan_asuransi;
 
         if (request()->hasFile('foto'))
         {
@@ -1051,10 +1058,11 @@ class KaryawanController extends Controller
                 $dep->hubungan      = $request->dependent['hubungan'][$key];
                 $dep->tempat_lahir  = $request->dependent['tempat_lahir'][$key];
                 $dep->tanggal_lahir = $request->dependent['tanggal_lahir'][$key];
-                $dep->tanggal_meninggal = $request->dependent['tanggal_meninggal'][$key];
-                $dep->jenjang_pendidikan = $request->dependent['jenjang_pendidikan'][$key];
-                $dep->pekerjaan = $request->dependent['pekerjaan'][$key];
-                $dep->tertanggung = $request->dependent['tertanggung'][$key];
+                $dep->tanggal_meninggal     = $request->dependent['tanggal_meninggal'][$key];
+                $dep->jenjang_pendidikan    = $request->dependent['jenjang_pendidikan'][$key];
+                $dep->pekerjaan             = $request->dependent['pekerjaan'][$key];
+                $dep->tertanggung           = $request->dependent['tertanggung'][$key];
+                $dep->no_bpjs               = $request->dependent['no_bpjs'][$key];
                 $dep->save();
             }
         }

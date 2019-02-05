@@ -41,7 +41,6 @@
                                     <th>DIVISION</th>
                                     <th>DEPARTMENT</th>
                                     <th>SECTION</th>
-                                    <th>DESCRIPTION</th>
                                     <th>CREATED</th>
                                     <th>MANAGE</th>
                                 </tr>

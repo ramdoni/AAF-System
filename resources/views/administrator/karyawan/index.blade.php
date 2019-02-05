@@ -2,42 +2,26 @@
 
 @section('title', 'Dashboard - PT. Arthaasia Finance')
 
-@section('sidebar')
-
-@endsection
-
 @section('content')
-
-  
-        
-<!-- ============================================================== -->
-<!-- Page Content -->
-<!-- ============================================================== -->
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Dashboard</h4> 
+                <h4 class="page-title">Manage Karyawan</h4> 
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <a href="{{ route('administrator.karyawan.create') }}" class="btn btn-success btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"> <i class="fa fa-plus"></i> TAMBAH KARYAWAN</a>
-
                 <a class="btn btn-info btn-sm pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light" id="add-import-karyawan"> <i class="fa fa-upload"></i> IMPORT</a>
-                
                 <ol class="breadcrumb">
                     <li><a href="javascript:void(0)">Dashboard</a></li>
                     <li class="active">Karyawan</li>
                 </ol>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
-        
         <!-- .row -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 p-l-0  p-r-0">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Manage Karyawan</h3>
-                    <br />
                     <div class="table-responsive">
                         <table id="data_table" class="display nowrap" cellspacing="0" width="100%">
                             <thead>
@@ -51,7 +35,8 @@
                                     <th>DEPARTEMENT</th>
                                     <th>POSITION</th>
                                     <th>JOB RULE</th>
-                                    <th>STATUS LOGIN</th>
+                                    <th>EMPLOYEE STATUS</th>
+                                    <th>LOGIN</th>
                                     <th>MANAGE</th>
                                 </tr>
                             </thead>
@@ -67,21 +52,47 @@
                                         <td>{{ isset($item->department->name) ? $item->department->name : '' }}</td>
                                         <td>{{ isset($item->organisasiposition->name) ? $item->organisasiposition->name : '' }}</td>
                                         <td>{{ $item->organisasi_job_role }}</td>
+                                        <td title="{{ $item->organisasi_status }}">
+                                            {{ $item->organisasi_status }} 
+                                            {!! counting_employe_status($item->organisasi_status, $item->end_date) !!}
+                                        </td>
                                         <td>
                                             <a onclick="status_karyawan('{{ $item->name .' - '. $item->nik }}',  {{ $item->id }}, {{ $item->status }})"> 
                                             @if($item->status == 1)
-                                                <label class="btn btn-success btn-xs"><i class="fa fa-check"></i> Active</label>
+                                                <label class="btn btn-success btn-xs"><i class="fa fa-check"></i></label>
                                             @else
-                                                <label class="btn btn-danger btn-xs"><i class="fa fa-close"></i> Inactive</label>
+                                                <label class="btn btn-danger btn-xs"><i class="fa fa-close"></i></label>
                                             @endif
                                             </a>
                                         </td>
                                         <td>
+                                            <div class="btn-group m-r-10">
+                                                <button aria-expanded="false" data-toggle="dropdown" class="btn btn-xs btn-default dropdown-toggle waves-effect waves-light" type="button">Action 
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul role="menu" class="dropdown-menu">
+                                                    <li>
+                                                        <a href="{{ route('administrator.karyawan.edit', ['id' => $item->id]) }}"><i class="fa fa-search-plus"></i> Detail</a>
+                                                    </li>
+                                                    <li>
+                                                        <a onclick="change_password('{{ $item->name .' - '. $item->nik }}', {{ $item->id }})"><i class="fa fa-key"></i> Change Password </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ route('administrator.karyawan.print-profile', $item->id) }}" target="_blank"><i class="fa fa-print"></i> Print</a>
+                                                    </li>
+                                                    <li>
+                                                        <a onclick="confirm_loginas('{{ $item->name }}','{{ route('administrator.karyawan.autologin', $item->id) }}')"><i class="fa fa-key"></i> Autologin</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <!--
                                             <a href="{{ route('administrator.karyawan.edit', ['id' => $item->id]) }}"> <button class="btn btn-info btn-xs m-r-5"><i class="fa fa-search-plus"></i> detail</button></a>
                                             <div class="clearfix"></div>
                                             <a class="btn btn-default btn-xs" onclick="change_password('{{ $item->name .' - '. $item->nik }}', {{ $item->id }})"><i class="fa fa-key"></i> Change Password </a><br />
                                             <a href="{{ route('administrator.karyawan.print-profile', $item->id) }}" target="_blank" class="btn btn-default btn-xs"><i class="fa fa-print"></i> print</a>
                                             <a onclick="confirm_loginas('{{ $item->name }}','{{ route('administrator.karyawan.autologin', $item->id) }}')"  class="btn btn-warning btn-xs"><i class="fa fa-key"></i> Autologin</a>
+                                            -->
                                         </td>
                                     </tr>
                                 @endforeach

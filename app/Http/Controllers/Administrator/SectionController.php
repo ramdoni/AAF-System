@@ -65,10 +65,10 @@ class SectionController extends Controller
     public function update(Request $request, $id)
     {
         $data       = \App\OrganisasiUnit::where('id', $id)->first();
-        $data->directorate_id   = $request->directorate_id; 
-        $data->division_id      = $request->division_id;
-        $data->department_id    = $request->department_id;
-        $data->name             = $request->name;
+        $data->organisasi_directorate_id    = $request->directorate_id; 
+        $data->organisasi_division_id       = $request->division_id;
+        $data->organisasi_department_id     = $request->department_id;
+        $data->name                         = $request->name;
         $data->save();
 
         return redirect()->route('administrator.section.index')->with('message-success', 'Data berhasil disimpan');

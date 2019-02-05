@@ -2,17 +2,7 @@
 
 @section('title', 'Dashboard - PT. Arthaasia Finance')
 
-@section('sidebar')
-
-@endsection
-
 @section('content')
-
-  
-        
-<!-- ============================================================== -->
-<!-- Page Content -->
-<!-- ============================================================== -->
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row bg-title">
@@ -25,51 +15,19 @@
                     <li class="active">Organization Structure</li>
                 </ol>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
-
         <!-- .row -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 p-l-0 p-r-0">
                 <div class="white-box" style="overflow: scroll;">
-                    <h3 class="box-title m-b-0">Organization Structure</h3>
-                    <hr />
-                    <div id="chart-container">
-                       <!--  <ul>
-                            @foreach($directorate as $dir)
-                            <li>
-                                <a href="#">{{ $dir->name }}</a>
-                                <ul>
-                                @foreach(get_division_by_directorate_id($dir->id) as $key => $div)
-                                    <li>
-                                        <a href="#">{{ $div->name }}</a>
-                                        <ul>
-                                        @foreach(get_department_by_division_id($div->id) as $dept)
-                                            <li>
-                                                <a href="#">{{ $dept->name }}</a>
-                                            </li>
-                                        @endforeach
-                                        </ul>
-                                    </li>
-                                @endforeach
-                                </ul>
-                            </li>
-                            @endforeach
-                        </ul>  -->
-                    </div>
+                    <div id="chart-container"></div>
                 </div>
                 <div class="clearfix"></div>
             </div>
         </div>
-
-        <!-- ============================================================== -->
     </div>
-    <!-- /.container-fluid -->
     @include('layouts.footer')
 </div>
-<!-- ============================================================== -->
-<!-- End Page Content -->
-<!-- ============================================================== -->
 </div>
 @section('footer-script')
     <link href="{{ asset('orgchart/jquery.orgchart.css') }}" rel="stylesheet">
@@ -113,5 +71,4 @@
 
     </script>
 @endsection
-
 @endsection

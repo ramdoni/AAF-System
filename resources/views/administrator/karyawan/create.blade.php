@@ -28,7 +28,7 @@
         <!-- .row -->
     <div class="row">
         <form class="form-horizontal" enctype="multipart/form-data" action="{{ route('administrator.karyawan.store') }}" method="POST">
-            <div class="col-md-12">
+            <div class="col-md-12 p-l-0 p-r-0">
                 <div class="white-box">
 
                      @if (count($errors) > 0)
@@ -266,7 +266,11 @@
                                 <div class="form-group">
                                     <label class="col-md-12">Marital Status</label>
                                     <div class="col-md-10">
-                                        <input type="text" name="marital_status" class="form-control">
+                                        <select class="form-control" name="marital_status">
+                                            @foreach(['T/K', 'K/0','K/1','K/2','K/3'] as $item)
+                                            <option>{{ $item }}</option>
+                                            @endforeach                                            
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -303,30 +307,33 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Join Date</label>
-                                    <div class="col-md-10">
-                                        <input type="text" name="join_date" value="{{ old('join_date') }}" class="form-control datepicker">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-md-6">Employee Status</label>
                                     <label class="col-md-6">Status Login</label>
                                     <div class="col-md-6">
                                         <select class="form-control" name="organisasi_status">
-                                            <option value="">- selectd - </option>
-                                            @foreach(['Permanent', 'Contract'] as $item)
+                                            <option value="">- select - </option>
+                                            @foreach(['Contract', 'Probation', 'Permanent','Temporary','Outsourching'] as $item)
                                             <option {{ old('organisasi_status') == $item ? 'selected' : '' }}>{{ $item }}</option>
                                             @endforeach
                                         </select> 
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <select class="form-control">
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
                                         </select>
                                     </div>
                                 </div>
-                                
+                                 <div class="form-group">
+                                    <label class="col-md-6">Join Date</label>
+                                    <label class="col-md-6">End Date</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="join_date" value="{{ old('join_date') }}" class="form-control datepicker">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" name="end_date" class="form-control datepicker" readonly="true" value="{{ old('end_date') }}">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-md-6" style="padding-left: 0">
@@ -410,21 +417,32 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">ID Zip Code</label>
-                                    <div class="col-md-12">
+                                    <label class="col-md-6">ID Zip Code</label>
+                                    <label class="col-md-6">Foto</label>
+                                    <div class="col-md-6">
                                         <input type="text" name="id_zip_code" value="{{ old('id_zip_code') }}" class="form-control" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="file" name="foto" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Foto</label>
-                                    <div class="col-md-12">
-                                        <input type="file" name="foto" class="form-control" />
+                                    <label class="col-md-6">Nomor Asuransi</label>
+                                    <label class="col-md-6">Plan Asuransi</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="nomor_asuransi" value="{{ old('nomor_asuransi') }}" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="plan_asuransi">
+                                            @foreach(plan_asuransi() as $key => $item)
+                                            <option value="{{ $key }}" {{ $key == old('plan_asuransi') ? 'selected' : '' }} >{{ $item }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                         </div>
-
                          <div role="tabpanel" class="tab-pane fade" id="dependent">
                             <h3 class="box-title m-b-0">Dependent</h3> <a class="btn btn-info btn-sm" id="btn_modal_dependent"><i class="fa fa-plus"></i> Tambah</a>
                             <br />
@@ -442,6 +460,7 @@
                                             <th>Jenjang Pendidikan</th>
                                             <th>Pekerjaan</th>
                                             <th>Tertanggung</th>
+                                            <th>No BPJS Kesehatan</th>
                                         </tr>
                                     </thead>
                                     <tbody class="dependent_table"></tbody>
@@ -570,6 +589,12 @@
                                     <option>Yes</option>
                                     <option>No</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none;">
+                            <label class="col-md-12">No BPJS Kesehatan</label>
+                            <div class="col-md-12">
+                                <input type="text" class="form-control modal-no_bpjs" />
                             </div>
                         </div>
                    </form>
@@ -789,335 +814,362 @@
 </div>
 
 @section('footer-script')
-    <style type="text/css">
-        .staff-branch-select, .head-branch-select {
-            display: none;
-        }
-    </style>
-    <!-- Date picker plugins css -->
-    <link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
-    <script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script type="text/javascript">
-
-         $("select[name='jabatan_cabang']").on('change', function(){
-
-            if($(this).val() =='Staff')
-            {
-                $('.head-branch-select').hide();
-                $('.staff-branch-select').show();
-            }
-            else if($(this).val() =='Head')
-            {
-                $('.head-branch-select').show();
-                $('.staff-branch-select').hide();   
-            }
-            else
-            {
-                $('.head-branch-select').hide();
-                $('.staff-branch-select').hide();
-            }
-
-        });
-
-        $("select[name='branch_type']").on('change', function(){
-
-            if($(this).val() == 'BRANCH')
-            {
-                $(".section-cabang").show();
-            }
-            else
-            {
-                $(".section-cabang").hide();
-            }
-        });
-
-
-        $("#add_inventaris_lainnya").click(function(){
-
-            $("#modal_inventaris_lainnya").modal('show');
-        });
-
-        $("#add_modal_inventaris_lainnya").click(function(){
-
-            var el = '<tr>';
-            var modal_jenis            = $('.modal-inventaris-jenis').val();
-            var modal_description                 = $('.modal-inventaris-description').val();
-            
-            el += '<td>'+ (parseInt($('.table_mobil tr').length) + 1)  +'</td>';
-            el +='<td>'+ modal_jenis +'</td>';
-            el +='<td>'+ modal_description +'</td>';;
-            el +='<input type="hidden" name="inventaris_lainnya[jenis][]" value="'+ modal_jenis +'" />';
-            el +='<input type="hidden" name="inventaris_lainnya[description][]" value="'+ modal_description +'" />';
-
-            $('.table_inventaris_lainnya').append(el);
-            $('#modal_inventaris_lainnya').modal('hide');
-        });
-
-        $("#add_cuti").click(function(){
-            $("#modal_cuti").modal('show');
-        });
-
-        $("#add_modal_cuti").click(function(){
-
-            var jenis_cuti = $('.modal-jenis_cuti :selected');
-            var kuota = $('.modal-kuota').val();
-
-            var el = '<tr><td>'+ (parseInt($('.table_cuti tr').length) + 1) +'</td><td>'+ jenis_cuti.text() +'</td><td>'+ kuota +'</td></tr>';
-            
-            el += '<input type="hidden" name="cuti[cuti_id][]" value="'+ jenis_cuti.val() +'" />';
-            el += '<input type="hidden" name="cuti[kuota][]" value="'+ kuota +'" />';
-
-            $("form.frm-modal-cuti").trigger('reset');
-
-            $('.table_cuti').append(el);
-
-            $("#modal_cuti").modal('hide');
-        });
-
-        $("#add_inventaris_mobil").click(function(){
-
-            $("#modal_inventaris_mobil").modal('show');
-        });
-
-        $("#add_modal_inventaris_mobil").click(function(){
-
-            var el = '<tr>';
-            var modal_tipe_mobil            = $('.modal-tipe_mobil').val();
-            var modal_tahun                 = $('.modal-tahun').val();
-            var modal_no_polisi             = $('.modal-no_polisi').val();
-            var modal_status_mobil          = $('.modal-status_mobil').val();
-            
-            el += '<td>'+ (parseInt($('.table_mobil tr').length) + 1)  +'</td>';
-            el +='<td>'+ modal_tipe_mobil +'</td>';
-            el +='<td>'+ modal_tahun +'</td>';
-            el +='<td>'+ modal_no_polisi +'</td>';
-            el +='<td>'+ modal_status_mobil +'</td>';
-            el +='<input type="hidden" name="inventaris_mobil[tipe_mobil][]" value="'+ modal_tipe_mobil +'" />';
-            el +='<input type="hidden" name="inventaris_mobil[tahun][]" value="'+ modal_tahun +'" />';
-            el +='<input type="hidden" name="inventaris_mobil[no_polisi][]" value="'+ modal_no_polisi +'" />';
-            el +='<input type="hidden" name="inventaris_mobil[status_mobil][]" value="'+ modal_status_mobil +'" />';
-
-            $('.table_mobil').append(el);
-            $('#modal_inventaris_mobil').modal('hide');
-        });
-
-
-        $("#add_modal_dependent").click(function(){
-
-            var el = '<tr>';
-            var modal_nama                  = $('.modal-nama').val();
-            var modal_hubungan              = $('.modal-hubungan').val();
-            var modal_tempat_lahir          = $('.modal-tempat_lahir').val();
-            var modal_tanggal_lahir         = $('.modal-tanggal_lahir').val();
-            var modal_tanggal_meninggal     = $('.modal-tanggal_meninggal').val();
-            var modal_jenjang_pendidikan    = $('.modal-jenjang_pendidikan').val();
-            var modal_pekerjaan             = $('.modal-pekerjaan').val();
-            var modal_tertanggung           = $('.modal-tertanggung').val();
-            
-            el += '<td>'+ parseInt($('.dependent_table tr').length) + 1  +'</td>';
-            el +='<td>'+ modal_nama +'</td>';
-            el +='<td>'+ modal_hubungan +'</td>';
-            el +='<td>'+ modal_tempat_lahir +'</td>';
-            el +='<td>'+ modal_tanggal_lahir +'</td>';
-            el +='<td>'+ modal_tanggal_meninggal +'</td>';
-            el +='<td>'+ modal_jenjang_pendidikan +'</td>';
-            el +='<td>'+ modal_pekerjaan +'</td>';
-            el +='<td>'+ modal_tertanggung +'</td>';
-            el +='<input type="hidden" name="dependent[nama][]" value="'+ modal_nama +'" />';
-            el +='<input type="hidden" name="dependent[hubungan][]" value="'+ modal_hubungan +'" />';
-            el +='<input type="hidden" name="dependent[tempat_lahir][]" value="'+ modal_tempat_lahir +'" />';
-            el +='<input type="hidden" name="dependent[tanggal_lahir][]" value="'+ modal_tanggal_lahir +'" />';
-            el +='<input type="hidden" name="dependent[tanggal_meninggal][]" value="'+ modal_tanggal_meninggal +'" />';
-            el +='<input type="hidden" name="dependent[jenjang_pendidikan][]" value="'+ modal_tanggal_meninggal +'" />';
-            el +='<input type="hidden" name="dependent[pekerjaan][]" value="'+ modal_pekerjaan +'" />';
-            el +='<input type="hidden" name="dependent[tertanggung][]" value="'+ modal_tertanggung +'" />';
-
-            $('.dependent_table').append(el);
-            $('.frm-modal-dependent').trigger('reset');
-            $('#modal_dependent').modal('hide');
-        });
-
-        $("#add_modal_education").click(function(){
-
-            var el = '<tr>';
-            var modal_pendidikan            = $('.modal-pendidikan').val();
-            var modal_tahun_awal            = $('.modal-tahun_awal').val();
-            var modal_tahun_akhir           = $('.modal-tahun_akhir').val();
-            var modal_fakultas              = $('.modal-fakultas').val();
-            var modal_jurusan               = $('.modal-jurusan').val();
-            var modal_nilai                 = $('.modal-nilai').val();
-            var modal_kota                  = $('.modal-kota').val();
-            
-            el += '<td>'+ (parseInt($('.education_table tr').length) + 1 )  +'</td>';
-            el +='<td>'+ modal_pendidikan +'</td>';
-            el +='<td>'+ modal_tahun_awal +'</td>';
-            el +='<td>'+ modal_tahun_akhir +'</td>';
-            el +='<td>'+ modal_fakultas +'</td>';
-            el +='<td>'+ modal_jurusan +'</td>';
-            el +='<td>'+ modal_nilai +'</td>';
-            el +='<td>'+ modal_kota +'</td>';
-            el +='<input type="hidden" name="education[pendidikan][]" value="'+ modal_pendidikan +'" />';
-            el +='<input type="hidden" name="education[tahun_awal][]" value="'+ modal_tahun_awal +'" />';
-            el +='<input type="hidden" name="education[tahun_akhir][]" value="'+ modal_tahun_akhir +'" />';
-            el +='<input type="hidden" name="education[fakultas][]" value="'+ modal_fakultas +'" />';
-            el +='<input type="hidden" name="education[jurusan][]" value="'+ modal_jurusan +'" />';
-            el +='<input type="hidden" name="education[nilai][]" value="'+ modal_nilai +'" />';
-            el +='<input type="hidden" name="education[kota][]" value="'+ modal_kota +'" />';
-
-            $('.education_table').append(el);
-
-            $('#modal_education').modal('hide');
-            $('form.frm-modal-education').reset();
-        });
-
-        $("#btn_modal_dependent").click(function(){
-
-            $('#modal_dependent').modal('show');
-
-        });
-
-         $("#btn_modal_education").click(function(){
-
-            $('#modal_education').modal('show');
-
-        });
-
-        function get_kabupaten(el)
+<style type="text/css">
+    .staff-branch-select, .head-branch-select {
+        display: none;
+    }
+</style>
+<!-- Date picker plugins css -->
+<link href="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('admin-css/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript">
+    
+    $(".modal-hubungan").on('change', function(){
+        var el_hubungan = $(this).val();
+        if(el_hubungan == 'Suami' || el_hubungan == 'Istri' || el_hubungan == 'Anak 1' || el_hubungan == 'Anak 2' || el_hubungan == 'Anak 3')
         {
-            var id = $(el).val();
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('ajax.get-kabupaten-by-provinsi') }}',
-                data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
-                dataType: 'json',
-                success: function (data) {
-
-                    var html_ = '<option value="">Pilih Kabupaten</option>';
-
-                    $(data.data).each(function(k, v){
-                        html_ += "<option value=\""+ v.id_kab +"\">"+ v.nama +"</option>";
-                    });
-
-                    $(el).parent().find('select').html(html_);
-                }
-            });
+            $('.modal-no_bpjs').parent().parent().show();
+        }
+        else
+        {
+            $('.modal-no_bpjs').parent().parent().hide();
         }
 
-        jQuery('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
+    });
+
+    $("select[name='organisasi_status']").on('change', function(){
+
+        if($(this).val() !== 'Permanent')
+        {
+            $("input[name='end_date']").removeAttr('readonly');
+        }
+        else
+        {
+            $("input[name='end_date']").attr('readonly', true);
+        }
+    });
+
+     $("select[name='jabatan_cabang']").on('change', function(){
+
+        if($(this).val() =='Staff')
+        {
+            $('.head-branch-select').hide();
+            $('.staff-branch-select').show();
+        }
+        else if($(this).val() =='Head')
+        {
+            $('.head-branch-select').show();
+            $('.staff-branch-select').hide();   
+        }
+        else
+        {
+            $('.head-branch-select').hide();
+            $('.staff-branch-select').hide();
+        }
+
+    });
+
+    $("select[name='branch_type']").on('change', function(){
+
+        if($(this).val() == 'BRANCH')
+        {
+            $(".section-cabang").show();
+        }
+        else
+        {
+            $(".section-cabang").hide();
+        }
+    });
+
+
+    $("#add_inventaris_lainnya").click(function(){
+
+        $("#modal_inventaris_lainnya").modal('show');
+    });
+
+    $("#add_modal_inventaris_lainnya").click(function(){
+
+        var el = '<tr>';
+        var modal_jenis            = $('.modal-inventaris-jenis').val();
+        var modal_description                 = $('.modal-inventaris-description').val();
+        
+        el += '<td>'+ (parseInt($('.table_mobil tr').length) + 1)  +'</td>';
+        el +='<td>'+ modal_jenis +'</td>';
+        el +='<td>'+ modal_description +'</td>';;
+        el +='<input type="hidden" name="inventaris_lainnya[jenis][]" value="'+ modal_jenis +'" />';
+        el +='<input type="hidden" name="inventaris_lainnya[description][]" value="'+ modal_description +'" />';
+
+        $('.table_inventaris_lainnya').append(el);
+        $('#modal_inventaris_lainnya').modal('hide');
+    });
+
+    $("#add_cuti").click(function(){
+        $("#modal_cuti").modal('show');
+    });
+
+    $("#add_modal_cuti").click(function(){
+
+        var jenis_cuti = $('.modal-jenis_cuti :selected');
+        var kuota = $('.modal-kuota').val();
+
+        var el = '<tr><td>'+ (parseInt($('.table_cuti tr').length) + 1) +'</td><td>'+ jenis_cuti.text() +'</td><td>'+ kuota +'</td></tr>';
+        
+        el += '<input type="hidden" name="cuti[cuti_id][]" value="'+ jenis_cuti.val() +'" />';
+        el += '<input type="hidden" name="cuti[kuota][]" value="'+ kuota +'" />';
+
+        $("form.frm-modal-cuti").trigger('reset');
+
+        $('.table_cuti').append(el);
+
+        $("#modal_cuti").modal('hide');
+    });
+
+    $("#add_inventaris_mobil").click(function(){
+
+        $("#modal_inventaris_mobil").modal('show');
+    });
+
+    $("#add_modal_inventaris_mobil").click(function(){
+
+        var el = '<tr>';
+        var modal_tipe_mobil            = $('.modal-tipe_mobil').val();
+        var modal_tahun                 = $('.modal-tahun').val();
+        var modal_no_polisi             = $('.modal-no_polisi').val();
+        var modal_status_mobil          = $('.modal-status_mobil').val();
+        
+        el += '<td>'+ (parseInt($('.table_mobil tr').length) + 1)  +'</td>';
+        el +='<td>'+ modal_tipe_mobil +'</td>';
+        el +='<td>'+ modal_tahun +'</td>';
+        el +='<td>'+ modal_no_polisi +'</td>';
+        el +='<td>'+ modal_status_mobil +'</td>';
+        el +='<input type="hidden" name="inventaris_mobil[tipe_mobil][]" value="'+ modal_tipe_mobil +'" />';
+        el +='<input type="hidden" name="inventaris_mobil[tahun][]" value="'+ modal_tahun +'" />';
+        el +='<input type="hidden" name="inventaris_mobil[no_polisi][]" value="'+ modal_no_polisi +'" />';
+        el +='<input type="hidden" name="inventaris_mobil[status_mobil][]" value="'+ modal_status_mobil +'" />';
+
+        $('.table_mobil').append(el);
+        $('#modal_inventaris_mobil').modal('hide');
+    });
+
+
+    $("#add_modal_dependent").click(function(){
+
+        var el = '<tr>';
+        var modal_nama                  = $('.modal-nama').val();
+        var modal_hubungan              = $('.modal-hubungan').val();
+        var modal_tempat_lahir          = $('.modal-tempat_lahir').val();
+        var modal_tanggal_lahir         = $('.modal-tanggal_lahir').val();
+        var modal_tanggal_meninggal     = $('.modal-tanggal_meninggal').val();
+        var modal_jenjang_pendidikan    = $('.modal-jenjang_pendidikan').val();
+        var modal_pekerjaan             = $('.modal-pekerjaan').val();
+        var modal_tertanggung           = $('.modal-tertanggung').val();
+        var modal_no_bpjs               = $('.modal-no_bpjs').val();
+        
+        el += '<td>'+ parseInt($('.dependent_table tr').length) + 1  +'</td>';
+        el +='<td>'+ modal_nama +'</td>';
+        el +='<td>'+ modal_hubungan +'</td>';
+        el +='<td>'+ modal_tempat_lahir +'</td>';
+        el +='<td>'+ modal_tanggal_lahir +'</td>';
+        el +='<td>'+ modal_tanggal_meninggal +'</td>';
+        el +='<td>'+ modal_jenjang_pendidikan +'</td>';
+        el +='<td>'+ modal_pekerjaan +'</td>';
+        el +='<td>'+ modal_tertanggung +'</td>';
+        el +='<td>'+ modal_no_bpjs +'</td>';
+        el +='<input type="hidden" name="dependent[nama][]" value="'+ modal_nama +'" />';
+        el +='<input type="hidden" name="dependent[hubungan][]" value="'+ modal_hubungan +'" />';
+        el +='<input type="hidden" name="dependent[tempat_lahir][]" value="'+ modal_tempat_lahir +'" />';
+        el +='<input type="hidden" name="dependent[tanggal_lahir][]" value="'+ modal_tanggal_lahir +'" />';
+        el +='<input type="hidden" name="dependent[tanggal_meninggal][]" value="'+ modal_tanggal_meninggal +'" />';
+        el +='<input type="hidden" name="dependent[jenjang_pendidikan][]" value="'+ modal_tanggal_meninggal +'" />';
+        el +='<input type="hidden" name="dependent[pekerjaan][]" value="'+ modal_pekerjaan +'" />';
+        el +='<input type="hidden" name="dependent[tertanggung][]" value="'+ modal_tertanggung +'" />';
+        el +='<input type="hidden" name="dependent[no_bpjs][]" value="'+ modal_no_bpjs +'" />';
+
+        $('.dependent_table').append(el);
+        $('.frm-modal-dependent').trigger('reset');
+        $('#modal_dependent').modal('hide');
+    });
+
+    $("#add_modal_education").click(function(){
+
+        var el = '<tr>';
+        var modal_pendidikan            = $('.modal-pendidikan').val();
+        var modal_tahun_awal            = $('.modal-tahun_awal').val();
+        var modal_tahun_akhir           = $('.modal-tahun_akhir').val();
+        var modal_fakultas              = $('.modal-fakultas').val();
+        var modal_jurusan               = $('.modal-jurusan').val();
+        var modal_nilai                 = $('.modal-nilai').val();
+        var modal_kota                  = $('.modal-kota').val();
+        
+        el += '<td>'+ (parseInt($('.education_table tr').length) + 1 )  +'</td>';
+        el +='<td>'+ modal_pendidikan +'</td>';
+        el +='<td>'+ modal_tahun_awal +'</td>';
+        el +='<td>'+ modal_tahun_akhir +'</td>';
+        el +='<td>'+ modal_fakultas +'</td>';
+        el +='<td>'+ modal_jurusan +'</td>';
+        el +='<td>'+ modal_nilai +'</td>';
+        el +='<td>'+ modal_kota +'</td>';
+        el +='<input type="hidden" name="education[pendidikan][]" value="'+ modal_pendidikan +'" />';
+        el +='<input type="hidden" name="education[tahun_awal][]" value="'+ modal_tahun_awal +'" />';
+        el +='<input type="hidden" name="education[tahun_akhir][]" value="'+ modal_tahun_akhir +'" />';
+        el +='<input type="hidden" name="education[fakultas][]" value="'+ modal_fakultas +'" />';
+        el +='<input type="hidden" name="education[jurusan][]" value="'+ modal_jurusan +'" />';
+        el +='<input type="hidden" name="education[nilai][]" value="'+ modal_nilai +'" />';
+        el +='<input type="hidden" name="education[kota][]" value="'+ modal_kota +'" />';
+
+        $('.education_table').append(el);
+
+        $('#modal_education').modal('hide');
+        $('form.frm-modal-education').reset();
+    });
+
+    $("#btn_modal_dependent").click(function(){
+
+        $('#modal_dependent').modal('show');
+
+    });
+
+     $("#btn_modal_education").click(function(){
+
+        $('#modal_education').modal('show');
+
+    });
+
+    function get_kabupaten(el)
+    {
+        var id = $(el).val();
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('ajax.get-kabupaten-by-provinsi') }}',
+            data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
+            dataType: 'json',
+            success: function (data) {
+
+                var html_ = '<option value="">Pilih Kabupaten</option>';
+
+                $(data.data).each(function(k, v){
+                    html_ += "<option value=\""+ v.id_kab +"\">"+ v.nama +"</option>";
+                });
+
+                $(el).parent().find('select').html(html_);
+            }
         });
+    }
 
-        $("select[name='provinsi_id']").on('change', function(){
+    jQuery('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+    });
 
-            var id = $(this).val();
+    $("select[name='provinsi_id']").on('change', function(){
 
-            $.ajax({
+        var id = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('ajax.get-kabupaten-by-provinsi') }}',
+            data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
+            dataType: 'json',
+            success: function (data) {
+
+                var html_ = '<option value="">Pilih Kabupaten</option>';
+
+                $(data.data).each(function(k, v){
+                    html_ += "<option value=\""+ v.id_kab +"\">"+ v.nama +"</option>";
+                });
+
+                $("select[name='kabupaten_id'").html(html_);
+            }
+        });
+    });
+
+    $("select[name='kabupaten_id']").on('change', function(){
+
+        var id = $(this).val();
+
+        $.ajax({
                 type: 'POST',
-                url: '{{ route('ajax.get-kabupaten-by-provinsi') }}',
+                url: '{{ route('ajax.get-kecamatan-by-kabupaten') }}',
                 data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
                 success: function (data) {
 
-                    var html_ = '<option value="">Pilih Kabupaten</option>';
+                    var html_ = '<option value=""> Pilih Kecamatan</option>';
 
                     $(data.data).each(function(k, v){
-                        html_ += "<option value=\""+ v.id_kab +"\">"+ v.nama +"</option>";
+                        html_ += "<option value=\""+ v.id_kec +"\">"+ v.nama +"</option>";
                     });
 
-                    $("select[name='kabupaten_id'").html(html_);
+                    $("select[name='kecamatan_id'").html(html_);
                 }
-            });
         });
+    });
 
-        $("select[name='kabupaten_id']").on('change', function(){
+    $("select[name='kecamatan_id']").on('change', function(){
 
-            var id = $(this).val();
+        var id = $(this).val();
 
-            $.ajax({
-                    type: 'POST',
-                    url: '{{ route('ajax.get-kecamatan-by-kabupaten') }}',
-                    data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
-                    dataType: 'json',
-                    success: function (data) {
-
-                        var html_ = '<option value=""> Pilih Kecamatan</option>';
-
-                        $(data.data).each(function(k, v){
-                            html_ += "<option value=\""+ v.id_kec +"\">"+ v.nama +"</option>";
-                        });
-
-                        $("select[name='kecamatan_id'").html(html_);
-                    }
-            });
-        });
-
-        $("select[name='kecamatan_id']").on('change', function(){
-
-            var id = $(this).val();
-
-            $.ajax({
-                    type: 'POST',
-                    url: '{{ route('ajax.get-kelurahan-by-kecamatan') }}',
-                    data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
-                    dataType: 'json',
-                    success: function (data) {
-
-                        var html_ = '<option value=""> Pilih Kelurahan</option>';
-
-                        $(data.data).each(function(k, v){
-                            html_ += "<option value=\""+ v.id_kel +"\">"+ v.nama +"</option>";
-                        });
-
-                        $("select[name='kelurahan_id'").html(html_);
-                    }
-            });
-        });
-
-        $("select[name='division_id']").on('change', function(){
-
-            var id = $(this).val();
-
-            $.ajax({
+        $.ajax({
                 type: 'POST',
-                url: '{{ route('ajax.get-department-by-division') }}',
+                url: '{{ route('ajax.get-kelurahan-by-kecamatan') }}',
                 data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
                 dataType: 'json',
                 success: function (data) {
 
-                    var html_ = '<option value=""> Pilih Department</option>';
+                    var html_ = '<option value=""> Pilih Kelurahan</option>';
 
                     $(data.data).each(function(k, v){
-                        html_ += "<option value=\""+ v.id +"\">"+ v.name +"</option>";
+                        html_ += "<option value=\""+ v.id_kel +"\">"+ v.nama +"</option>";
                     });
 
-                    $("select[name='department_id'").html(html_);
+                    $("select[name='kelurahan_id'").html(html_);
                 }
-            });
         });
+    });
 
-        $("select[name='department_id']").on('change', function(){
+    $("select[name='division_id']").on('change', function(){
 
-            var id = $(this).val();
+        var id = $(this).val();
 
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('ajax.get-section-by-department') }}',
-                data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
-                dataType: 'json',
-                success: function (data) {
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('ajax.get-department-by-division') }}',
+            data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
+            dataType: 'json',
+            success: function (data) {
 
-                    var html_ = '<option value=""> Pilih Section</option>';
+                var html_ = '<option value=""> Pilih Department</option>';
 
-                    $(data.data).each(function(k, v){
-                        html_ += "<option value=\""+ v.id +"\">"+ v.name +"</option>";
-                    });
+                $(data.data).each(function(k, v){
+                    html_ += "<option value=\""+ v.id +"\">"+ v.name +"</option>";
+                });
 
-                    $("select[name='section_id'").html(html_);
-                }
-            });
+                $("select[name='department_id'").html(html_);
+            }
         });
-    </script>
+    });
+
+    $("select[name='department_id']").on('change', function(){
+
+        var id = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('ajax.get-section-by-department') }}',
+            data: {'id' : id, '_token' : $("meta[name='csrf-token']").attr('content')},
+            dataType: 'json',
+            success: function (data) {
+
+                var html_ = '<option value=""> Pilih Section</option>';
+
+                $(data.data).each(function(k, v){
+                    html_ += "<option value=\""+ v.id +"\">"+ v.name +"</option>";
+                });
+
+                $("select[name='section_id'").html(html_);
+            }
+        });
+    });
+</script>
 @endsection
-
 @endsection

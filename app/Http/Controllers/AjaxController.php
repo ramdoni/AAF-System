@@ -7,7 +7,10 @@ use App\ModelUser;
 use Auth;
 use Session;
 use Illuminate\Support\Facades\Input;
-use App\Directorate;
+use App\OrganisasiDirectorate;
+use App\OrganisasiDivision;
+use App\OrganisasiDepartment;
+use App\OrganisasiSection;
 use App\Division;
 use App\Department;
 use App\Section;
@@ -268,6 +271,7 @@ class AjaxController extends Controller
             $data->jenjang_pendidikan=$request->jenjang_pendidikan;
             $data->pekerjaan        = $request->pekerjaan;
             $data->tertanggung      = $request->tertanggung;
+            $data->no_bpjs          = $request->no_bpjs;
             $data->save();
 
             \Session::flash('message-success', 'Data Dependent Berhasil di update');
@@ -1153,7 +1157,7 @@ class AjaxController extends Controller
     {
         if($request->ajax())
         {
-            $data = Division::where('directorate_id', $request->id)->get();
+            $data = OrganisasiDivision::where('organisasi_directorate_id', $request->id)->get();
         
             return response()->json(['message'=> 'success', 'data' => $data]);
         }
@@ -1191,7 +1195,7 @@ class AjaxController extends Controller
     {
         $data = [];
 
-        $directorate = Directorate::all();
+        $directorate = OrganisasiDirectorate::all();
         foreach($directorate as $key_dir => $dir)
         {
             $data[$key_dir]['name'] = 'Directorate';
@@ -1203,14 +1207,14 @@ class AjaxController extends Controller
             {
                 $data[$key_dir]['children'][$key_div]['name'] = 'Division';
                 $data[$key_dir]['children'][$key_div]['title'] = $div->name;
-
+ 
                 foreach(get_department_by_division_id($div->id) as $key_dept => $dept)
                 {
-                    $data[$key_dir]['children'][$key_div]['children'][$key_dept]['name'] = 'Division';
-                    $data[$key_dir]['children'][$key_div]['children'][$key_dept]['title'] = $div->name;
+                    $data[$key_dir]['children'][$key_div]['children'][$key_dept]['name'] = 'Department';
+                    $data[$key_dir]['children'][$key_div]['children'][$key_dept]['title'] = $dept->name;
 
                     foreach(get_section_by_department_id($dept->id) as $key_sec => $sec)
-                    {
+                    { 
                         $data[$key_dir]['children'][$key_div]['children'][$key_dept]['children'][$key_sec]['name'] = 'Section';
                         $data[$key_dir]['children'][$key_div]['children'][$key_dept]['children'][$key_sec]['title'] = $sec->name;
                     } 

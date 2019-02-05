@@ -77,9 +77,15 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-s6"> 
-                                    <input type="text" name="jam_pulang_cepat" style="display: none;" class="form-control jam_pulang_cepat" placeholder="Jam Pulang Cepat">
-                                    <input type="text" name="jam_datang_terlambat" style="display: none;" class="form-control jam_datang_terlambat" placeholder="Jam Datang Terlambat">
+                                <div class="col-md-4"> 
+                                    <div style="display: none;" class="jam_pulang_cepat">
+                                        <label class="btn btn-info btn-xs label_jam_pulang" style="margin-top: -21px;"> 17:00 </label>
+                                        <input type="text" name="jam_pulang_cepat" class="form-control" placeholder="Jam Pulang Cepat">
+                                    </div>
+                                    <div  style="display: none;" class="jam_datang_terlambat">
+                                        <label class="btn btn-info btn-xs label_jam_datang"style="margin-top: -21px;"> 08:00 </label>
+                                        <input type="text" name="jam_datang_terlambat" class="form-control" placeholder="Jam Datang Terlambat">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group"> 
@@ -618,14 +624,14 @@
     function time_picker()
     {
         // Clock pickers
-        $('.jam_pulang_cepat').clockpicker({
+        $("[input[name='jam_pulang_cepat']").clockpicker({
             placement: 'bottom',
             align: 'left',
             autoclose: true,
             'default': 'now'
         });
 
-        $('.jam_datang_terlambat').clockpicker({
+        $("input[name='jam_datang_terlambat']").clockpicker({
             placement: 'bottom',
             align: 'left',
             autoclose: true,
